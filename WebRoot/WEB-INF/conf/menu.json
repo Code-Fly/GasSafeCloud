@@ -1,54 +1,73 @@
  {
      "button":[
      {	
-		   "name":"最新咨询",
+		   "name":"气瓶",
            "sub_button":[
             {
-               "type":"view",
-               "name":"刮刮卡",
-               "url":"V1001_LOTTERY"
+               "type":"scancode_waitmsg",
+               "name":"身份查询",
+                "key":"QP_SFCX"
             },
             {
-               "type":"view",
-               "name":"当季新品",
-               "url":"V1003_NEW_ARRIVED"
+               "type":"scancode_waitmsg",
+               "name":"灌装记录",
+                "key":"QP_GZJL"
+            },
+             {
+               "type":"scancode_waitmsg",
+               "name":"流转跟踪",
+                "key":"QP_LZGZ"
+            },
+             {
+               "type":"scancode_waitmsg",
+               "name":"实名使用",
+                "key":"QP_SMSY"
+            },
+             {
+               "type":"scancode_waitmsg",
+               "name":"安全定位",
+                "key":"QP_AQDW"
+            }]
+      },
+      {    
+      	    "name":"管理",
+            "sub_button":[
+            {
+               "type":"scancode_waitmsg",
+               "name":"车用气瓶",
             },
             {
-               "type":"media_id",
-               "name":"黑板报",
-               "media_id":"TBDw114J76PhQlR1n9rjBztPRRJdoMds4XBqoUEWRMI"
+               "type":"click",
+               "name":"充装存储",
+               "key":"GL_CZCC"
+            },
+             {
+               "type":"click",
+               "name":"配送运输",
+                "key":"GL_PSYS"
+            },
+             {
+               "type":"click",
+               "name":"检验检测",
+               "key":"GL_JYJC"
             }]
       },
       {
-           "name":"米宝微店",
-           "sub_button":[            
-            {
-               "type":"media_id",
-               "name":"美甲小知识",
-               "media_id":"TBDw114J76PhQlR1n9rjBzIPZSJHQrRI95bBV7XdojE"
-            },{
-               "type":"view_limited",
-               "name":"使用说明",
-               "media_id":"TBDw114J76PhQlR1n9rjB4hCyKNKJ73kEycG-GziOn4"
-            },
-            {
-               "type":"view",
-               "name":"米兰艺社",
-               "url":"V2002_WEB_HOME"
-            }]
-      },
-      {
-           "name":"我的米宝",
+           "name":"服务",
            "sub_button":[
             {
-               "type":"view",
-               "name":"门店地址",
-               "url":"V3001_ADDREDD"
+               "type":"scancode_push",
+               "name":"认识气瓶",
+               "key":"FW_RSQP"
             },
             {
-               "type":"view",
-               "name":"我的订单",
-               "url":"V3002_ORDER"
+               "type":"scancode_push",
+               "name":"用气安全",
+               "key":"FW_YQAQ"
+            }, {
+               "type":"click",
+               "name":"咨询投诉",
+               "key":"FW_ZXTS"
             }]
        }]
  }
