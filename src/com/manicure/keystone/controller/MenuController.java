@@ -46,6 +46,8 @@ public class MenuController extends BaseController {
 			return KeystoneUtil.getErrmsg();
 		}
 		String menuStr = ConfigUtil.getJson("menu.json");
+		
+		
 /*
 		String urlHome = URL_SNS_OAUTH2_REDIRECT.replace("REDIRECT_URI", UrlUtil.toUTF8(baseUrl + "/mobile/index")).replace("APPID", APP_ID).replace("SCOPE", "snsapi_base")
 				.replace("STATE", "STATE");
