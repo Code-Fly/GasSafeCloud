@@ -3,6 +3,8 @@
  */
 package com.fujitsu.keystone.publics.service.iface;
 
+import com.fujitsu.base.exception.ConnectionFailedException;
+
 import net.sf.json.JSONObject;
 
 /**
@@ -12,9 +14,9 @@ import net.sf.json.JSONObject;
 public interface IProductService {
 	public JSONObject getProductList(String accessToken, int status);
 
-	public JSONObject getProduct(String accessToken, String productId);
+	public JSONObject getProduct(String accessToken, String productId) throws ConnectionFailedException;
 
-	public JSONObject getProductGroupList(String accessToken);
+	public JSONObject getProductGroupList(String accessToken) throws ConnectionFailedException;
 
-	public JSONObject getProductGroupDetail(String accessToken, String groupId);
+	public JSONObject getProductGroupDetail(String accessToken, String groupId) throws ConnectionFailedException;
 }

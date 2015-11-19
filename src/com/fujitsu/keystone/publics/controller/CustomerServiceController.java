@@ -20,6 +20,7 @@ import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.entity.customer.message.CouponMessage;
 import com.fujitsu.keystone.publics.entity.customer.message.WxCard;
+import com.fujitsu.keystone.publics.service.iface.ICustomerService;
 import com.fujitsu.keystone.publics.service.impl.CustomerService;
 
 /**
@@ -30,7 +31,7 @@ import com.fujitsu.keystone.publics.service.impl.CustomerService;
 @RequestMapping(value = "/api/keystone")
 public class CustomerServiceController extends BaseController {
 	@Resource
-	CustomerService customerService;
+	ICustomerService customerService;
 
 	@RequestMapping(value = "/customerservice/coupon/send", produces = "application/json;charset=UTF-8")
 	@ResponseBody

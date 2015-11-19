@@ -9,7 +9,7 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
-import com.fujitsu.base.entity.ErrorMsg;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
@@ -30,11 +30,12 @@ public class MaterialService extends BaseService implements IMaterialService {
 	public static String MATERIAL_TYPE_NEWS = "news";
 
 	/**
+	 * @throws ConnectionFailedException 
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
 	 * 
 	 */
-	public JSONObject getMaterialList(String accessToken, String type, int offset, int count) {
+	public JSONObject getMaterialList(String accessToken, String type, int offset, int count) throws ConnectionFailedException {
 
 		String url = URL_MATERIAL_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
@@ -46,11 +47,7 @@ public class MaterialService extends BaseService implements IMaterialService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}
@@ -60,10 +57,11 @@ public class MaterialService extends BaseService implements IMaterialService {
 	 * @param accessToken
 	 * @param mediaId
 	 * @return
+	 * @throws ConnectionFailedException 
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
 	 */
-	public JSONObject getMaterial(String accessToken, String mediaId) {
+	public JSONObject getMaterial(String accessToken, String mediaId) throws ConnectionFailedException {
 
 		String url = URL_MATERIAL_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
@@ -73,11 +71,7 @@ public class MaterialService extends BaseService implements IMaterialService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}

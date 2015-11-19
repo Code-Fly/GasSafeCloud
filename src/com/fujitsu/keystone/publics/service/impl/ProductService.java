@@ -16,6 +16,7 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.fujitsu.base.entity.ErrorMsg;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.Const;
 import com.fujitsu.base.helper.FileUtil;
 import com.fujitsu.base.helper.HttpClientUtil;
@@ -25,6 +26,7 @@ import com.fujitsu.keystone.publics.entity.product.ProductBase;
 import com.fujitsu.keystone.publics.entity.product.ProductInfo;
 import com.fujitsu.keystone.publics.entity.product.ProductList;
 import com.fujitsu.keystone.publics.entity.product.SkuList;
+import com.fujitsu.keystone.publics.service.iface.IOrderService;
 import com.fujitsu.keystone.publics.service.iface.IProductService;
 
 /**
@@ -34,9 +36,7 @@ import com.fujitsu.keystone.publics.service.iface.IProductService;
 @Service
 public class ProductService extends BaseService implements IProductService {
 	@Resource
-	CoreService coreService;
-	@Resource
-	OrderService orderService;
+	IOrderService orderService;
 
 	public final int STATUS_ALL = 0;
 	public final int STATUS_ON_SHELVES = 1;
@@ -62,7 +62,7 @@ public class ProductService extends BaseService implements IProductService {
 		return response;
 	}
 
-	public JSONObject getProduct(String accessToken, String productId) {
+	public JSONObject getProduct(String accessToken, String productId) throws ConnectionFailedException {
 		String url = URL_PROGUCT_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
@@ -71,33 +71,25 @@ public class ProductService extends BaseService implements IProductService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 
 		return response;
 	}
 
-	public JSONObject getProductGroupList(String accessToken) {
+	public JSONObject getProductGroupList(String accessToken) throws ConnectionFailedException {
 		String url = URL_PROGUCT_GROUP_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", null);
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 
 		return response;
 	}
 
-	public JSONObject getProductGroupDetail(String accessToken, String groupId) {
+	public JSONObject getProductGroupDetail(String accessToken, String groupId) throws ConnectionFailedException {
 		String url = URL_PROGUCT_GROUP_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
@@ -105,11 +97,7 @@ public class ProductService extends BaseService implements IProductService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 
 		return response;
@@ -122,8 +110,9 @@ public class ProductService extends BaseService implements IProductService {
 	 * @param accessToken
 	 * @param groupId
 	 * @return
+	 * @throws ConnectionFailedException 
 	 */
-	public JSONObject getProduct(HttpServletRequest request, String accessToken, String productId) {
+	public JSONObject getProduct(HttpServletRequest request, String accessToken, String productId) throws ConnectionFailedException {
 		JSONObject oList = orderService.getOrderList(accessToken, "0", "0", "0");
 
 		JSONObject respProduct = getProduct(accessToken, productId);
@@ -155,8 +144,9 @@ public class ProductService extends BaseService implements IProductService {
 	 * @param sort
 	 * @param filter
 	 * @return
+	 * @throws ConnectionFailedException 
 	 */
-	public JSONObject getProductList(HttpServletRequest request, String accessToken, int status, Map<String, String> filter) {
+	public JSONObject getProductList(HttpServletRequest request, String accessToken, int status, Map<String, String> filter) throws ConnectionFailedException {
 		ProductList pList = new ProductList();
 		String groupId = filter.get("groupId");
 		if ("0".equals(groupId)) {

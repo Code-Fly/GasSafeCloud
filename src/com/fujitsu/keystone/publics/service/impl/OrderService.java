@@ -15,7 +15,7 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
-import com.fujitsu.base.entity.ErrorMsg;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.Const;
 import com.fujitsu.base.helper.FileUtil;
 import com.fujitsu.base.helper.HttpClientUtil;
@@ -23,7 +23,6 @@ import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.entity.order.Order;
 import com.fujitsu.keystone.publics.entity.order.OrderBase;
 import com.fujitsu.keystone.publics.entity.order.OrderList;
-import com.fujitsu.keystone.publics.entity.product.ProductInfo;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IOrderService;
 
@@ -42,7 +41,7 @@ public class OrderService extends BaseService implements IOrderService {
 	public final int STATUS_RETURING = 8;
 	public final int STATUS_DONE = 5;
 
-	public JSONObject getOrderList(String accessToken, String status, String beginTime, String endTime) {
+	public JSONObject getOrderList(String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException {
 		String url = URL_ORDER_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 		JSONObject request = new JSONObject();
 		if (!"0".equals(status)) {
@@ -59,16 +58,12 @@ public class OrderService extends BaseService implements IOrderService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", request.toString());
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}
 
-	public JSONObject getOrderList(HttpServletRequest request, String accessToken, String status, String beginTime, String endTime) {
+	public JSONObject getOrderList(HttpServletRequest request, String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException {
 		JSONObject resp = getOrderList(accessToken, status, beginTime, endTime);
 		if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
 			logger.error(resp.toString());
@@ -89,7 +84,7 @@ public class OrderService extends BaseService implements IOrderService {
 		return JSONObject.fromObject(oList);
 	}
 
-	public JSONObject getOrder(String accessToken, String orderId) {
+	public JSONObject getOrder(String accessToken, String orderId) throws ConnectionFailedException {
 		String url = URL_ORDER_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
@@ -98,16 +93,12 @@ public class OrderService extends BaseService implements IOrderService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}
 	
-	public JSONObject getOrder(HttpServletRequest request,String accessToken, String orderId){
+	public JSONObject getOrder(HttpServletRequest request,String accessToken, String orderId) throws ConnectionFailedException{
 		JSONObject resp = getOrder(accessToken, orderId);
 		if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
 			logger.error(resp.toString());
@@ -121,6 +112,7 @@ public class OrderService extends BaseService implements IOrderService {
 		o.setOrder(oInfo);
 		return JSONObject.fromObject(o);
 	}
+	
 	public int getOrderCount(JSONObject oList, String productId) {
 		int count = 0;
 		if (oList.containsKey("errcode") && !oList.getString("errcode").equals("0")) {

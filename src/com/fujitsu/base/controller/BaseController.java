@@ -27,7 +27,6 @@ public abstract class BaseController extends Const {
 
 	@ExceptionHandler(RuntimeException.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-	@RequestMapping(produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String handleUnexpectedServerException(RuntimeException ex) {
 		logger.error("内部错误", ex);
@@ -39,19 +38,17 @@ public abstract class BaseController extends Const {
 	
 	@ExceptionHandler(ConnectionFailedException.class)
 	@ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
-	@RequestMapping(produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String handleConnectionFailedException(ConnectionFailedException ex) {
-		logger.error("链接失败", ex);
+		logger.error("连接失败", ex);
 		ErrorMsg errMsg = new ErrorMsg();
 		errMsg.setErrcode("-2");
-		errMsg.setErrmsg("链接失败");
+		errMsg.setErrmsg("连接失败");
 		return JSONObject.fromObject(errMsg).toString();
 	}
 	
 	@ExceptionHandler(AccessTokenException.class)
 	@ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
-	@RequestMapping(produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String handleAccessTokenException(AccessTokenException ex) {
 		logger.error(ex.getMessage());

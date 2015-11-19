@@ -3,11 +3,11 @@
  */
 package com.fujitsu.keystone.publics.service.impl;
 
-import org.springframework.stereotype.Service;
-
 import net.sf.json.JSONObject;
 
-import com.fujitsu.base.entity.ErrorMsg;
+import org.springframework.stereotype.Service;
+
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.entity.customer.message.CouponMessage;
@@ -32,29 +32,25 @@ public class CustomerService extends BaseService implements ICustomerService {
 
 	public static final String CUSTOMER_SERVICE_MESSAGE_TYPE_COUPON = "wxcard";
 
-	public JSONObject sendTextMessage(String accessToken, TextMessage message) {
+	public JSONObject sendTextMessage(String accessToken, TextMessage message) throws ConnectionFailedException {
 
 		JSONObject response = sendMessage(accessToken, JSONObject.fromObject(message));
 		return response;
 	}
 
-	public JSONObject sendCouponMessage(String accessToken, CouponMessage message) {
+	public JSONObject sendCouponMessage(String accessToken, CouponMessage message) throws ConnectionFailedException {
 
 		JSONObject response = sendMessage(accessToken, JSONObject.fromObject(message));
 		return response;
 	}
 
-	private JSONObject sendMessage(String accessToken, JSONObject message) {
+	private JSONObject sendMessage(String accessToken, JSONObject message) throws ConnectionFailedException {
 		String url = URL_CUSTOMER_SERVICE_MESSAGE_SEND.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", message.toString());
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 
 		return response;

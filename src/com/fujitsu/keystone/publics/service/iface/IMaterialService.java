@@ -3,6 +3,8 @@
  */
 package com.fujitsu.keystone.publics.service.iface;
 
+import com.fujitsu.base.exception.ConnectionFailedException;
+
 import net.sf.json.JSONObject;
 
 /**
@@ -10,7 +12,7 @@ import net.sf.json.JSONObject;
  *
  */
 public interface IMaterialService {
-	public JSONObject getMaterialList(String accessToken, String type, int offset, int count);
+	public JSONObject getMaterialList(String accessToken, String type, int offset, int count) throws ConnectionFailedException;
 
-	public JSONObject getMaterial(String accessToken, String mediaId);
+	public JSONObject getMaterial(String accessToken, String mediaId) throws ConnectionFailedException;
 }

@@ -19,7 +19,6 @@ import com.fujitsu.base.controller.BaseController;
 import com.fujitsu.base.helper.Const;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.merchant.service.iface.IMerchantService;
-import com.fujitsu.keystone.publics.service.iface.ICoreService;
 
 /**
  * @author Barrie
@@ -28,8 +27,6 @@ import com.fujitsu.keystone.publics.service.iface.ICoreService;
 @Controller
 @RequestMapping(value = "/api/keystone")
 public class MerchantController extends BaseController {
-	@Resource
-	ICoreService coreService;
 	@Resource
 	IMerchantService merchantService;
 

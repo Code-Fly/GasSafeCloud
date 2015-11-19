@@ -3,7 +3,6 @@
  */
 package com.fujitsu.base.helper;
 
-import java.security.AccessControlException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -142,6 +141,7 @@ public class KeystoneUtil {
 		return (int) ((random * num)) + strTime;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static String createSign(Map<String, Object> map, String mchKey) {
 		SortedMap<String, String> packageParams = new TreeMap<String, String>();
 		for (Map.Entry<String, Object> m : map.entrySet()) {
