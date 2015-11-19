@@ -3,9 +3,9 @@
  */
 package com.fujitsu.keystone.publics.event;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONObject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public abstract  class Event {
 	public String ENTER = System.getProperty("line.separator");
 	
 	
-	public String execute(HttpServletRequest request, Map<String, String> requestMap) throws ConnectionFailedException, AccessTokenException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException {
 		return null;
 	}
 }

@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONObject;
+
 import com.fujitsu.base.helper.Const;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
@@ -19,12 +21,12 @@ import com.fujitsu.keystone.publics.service.impl.MessageService;
 public class SubscribeEvent extends Event {
 
 	@Override
-	public String execute(HttpServletRequest request, Map<String, String> requestMap) {
+	public String execute(HttpServletRequest request, JSONObject requestJson) {
 		String respXml = null;
 		// 发送方帐号
-		String fromUserName = requestMap.get("FromUserName");
+		String fromUserName = requestJson.getString("FromUserName");
 		// 开发者微信号
-		String toUserName = requestMap.get("ToUserName");
+		String toUserName = requestJson.getString("ToUserName");
 
 		TextMessage textMessage = new TextMessage();
 

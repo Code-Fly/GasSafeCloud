@@ -32,16 +32,16 @@ import com.fujitsu.keystone.publics.service.impl.ProductService;
 
 public class MerchantOrderEvent extends Event {
 	@Override
-	public String execute(HttpServletRequest request, Map<String, String> requestMap) throws ConnectionFailedException, AccessTokenException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
 
 		String respXml = null;
 
-		String fromUserName = requestMap.get("FromUserName");
-		String toUserName = requestMap.get("ToUserName");
-		String orderId = requestMap.get("OrderId");
-		String createTime = requestMap.get("CreateTime");
-		String productId = requestMap.get("ProductId");
+		String fromUserName = requestJson.getString("FromUserName");
+		String toUserName = requestJson.getString("ToUserName");
+		String orderId = requestJson.getString("OrderId");
+		String createTime = requestJson.getString("CreateTime");
+		String productId = requestJson.getString("ProductId");
 
 		TextMessage message = new TextMessage();
 		message.setMsgtype(CustomerService.CUSTOMER_SERVICE_MESSAGE_TYPE_TEXT);

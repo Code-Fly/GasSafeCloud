@@ -9,10 +9,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONObject;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -71,18 +74,17 @@ public class MessageService extends BaseService implements IMessageService {
 	public static final String EVENT_TYPE_CLICK = "CLICK";
 
 	public static final String EVENT_MERCHANT_ORDER = "merchant_order";
-	
+
 	public static final String EVENT_CUSTOMER_SERVICE_CREATE_SESSION = "kf_create_session";
-	
-	public static final String EVENT_CUSTOMER_SERVICE_CLOSE_SESSION  = "kf_close_session";
-	
-	public static final String EVENT_SCANCODE_WAIT_MSG  = "scancode_waitmsg";
-	
-	public static final String EVENT_SCANCODE_PUSH  = "scancode_push";
-	
+
+	public static final String EVENT_CUSTOMER_SERVICE_CLOSE_SESSION = "kf_close_session";
+
+	public static final String EVENT_SCANCODE_WAIT_MSG = "scancode_waitmsg";
+
+	public static final String EVENT_SCANCODE_PUSH = "scancode_push";
 
 	public static final String RESP_MESSAGE_TYPE_TRANSFER_CUSTOMER_SERVICE = "transfer_customer_service";
-// 响应消息类型：文本
+	// 响应消息类型：文本
 	public static final String RESP_MESSAGE_TYPE_TEXT = "text";
 	// 响应消息类型：图片
 	public static final String RESP_MESSAGE_TYPE_IMAGE = "image";
@@ -101,27 +103,11 @@ public class MessageService extends BaseService implements IMessageService {
 	 * @param request
 	 * @return Map<String, String>
 	 * @throws IOException
-	 * @throws DocumentException 
+	 * @throws DocumentException
 	 */
 	@SuppressWarnings("unchecked")
-	public static Map<String, String> parseXml(HttpServletRequest request) throws IOException, DocumentException   {
-		StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()));
-        boolean firstLine = true;
-        String line = null; ;
-        while((line = bufferedReader.readLine()) != null){
-            if(!firstLine){
-                stringBuilder.append(System.getProperty("line.separator"));
-            }else{
-                firstLine = false;
-            }
-            stringBuilder.append(line);
-        }
-        System.out.println(stringBuilder.toString());
-
-		
-		// 将解析结果存储在HashMap中
-		Map<String, String> map = new HashMap<String, String>();
+	public static JSONObject parseXml(HttpServletRequest request) throws IOException, DocumentException {
+		JSONObject json = new JSONObject();
 
 		// 从request中取得输入流
 		InputStream inputStream = request.getInputStream();
@@ -131,17 +117,29 @@ public class MessageService extends BaseService implements IMessageService {
 		// 得到xml根元素
 		Element root = document.getRootElement();
 		// 得到根元素的所有子节点
-		List<Element> elementList = root.elements();
+		List<Element> rootElementList = root.elements();
 
 		// 遍历所有子节点
-		for (Element e : elementList)
-			map.put(e.getName(), e.getText());
+		for (Element re : rootElementList) {
+
+			JSONObject jsonChild = new JSONObject();
+			List<Element> childElementList = re.elements();
+			if (childElementList.isEmpty()){
+				json.put(re.getName(), re.getText());
+			}else{
+				for (Element ce : childElementList) {
+					jsonChild.put(ce.getName(), ce.getText());
+				}
+				json.put(re.getName(), jsonChild);
+			}		
+
+		}
 
 		// 释放资源
 		inputStream.close();
 		inputStream = null;
 
-		return map;
+		return json;
 	}
 
 	/**
@@ -242,7 +240,7 @@ public class MessageService extends BaseService implements IMessageService {
 		xstream.alias("item", new Article().getClass());
 		return xstream.toXML(newsMessage);
 	}
-	
+
 	public static String messageToXml(TransferCustomerService transferMessage) {
 		xstream.alias("xml", transferMessage.getClass());
 		return xstream.toXML(transferMessage);

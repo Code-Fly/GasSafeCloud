@@ -1,15 +1,14 @@
 package com.fujitsu.keystone.publics.event;
 
 import java.util.Date;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONObject;
+
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
-import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
-import com.fujitsu.keystone.publics.service.impl.CustomerService;
 import com.fujitsu.keystone.publics.service.impl.MenuService;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
 
@@ -20,13 +19,13 @@ public class ScancodeWaitmsgEvent extends Event {
 	 * @throws ConnectionFailedException
 	 * 
 	 */
-	public String execute(HttpServletRequest request, Map<String, String> requestMap) throws ConnectionFailedException, AccessTokenException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException {
 		String respXml = null;
 
-		String fromUserName = requestMap.get(FROM_USER_NAME);
-		String toUserName = requestMap.get(TO_USER_NAME);
-		String scanResult = requestMap.get(SCAN_RESULT);
-		String scanCodeInfo = requestMap.get(SCAN_CODE_INFO);
+		String fromUserName = requestJson.getString(FROM_USER_NAME);
+		String toUserName = requestJson.getString(TO_USER_NAME);		
+		JSONObject scanCodeInfo = JSONObject.fromObject(requestJson.get(SCAN_CODE_INFO));
+		String scanResult = scanCodeInfo.getString(SCAN_RESULT);
 
 		TextMessage textMessage = new TextMessage();
 		textMessage.setToUserName(fromUserName);
@@ -34,8 +33,6 @@ public class ScancodeWaitmsgEvent extends Event {
 		textMessage.setCreateTime(new Date().getTime());
 		textMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
 		
-		System.out.println(scanResult);
-		System.out.println(scanCodeInfo);
 		/**
 		 * 处理message 推送给用户的message
 		 * [QP02001,132020000001,AG,323232,2015年09月,2045年09月]气瓶安全云www.qpsafe.cn
@@ -47,7 +44,7 @@ public class ScancodeWaitmsgEvent extends Event {
 		String[] messArray = tmp.split(",");
 		StringBuffer buffer = new StringBuffer();
 		// 身份查询
-		if (MenuService.QP_SFCX.equals(requestMap.get(EVENT_KEY))) {
+		if (MenuService.QP_SFCX.equals(requestJson.get(EVENT_KEY))) {
 			buffer.append("气瓶使用证编号:");
 			buffer.append(messArray[0]);
 			buffer.append(ENTER).append("气瓶注册代码:");

@@ -129,19 +129,19 @@ public class CoreService extends BaseService implements ICoreService {
 		String respXml = null;
 		try {
 			// 调用parseXml方法解析请求消息
-			Map<String, String> requestMap = MessageService.parseXml(request);
+			JSONObject requestJson = MessageService.parseXml(request);
 			// 消息类型
-			String msgType = requestMap.get("MsgType");
+			String msgType = requestJson.getString("MsgType");
 
-			logger.info(requestMap.toString());
+			logger.info(requestJson.toString());
 			// 事件推送
 			if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_EVENT)) {
 				// 事件类型
-				String eventType = requestMap.get("Event");
+				String eventType = requestJson.getString("Event");
 				// 订阅
 				if (eventType.equals(MessageService.EVENT_TYPE_SUBSCRIBE)) {
 					Event event = new SubscribeEvent();
-					respXml = event.execute(request, requestMap);
+					respXml = event.execute(request, requestJson);
 				}
 				// 取消订阅
 				else if (eventType.equals(MessageService.EVENT_TYPE_UNSUBSCRIBE)) {
@@ -149,32 +149,32 @@ public class CoreService extends BaseService implements ICoreService {
 					// 收到订单
 				} else if (eventType.equals(MessageService.EVENT_MERCHANT_ORDER)) {
 					Event event = new MerchantOrderEvent();
-					respXml = event.execute(request, requestMap);
+					respXml = event.execute(request, requestJson);
 					// 开始客服会话
 				} else if (eventType.equals(MessageService.EVENT_CUSTOMER_SERVICE_CREATE_SESSION)) {
 					Event event = new CustomerServiceCreateSessionEvent();
-					respXml = event.execute(request, requestMap);
+					respXml = event.execute(request, requestJson);
 					// 关闭客服会话
 				} else if (eventType.equals(MessageService.EVENT_CUSTOMER_SERVICE_CLOSE_SESSION)) {
 					Event event = new CustomerServiceCloseSessionEvent();
-					respXml = event.execute(request, requestMap);
+					respXml = event.execute(request, requestJson);
 
 				}else if (eventType.equals(MessageService.EVENT_SCANCODE_WAIT_MSG)) {
 					Event event = new ScancodeWaitmsgEvent();
-					respXml = event.execute(request, requestMap);
+					respXml = event.execute(request, requestJson);
 
 				}
 
 				// 自定义菜单点击事件
 				else if (eventType.equals(MessageService.EVENT_TYPE_CLICK)) {
 					Event event = new ClickEvent();
-					respXml = event.execute(request, requestMap);
+					respXml = event.execute(request, requestJson);
 				}
 			}
 			// 当用户发消息时
 			else {
 				Event event = new CustomerServiceTransferEvent();
-				respXml = event.execute(request, requestMap);
+				respXml = event.execute(request, requestJson);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

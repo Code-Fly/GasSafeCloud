@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONObject;
+
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.KeystoneUtil;
@@ -20,14 +22,14 @@ import com.fujitsu.keystone.publics.service.impl.CustomerService;
  */
 public class CustomerServiceCloseSessionEvent extends Event {
 	@Override
-	public String execute(HttpServletRequest request, Map<String, String> requestMap) throws ConnectionFailedException, AccessTokenException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
 
 		String respXml = null;
 		// 发送方帐号
-		String fromUserName = requestMap.get("FromUserName");
+		String fromUserName = requestJson.getString("FromUserName");
 		
-		String kfAccount = requestMap.get("KfAccount");		
+		String kfAccount = requestJson.getString("KfAccount");		
 
 		TextMessage customerMsg = new TextMessage();
 		customerMsg.setMsgtype(CustomerService.CUSTOMER_SERVICE_MESSAGE_TYPE_TEXT);

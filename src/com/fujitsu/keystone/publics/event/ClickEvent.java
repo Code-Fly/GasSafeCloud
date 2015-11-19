@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONObject;
+
 import com.fujitsu.keystone.publics.entity.push.response.Article;
 import com.fujitsu.keystone.publics.entity.push.response.NewsMessage;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
@@ -23,12 +25,12 @@ import com.fujitsu.keystone.publics.service.impl.MessageService;
 public class ClickEvent extends Event {
 
 	@Override
-	public String execute(HttpServletRequest request, Map<String, String> requestMap) {
+	public String execute(HttpServletRequest request, JSONObject requestJson) {
 		String respXml = null;
 		// 发送方帐号
-		String fromUserName = requestMap.get("FromUserName");
+		String fromUserName = requestJson.getString("FromUserName");
 		// 开发者微信号
-		String toUserName = requestMap.get("ToUserName");
+		String toUserName = requestJson.getString("ToUserName");
 
 		TextMessage textMessage = new TextMessage();
 		textMessage.setToUserName(fromUserName);
@@ -36,7 +38,7 @@ public class ClickEvent extends Event {
 		textMessage.setCreateTime(new Date().getTime());
 		textMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
 		// 事件KEY值，与创建菜单时的key值对应
-		String eventKey = requestMap.get("EventKey");
+		String eventKey = requestJson.getString("EventKey");
 		// 根据key值判断用户点击的按钮
 		if (eventKey.equals(MenuService.FW_RSQP)) {
 			Article article = new Article();
