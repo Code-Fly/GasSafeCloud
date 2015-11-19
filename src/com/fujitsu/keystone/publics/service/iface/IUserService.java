@@ -5,6 +5,8 @@ package com.fujitsu.keystone.publics.service.iface;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fujitsu.base.exception.ConnectionFailedException;
+
 import net.sf.json.JSONObject;
 
 /**
@@ -12,19 +14,19 @@ import net.sf.json.JSONObject;
  *
  */
 public interface IUserService {
-	public JSONObject getOauth2AccessToken(String appId, String appSecret, String code);
+	public JSONObject getOauth2AccessToken(String appId, String appSecret, String code) throws ConnectionFailedException;
 
-	public JSONObject refreshOauth2AccessToken(String appId, String refreshToken);
+	public JSONObject refreshOauth2AccessToken(String appId, String refreshToken) throws ConnectionFailedException;
 
-	public JSONObject getSNSUserInfo(String accessToken, String openId);
+	public JSONObject getSNSUserInfo(String accessToken, String openId) throws ConnectionFailedException;
 
-	public JSONObject getWeChatUserInfo(String accessToken, String openId);
+	public JSONObject getWeChatUserInfo(String accessToken, String openId) throws ConnectionFailedException;
 
-	public JSONObject getWeChatUserInfo(HttpServletRequest request, String accessToken, String openId);
+	public JSONObject getWeChatUserInfo(HttpServletRequest request, String accessToken, String openId) throws ConnectionFailedException;
 
-	public JSONObject getWeChatUserList(String accessToken, String nextOpenId);
+	public JSONObject getWeChatUserList(String accessToken, String nextOpenId) throws ConnectionFailedException;
 
-	public JSONObject getWeChatUserGroupList(String accessToken);
+	public JSONObject getWeChatUserGroupList(String accessToken) throws ConnectionFailedException;
 
-	public JSONObject getWeChatUserGroupByOpenId(String accessToken, String openId);
+	public JSONObject getWeChatUserGroupByOpenId(String accessToken, String openId) throws ConnectionFailedException;
 }

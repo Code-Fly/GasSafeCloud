@@ -14,13 +14,11 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
-import com.fujitsu.base.entity.ErrorMsg;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.Const;
 import com.fujitsu.base.helper.FileUtil;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.service.BaseService;
-import com.fujitsu.keystone.publics.entity.product.ProductInfo;
-import com.fujitsu.keystone.publics.entity.product.SkuList;
 import com.fujitsu.keystone.publics.entity.shop.BaseInfo;
 import com.fujitsu.keystone.publics.entity.shop.Business;
 import com.fujitsu.keystone.publics.entity.shop.PhotoUrl;
@@ -39,9 +37,10 @@ public class ShopService extends BaseService implements IShopService {
 	ICoreService coreService;
 
 	/**
+	 * @throws ConnectionFailedException 
 	 * 
 	 */
-	public JSONObject getShopList(String accessToken, String begin, String limit) {
+	public JSONObject getShopList(String accessToken, String begin, String limit) throws ConnectionFailedException {
 		String url = URL_SHOP_GET_LIST.replace("TOKEN", accessToken);
 		JSONObject request = new JSONObject();
 		request.put("begin", begin);
@@ -50,17 +49,13 @@ public class ShopService extends BaseService implements IShopService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 
 		return response;
 	}
 
-	public JSONObject getShopList(HttpServletRequest request, String accessToken, String begin, String limit) {
+	public JSONObject getShopList(HttpServletRequest request, String accessToken, String begin, String limit) throws ConnectionFailedException {
 		JSONObject resp = getShopList(accessToken, begin, limit);
 		if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
 			logger.error(resp.toString());
@@ -91,9 +86,10 @@ public class ShopService extends BaseService implements IShopService {
 	}
 
 	/**
+	 * @throws ConnectionFailedException 
 	 * 
 	 */
-	public JSONObject getShop(String accessToken, String poi_id) {
+	public JSONObject getShop(String accessToken, String poi_id) throws ConnectionFailedException {
 		String url = URL_SHOP_GET_DETAIL.replace("TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
@@ -102,16 +98,12 @@ public class ShopService extends BaseService implements IShopService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}
 
-	public JSONObject getShop(HttpServletRequest request, String accessToken, String poi_id) {
+	public JSONObject getShop(HttpServletRequest request, String accessToken, String poi_id) throws ConnectionFailedException {
 		JSONObject resp = getShop(accessToken, poi_id);
 		if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
 			logger.error(resp.toString());

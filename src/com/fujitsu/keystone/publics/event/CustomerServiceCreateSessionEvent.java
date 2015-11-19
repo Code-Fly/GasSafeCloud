@@ -3,9 +3,9 @@
  */
 package com.fujitsu.keystone.publics.event;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONObject;
 
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
@@ -19,22 +19,24 @@ import com.fujitsu.keystone.publics.service.impl.CustomerService;
  *
  */
 public class CustomerServiceCreateSessionEvent extends Event {
+	public static String KF_ACCOUNT = "KfAccount";
+
 	@Override
-	public String execute(HttpServletRequest request, Map<String, String> requestMap) throws ConnectionFailedException, AccessTokenException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
 
 		String respXml = null;
 		// 发送方帐号
-		String fromUserName = requestMap.get("FromUserName");
+		String fromUserName = requestJson.getString(FROM_USER_NAME);
 
-		String kfAccount = requestMap.get("KfAccount");
+		String kfAccount = requestJson.getString(KF_ACCOUNT);
 
 		TextMessage customerMsg = new TextMessage();
 		customerMsg.setMsgtype(CustomerService.CUSTOMER_SERVICE_MESSAGE_TYPE_TEXT);
 		customerMsg.setTouser(fromUserName);
 		Text t = new Text();
 		StringBuffer buffer = new StringBuffer();
-		buffer.append(kfAccount + " 正在为您服务。").append("\n");
+		buffer.append(kfAccount + " 正在为您服务。").append(ENTER);
 		t.setContent(buffer.toString());
 		customerMsg.setText(t);
 		new CustomerService().sendTextMessage(at, customerMsg);

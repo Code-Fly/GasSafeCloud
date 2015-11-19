@@ -5,7 +5,6 @@ package com.fujitsu.keystone.publics.service.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -26,6 +25,7 @@ import com.fujitsu.keystone.publics.event.CustomerServiceCreateSessionEvent;
 import com.fujitsu.keystone.publics.event.CustomerServiceTransferEvent;
 import com.fujitsu.keystone.publics.event.Event;
 import com.fujitsu.keystone.publics.event.MerchantOrderEvent;
+import com.fujitsu.keystone.publics.event.ScancodePushEvent;
 import com.fujitsu.keystone.publics.event.ScancodeWaitmsgEvent;
 import com.fujitsu.keystone.publics.event.SubscribeEvent;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
@@ -129,19 +129,19 @@ public class CoreService extends BaseService implements ICoreService {
 		String respXml = null;
 		try {
 			// 调用parseXml方法解析请求消息
-			Map<String, String> requestMap = MessageService.parseXml(request);
+			JSONObject requestJson = MessageService.parseXml(request);
 			// 消息类型
-			String msgType = requestMap.get("MsgType");
+			String msgType = requestJson.getString(Event.MSG_TYPE);
 
-			logger.info(requestMap.toString());
+			logger.info(requestJson.toString());
 			// 事件推送
 			if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_EVENT)) {
 				// 事件类型
-				String eventType = requestMap.get("Event");
+				String eventType = requestJson.getString(Event.EVENT);
 				// 订阅
 				if (eventType.equals(MessageService.EVENT_TYPE_SUBSCRIBE)) {
 					Event event = new SubscribeEvent();
-					respXml = event.execute(request, requestMap);
+					respXml = event.execute(request, requestJson);
 				}
 				// 取消订阅
 				else if (eventType.equals(MessageService.EVENT_TYPE_UNSUBSCRIBE)) {
@@ -149,32 +149,34 @@ public class CoreService extends BaseService implements ICoreService {
 					// 收到订单
 				} else if (eventType.equals(MessageService.EVENT_MERCHANT_ORDER)) {
 					Event event = new MerchantOrderEvent();
-					respXml = event.execute(request, requestMap);
+					respXml = event.execute(request, requestJson);
 					// 开始客服会话
 				} else if (eventType.equals(MessageService.EVENT_CUSTOMER_SERVICE_CREATE_SESSION)) {
 					Event event = new CustomerServiceCreateSessionEvent();
-					respXml = event.execute(request, requestMap);
+					respXml = event.execute(request, requestJson);
 					// 关闭客服会话
 				} else if (eventType.equals(MessageService.EVENT_CUSTOMER_SERVICE_CLOSE_SESSION)) {
 					Event event = new CustomerServiceCloseSessionEvent();
-					respXml = event.execute(request, requestMap);
-
-				}else if (eventType.equals(MessageService.EVENT_SCANCODE_WAIT_MSG)) {
+					respXml = event.execute(request, requestJson);
+					// 扫码推事件且弹出“消息接收中”提示框的事件推送
+				} else if (eventType.equals(MessageService.EVENT_SCANCODE_WAIT_MSG)) {
 					Event event = new ScancodeWaitmsgEvent();
-					respXml = event.execute(request, requestMap);
-
+					respXml = event.execute(request, requestJson);
+					// 扫码推事件的事件推送
+				} else if (eventType.equals(MessageService.EVENT_SCANCODE_PUSH)) {
+					Event event = new ScancodePushEvent();
+					respXml = event.execute(request, requestJson);
 				}
-
 				// 自定义菜单点击事件
 				else if (eventType.equals(MessageService.EVENT_TYPE_CLICK)) {
 					Event event = new ClickEvent();
-					respXml = event.execute(request, requestMap);
+					respXml = event.execute(request, requestJson);
 				}
 			}
 			// 当用户发消息时
 			else {
 				Event event = new CustomerServiceTransferEvent();
-				respXml = event.execute(request, requestMap);
+				respXml = event.execute(request, requestJson);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

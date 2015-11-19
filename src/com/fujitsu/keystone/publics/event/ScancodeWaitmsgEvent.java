@@ -1,72 +1,80 @@
 package com.fujitsu.keystone.publics.event;
 
 import java.util.Date;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONObject;
+
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
-import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
-import com.fujitsu.keystone.publics.service.impl.CustomerService;
 import com.fujitsu.keystone.publics.service.impl.MenuService;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
 
 public class ScancodeWaitmsgEvent extends Event {
+
+	public static String SCAN_RESULT = "ScanResult";
+
+	public static String SCAN_CODE_INFO = "ScanCodeInfo";
+
+	public static String EVENT_KEY = "EventKey";
 
 	/**
 	 * @throws AccessTokenException
 	 * @throws ConnectionFailedException
 	 * 
 	 */
-	public String execute(HttpServletRequest request, Map<String, String> requestMap) throws ConnectionFailedException, AccessTokenException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException {
 		String respXml = null;
 
-		String fromUserName = requestMap.get(FROM_USER_NAME);
-		String toUserName = requestMap.get(TO_USER_NAME);
-		String scanResult = requestMap.get(SCAN_RESULT);
-		String scanCodeInfo = requestMap.get(SCAN_CODE_INFO);
+		String fromUserName = requestJson.getString(FROM_USER_NAME);
+		String toUserName = requestJson.getString(TO_USER_NAME);
+		String eventKey = requestJson.getString(EVENT_KEY);
+		JSONObject scanCodeInfo = JSONObject.fromObject(requestJson.get(SCAN_CODE_INFO));
+		String scanResult = scanCodeInfo.getString(SCAN_RESULT);
 
-		TextMessage textMessage = new TextMessage();
-		textMessage.setToUserName(fromUserName);
-		textMessage.setFromUserName(toUserName);
-		textMessage.setCreateTime(new Date().getTime());
-		textMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
-		
-		System.out.println(scanResult);
-		System.out.println(scanCodeInfo);
+		TextMessage message = new TextMessage();
+		message.setToUserName(fromUserName);
+		message.setFromUserName(toUserName);
+		message.setCreateTime(new Date().getTime());
+		message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
+
 		/**
 		 * 处理message 推送给用户的message
 		 * [QP02001,132020000001,AG,323232,2015年09月,2045年09月]气瓶安全云www.qpsafe.cn
 		 */
-		int lastIndex = scanResult.lastIndexOf("]");
-		// QP02001,132020000001,AG,323232,2015年09月,2045年09月
-		String tmp = scanResult.substring(1, lastIndex);
-		// [QP02001,132020000001,AG,323232,2015年09月,2045年09月]
-		String[] messArray = tmp.split(",");
-		StringBuffer buffer = new StringBuffer();
-		// 身份查询
-		if (MenuService.QP_SFCX.equals(requestMap.get(EVENT_KEY))) {
-			buffer.append("气瓶使用证编号:");
-			buffer.append(messArray[0]);
-			buffer.append(ENTER).append("气瓶注册代码:");
-			buffer.append(messArray[1]);
-			buffer.append(ENTER);
-			buffer.append("气瓶充装单位(编号):");
-			buffer.append(messArray[3]);
-			buffer.append(ENTER).append("气瓶编号:");
-			buffer.append(messArray[3]);
-			buffer.append(ENTER).append("出厂日期:");
-			buffer.append(messArray[3]);
-			buffer.append(ENTER).append("报废日期:");
-			buffer.append(messArray[3]);
-			buffer.append(ENTER);
-		}
-		textMessage.setContent(buffer.toString());
-
+//		int lastIndex = scanResult.lastIndexOf("]");
+//		// QP02001,132020000001,AG,323232,2015年09月,2045年09月
+//		String tmp = scanResult.substring(1, lastIndex);
+//		// [QP02001,132020000001,AG,323232,2015年09月,2045年09月]
+//		String[] messArray = tmp.split(",");
+//		StringBuffer buffer = new StringBuffer();
+//		// 身份查询
+//		if (MenuService.QP_SFCX.equals(requestJson.get(EVENT_KEY))) {
+//			buffer.append("气瓶使用证编号:");
+//			buffer.append(messArray[0]);
+//			buffer.append(ENTER);
+//			buffer.append("气瓶注册代码:");
+//			buffer.append(messArray[1]);
+//			buffer.append(ENTER);
+//			buffer.append("气瓶充装单位(编号):");
+//			buffer.append(messArray[3]);
+//			buffer.append(ENTER);
+//			buffer.append("气瓶编号:");
+//			buffer.append(messArray[3]);
+//			buffer.append(ENTER);
+//			buffer.append("出厂日期:");
+//			buffer.append(messArray[3]);
+//			buffer.append(ENTER);
+//			buffer.append("报废日期:");
+//			buffer.append(messArray[3]);
+//			buffer.append(ENTER);
+//		}
+//		message.setContent(buffer.toString());
+		message.setContent(scanResult);
 		// 将消息对象转换成xml
-		respXml = MessageService.messageToXml(textMessage);
+		respXml = MessageService.messageToXml(message);
 
 		return respXml;
 

@@ -10,7 +10,7 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
-import com.fujitsu.base.entity.ErrorMsg;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.Const;
 import com.fujitsu.base.helper.FileUtil;
 import com.fujitsu.base.helper.HttpClientUtil;
@@ -35,8 +35,9 @@ public class UserService extends BaseService implements IUserService {
 	 * @param appSecret
 	 * @param code
 	 * @return
+	 * @throws ConnectionFailedException 
 	 */
-	public JSONObject getOauth2AccessToken(String appId, String appSecret, String code) {
+	public JSONObject getOauth2AccessToken(String appId, String appSecret, String code) throws ConnectionFailedException {
 		// WeChatOauth2Token wat = null;
 
 		String url = URL_SNS_OAUTH2_TOKEN_GET.replace("APPID", appId).replace("SECRET", appSecret).replace("CODE", code);
@@ -44,11 +45,7 @@ public class UserService extends BaseService implements IUserService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", null);
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 
@@ -60,8 +57,9 @@ public class UserService extends BaseService implements IUserService {
 	 * @param appId
 	 * @param refreshToken
 	 * @return
+	 * @throws ConnectionFailedException 
 	 */
-	public JSONObject refreshOauth2AccessToken(String appId, String refreshToken) {
+	public JSONObject refreshOauth2AccessToken(String appId, String refreshToken) throws ConnectionFailedException {
 		// WeChatOauth2Token wat = null;
 
 		String url = URL_SNS_OAUTH2_TOKEN_REFRESH.replace("APPID", appId).replace("REFRESH_TOKEN", refreshToken);
@@ -69,11 +67,7 @@ public class UserService extends BaseService implements IUserService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", null);
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}
@@ -86,9 +80,10 @@ public class UserService extends BaseService implements IUserService {
 	 * @param openId
 	 *            用户标识
 	 * @return SNSUserInfo
+	 * @throws ConnectionFailedException 
 	 */
 	// @SuppressWarnings({ "deprecation", "unchecked" })
-	public JSONObject getSNSUserInfo(String accessToken, String openId) {
+	public JSONObject getSNSUserInfo(String accessToken, String openId) throws ConnectionFailedException {
 		// SNSUserInfo snsUserInfo = null;
 
 		String url = URL_USER_GET_SNS_INFO.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
@@ -96,11 +91,7 @@ public class UserService extends BaseService implements IUserService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", null);
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}
@@ -113,8 +104,9 @@ public class UserService extends BaseService implements IUserService {
 	 * @param openId
 	 *            用户标识
 	 * @return WeixinUserInfo
+	 * @throws ConnectionFailedException 
 	 */
-	public JSONObject getWeChatUserInfo(String accessToken, String openId) {
+	public JSONObject getWeChatUserInfo(String accessToken, String openId) throws ConnectionFailedException {
 		// WeChatUserInfo wechatUserInfo = null;
 
 		String url = URL_USER_GET_INFO.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
@@ -122,16 +114,12 @@ public class UserService extends BaseService implements IUserService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", null);
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}
 
-	public JSONObject getWeChatUserInfo(HttpServletRequest request, String accessToken, String openId) {
+	public JSONObject getWeChatUserInfo(HttpServletRequest request, String accessToken, String openId) throws ConnectionFailedException {
 
 		JSONObject resp = getWeChatUserInfo(accessToken, openId);
 		if (resp.containsKey("errcode")) {
@@ -150,8 +138,9 @@ public class UserService extends BaseService implements IUserService {
 	 * @param accessToken
 	 * @param nextOpenId
 	 * @return
+	 * @throws ConnectionFailedException 
 	 */
-	public JSONObject getWeChatUserList(String accessToken, String nextOpenId) {
+	public JSONObject getWeChatUserList(String accessToken, String nextOpenId) throws ConnectionFailedException {
 		// WeChatUserList wechatUserList = null;
 		if (null == nextOpenId)
 			nextOpenId = "";
@@ -161,32 +150,24 @@ public class UserService extends BaseService implements IUserService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", null);
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}
 
-	public JSONObject getWeChatUserGroupList(String accessToken) {
+	public JSONObject getWeChatUserGroupList(String accessToken) throws ConnectionFailedException {
 
 		String url = URL_USER_GROUP_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", null);
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}
 
-	public JSONObject getWeChatUserGroupByOpenId(String accessToken, String openId) {
+	public JSONObject getWeChatUserGroupByOpenId(String accessToken, String openId) throws ConnectionFailedException {
 
 		String url = URL_USER_GROUP_GET_BY_OPENID.replace("ACCESS_TOKEN", accessToken);
 		JSONObject request = new JSONObject();
@@ -194,11 +175,7 @@ public class UserService extends BaseService implements IUserService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}
