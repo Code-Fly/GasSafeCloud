@@ -5,7 +5,6 @@ package com.fujitsu.keystone.publics.service.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -131,13 +130,13 @@ public class CoreService extends BaseService implements ICoreService {
 			// 调用parseXml方法解析请求消息
 			JSONObject requestJson = MessageService.parseXml(request);
 			// 消息类型
-			String msgType = requestJson.getString("MsgType");
+			String msgType = requestJson.getString(Event.MSG_TYPE);
 
 			logger.info(requestJson.toString());
 			// 事件推送
 			if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_EVENT)) {
 				// 事件类型
-				String eventType = requestJson.getString("Event");
+				String eventType = requestJson.getString(Event.EVENT);
 				// 订阅
 				if (eventType.equals(MessageService.EVENT_TYPE_SUBSCRIBE)) {
 					Event event = new SubscribeEvent();
@@ -159,12 +158,10 @@ public class CoreService extends BaseService implements ICoreService {
 					Event event = new CustomerServiceCloseSessionEvent();
 					respXml = event.execute(request, requestJson);
 
-				}else if (eventType.equals(MessageService.EVENT_SCANCODE_WAIT_MSG)) {
+				} else if (eventType.equals(MessageService.EVENT_SCANCODE_WAIT_MSG)) {
 					Event event = new ScancodeWaitmsgEvent();
 					respXml = event.execute(request, requestJson);
-
 				}
-
 				// 自定义菜单点击事件
 				else if (eventType.equals(MessageService.EVENT_TYPE_CLICK)) {
 					Event event = new ClickEvent();

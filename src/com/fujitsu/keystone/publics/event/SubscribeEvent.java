@@ -4,7 +4,6 @@
 package com.fujitsu.keystone.publics.event;
 
 import java.util.Date;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,9 +23,9 @@ public class SubscribeEvent extends Event {
 	public String execute(HttpServletRequest request, JSONObject requestJson) {
 		String respXml = null;
 		// 发送方帐号
-		String fromUserName = requestJson.getString("FromUserName");
+		String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
 		// 开发者微信号
-		String toUserName = requestJson.getString("ToUserName");
+		String toUserName = requestJson.getString(Event.TO_USER_NAME);
 
 		TextMessage textMessage = new TextMessage();
 

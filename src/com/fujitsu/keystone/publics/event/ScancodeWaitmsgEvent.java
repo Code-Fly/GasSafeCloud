@@ -23,7 +23,7 @@ public class ScancodeWaitmsgEvent extends Event {
 		String respXml = null;
 
 		String fromUserName = requestJson.getString(FROM_USER_NAME);
-		String toUserName = requestJson.getString(TO_USER_NAME);		
+		String toUserName = requestJson.getString(TO_USER_NAME);
 		JSONObject scanCodeInfo = JSONObject.fromObject(requestJson.get(SCAN_CODE_INFO));
 		String scanResult = scanCodeInfo.getString(SCAN_RESULT);
 
@@ -32,7 +32,7 @@ public class ScancodeWaitmsgEvent extends Event {
 		textMessage.setFromUserName(toUserName);
 		textMessage.setCreateTime(new Date().getTime());
 		textMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
-		
+
 		/**
 		 * 处理message 推送给用户的message
 		 * [QP02001,132020000001,AG,323232,2015年09月,2045年09月]气瓶安全云www.qpsafe.cn
@@ -47,16 +47,20 @@ public class ScancodeWaitmsgEvent extends Event {
 		if (MenuService.QP_SFCX.equals(requestJson.get(EVENT_KEY))) {
 			buffer.append("气瓶使用证编号:");
 			buffer.append(messArray[0]);
-			buffer.append(ENTER).append("气瓶注册代码:");
+			buffer.append(ENTER);
+			buffer.append("气瓶注册代码:");
 			buffer.append(messArray[1]);
 			buffer.append(ENTER);
 			buffer.append("气瓶充装单位(编号):");
 			buffer.append(messArray[3]);
-			buffer.append(ENTER).append("气瓶编号:");
+			buffer.append(ENTER);
+			buffer.append("气瓶编号:");
 			buffer.append(messArray[3]);
-			buffer.append(ENTER).append("出厂日期:");
+			buffer.append(ENTER);
+			buffer.append("出厂日期:");
 			buffer.append(messArray[3]);
-			buffer.append(ENTER).append("报废日期:");
+			buffer.append(ENTER);
+			buffer.append("报废日期:");
 			buffer.append(messArray[3]);
 			buffer.append(ENTER);
 		}

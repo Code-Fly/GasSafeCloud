@@ -37,30 +37,32 @@ public class MerchantOrderEvent extends Event {
 
 		String respXml = null;
 
-		String fromUserName = requestJson.getString("FromUserName");
-		String toUserName = requestJson.getString("ToUserName");
-		String orderId = requestJson.getString("OrderId");
-		String createTime = requestJson.getString("CreateTime");
-		String productId = requestJson.getString("ProductId");
+		// 发送方帐号
+		String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
+		// 开发者微信号
+		String toUserName = requestJson.getString(Event.TO_USER_NAME);
+		String orderId = requestJson.getString(Event.ORDER_ID);
+		String createTime = requestJson.getString(Event.CREATE_TIME);
+		String productId = requestJson.getString(Event.PRODUCT_ID);
 
 		TextMessage message = new TextMessage();
 		message.setMsgtype(CustomerService.CUSTOMER_SERVICE_MESSAGE_TYPE_TEXT);
 		message.setTouser(fromUserName);
 		Text t = new Text();
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("感谢您付款购买本店的服务！").append("\n");
-		buffer.append("\n");
-		buffer.append("服务名： ").append("\n");
+		buffer.append("感谢您付款购买本店的服务！").append(Event.ENTER);
+		buffer.append(Event.ENTER);
+		buffer.append("服务名： ").append(Event.ENTER);
 		Product p = (Product) JSONObject.toBean(new ProductService().getProduct(at, productId), Product.class);
-		buffer.append(p.getProduct_info().getProduct_base().getName()).append("\n");
-		buffer.append("\n");
-		buffer.append("订单编号：").append("\n");
-		buffer.append(orderId).append("\n");
-		buffer.append("\n");
-		buffer.append("下单时间：").append("\n");
-		buffer.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(createTime + "000"))).append("\n");
-		buffer.append("\n");
-		buffer.append("如果您有任何疑问，可以直接在下方输入与我们的在线客服联系。").append("\n");
+		buffer.append(p.getProduct_info().getProduct_base().getName()).append(Event.ENTER);
+		buffer.append(Event.ENTER);
+		buffer.append("订单编号：").append(Event.ENTER);
+		buffer.append(orderId).append(Event.ENTER);
+		buffer.append(Event.ENTER);
+		buffer.append("下单时间：").append(Event.ENTER);
+		buffer.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(createTime + "000"))).append(Event.ENTER);
+		buffer.append(Event.ENTER);
+		buffer.append("如果您有任何疑问，可以直接在下方输入与我们的在线客服联系。").append(Event.ENTER);
 		t.setContent(buffer.toString());
 		message.setText(t);
 

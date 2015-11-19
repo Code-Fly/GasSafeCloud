@@ -25,16 +25,16 @@ public class CustomerServiceCreateSessionEvent extends Event {
 
 		String respXml = null;
 		// 发送方帐号
-		String fromUserName = requestJson.getString("FromUserName");
+		String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
 
-		String kfAccount = requestJson.getString("KfAccount");
+		String kfAccount = requestJson.getString(Event.KF_ACCOUNT);
 
 		TextMessage customerMsg = new TextMessage();
 		customerMsg.setMsgtype(CustomerService.CUSTOMER_SERVICE_MESSAGE_TYPE_TEXT);
 		customerMsg.setTouser(fromUserName);
 		Text t = new Text();
 		StringBuffer buffer = new StringBuffer();
-		buffer.append(kfAccount + " 正在为您服务。").append("\n");
+		buffer.append(kfAccount + " 正在为您服务。").append(Event.ENTER);
 		t.setContent(buffer.toString());
 		customerMsg.setText(t);
 		new CustomerService().sendTextMessage(at, customerMsg);
