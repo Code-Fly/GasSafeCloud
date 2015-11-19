@@ -27,11 +27,11 @@ public class ScancodeWaitmsgEvent extends Event {
 		JSONObject scanCodeInfo = JSONObject.fromObject(requestJson.get(SCAN_CODE_INFO));
 		String scanResult = scanCodeInfo.getString(SCAN_RESULT);
 
-		TextMessage textMessage = new TextMessage();
-		textMessage.setToUserName(fromUserName);
-		textMessage.setFromUserName(toUserName);
-		textMessage.setCreateTime(new Date().getTime());
-		textMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
+		TextMessage message = new TextMessage();
+		message.setToUserName(fromUserName);
+		message.setFromUserName(toUserName);
+		message.setCreateTime(new Date().getTime());
+		message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
 
 		/**
 		 * 处理message 推送给用户的message
@@ -64,10 +64,10 @@ public class ScancodeWaitmsgEvent extends Event {
 			buffer.append(messArray[3]);
 			buffer.append(ENTER);
 		}
-		textMessage.setContent(buffer.toString());
+		message.setContent(buffer.toString());
 
 		// 将消息对象转换成xml
-		respXml = MessageService.messageToXml(textMessage);
+		respXml = MessageService.messageToXml(message);
 
 		return respXml;
 
