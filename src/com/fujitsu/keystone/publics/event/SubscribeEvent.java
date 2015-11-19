@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fujitsu.base.helper.Const;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
 
@@ -31,7 +32,7 @@ public class SubscribeEvent extends Event {
 		textMessage.setFromUserName(toUserName);
 		textMessage.setCreateTime(new Date().getTime());
 		textMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
-		textMessage.setContent("您好，欢迎关注米兰美甲艺社！体验生活，从这里开始！");
+		textMessage.setContent("您好，欢迎关注" + Const.MERCHANT_NAME + "！");
 
 		// 将消息对象转换成xml
 		respXml = MessageService.messageToXml(textMessage);

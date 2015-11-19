@@ -57,7 +57,8 @@
 	<!-- Log4j  -->
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>
-		<param-value>classpath:Log4j.properties</param-value>
+		<param-value>/WEB-INF/conf/log4j.xml</param-value>
+		<!-- <param-value>classpath:Log4j.properties</param-value> -->
 	</context-param>
 
 	<!-- if Log4j.properties changed,No need to restart -->
