@@ -9,9 +9,9 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
+import com.fujitsu.base.entity.ErrorMsg;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.service.BaseService;
-import com.fujitsu.keystone.publics.entity.error.ErrorMsg;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IMaterialService;
 

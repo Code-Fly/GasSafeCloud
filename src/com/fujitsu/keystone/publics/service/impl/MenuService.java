@@ -15,9 +15,9 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
+import com.fujitsu.base.entity.ErrorMsg;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.service.BaseService;
-import com.fujitsu.keystone.publics.entity.error.ErrorMsg;
 import com.fujitsu.keystone.publics.entity.push.response.Article;
 import com.fujitsu.keystone.publics.entity.push.response.NewsMessage;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;

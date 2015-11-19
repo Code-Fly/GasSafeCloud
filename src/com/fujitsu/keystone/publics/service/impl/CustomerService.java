@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 import net.sf.json.JSONObject;
 
+import com.fujitsu.base.entity.ErrorMsg;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.entity.customer.message.CouponMessage;
 import com.fujitsu.keystone.publics.entity.customer.message.TextMessage;
-import com.fujitsu.keystone.publics.entity.error.ErrorMsg;
 import com.fujitsu.keystone.publics.service.iface.ICustomerService;
 
 /**

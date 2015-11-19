@@ -1,9 +1,8 @@
 /**
  * 
  */
-package com.fujitsu.keystone.publics.entity.error;
+package com.fujitsu.base.entity;
 
-import com.fujitsu.base.entity.BaseEntity;
 
 /**
  * @author Barrie

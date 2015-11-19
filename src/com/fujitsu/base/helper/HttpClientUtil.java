@@ -363,11 +363,14 @@ public class HttpClientUtil {
 				inputStream = null;
 				conn.disconnect();
 				jsonObject = JSONObject.fromObject(buffer.toString());
-				if (jsonObject.containsKey("errcode") && jsonObject.getString("errcode").equals("40001")) {
-					KeystoneUtil.refreshRemoteAccessToken();
-				} else {
-					break;
+				if (jsonObject.containsKey("errcode")) {
+					if (jsonObject.getString("errcode").equals("40001") || jsonObject.getString("errcode").equals("42001")) {
+						KeystoneUtil.refreshRemoteAccessToken();
+					} else {
+						break;
+					}
 				}
+
 			}
 		} catch (ConnectException ce) {
 			// logger.error("连接超时：{}", ce);

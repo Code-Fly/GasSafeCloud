@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fujitsu.base.controller.BaseController;
+import com.fujitsu.base.entity.ErrorMsg;
 import com.fujitsu.base.helper.KeystoneUtil;
-import com.fujitsu.keystone.publics.entity.error.ErrorMsg;
 import com.fujitsu.keystone.publics.service.impl.CoreService;
 import com.fujitsu.keystone.publics.service.impl.UserService;
 
