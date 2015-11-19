@@ -3,8 +3,10 @@
  */
 package com.fujitsu.keystone.publics.service.impl;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
@@ -103,6 +105,21 @@ public class MessageService extends BaseService implements IMessageService {
 	 */
 	@SuppressWarnings("unchecked")
 	public static Map<String, String> parseXml(HttpServletRequest request) throws IOException, DocumentException   {
+		StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()));
+        boolean firstLine = true;
+        String line = null; ;
+        while((line = bufferedReader.readLine()) != null){
+            if(!firstLine){
+                stringBuilder.append(System.getProperty("line.separator"));
+            }else{
+                firstLine = false;
+            }
+            stringBuilder.append(line);
+        }
+        System.out.println(stringBuilder.toString());
+
+		
 		// 将解析结果存储在HashMap中
 		Map<String, String> map = new HashMap<String, String>();
 
