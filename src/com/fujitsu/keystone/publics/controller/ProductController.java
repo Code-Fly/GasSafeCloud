@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fujitsu.base.controller.BaseController;
+import com.fujitsu.base.exception.AccessTokenException;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.service.impl.CoreService;
 import com.fujitsu.keystone.publics.service.impl.ProductService;
@@ -39,7 +41,7 @@ public class ProductController extends BaseController {
 	@ResponseBody
 	public String getProductList(HttpServletRequest request, HttpServletResponse response, @PathVariable int status, @RequestParam(value = "groupId", required = false) String groupId,
 			@RequestParam(value = "orderBy", required = false) String orderBy, @RequestParam(value = "sort", required = false) String sort,
-			@RequestParam(value = "minPrice", required = false) String minPrice, @RequestParam(value = "maxPrice", required = false) String maxPrice) {
+			@RequestParam(value = "minPrice", required = false) String minPrice, @RequestParam(value = "maxPrice", required = false) String maxPrice) throws ConnectionFailedException, AccessTokenException {
 		Map<String, String> filter = new HashMap<String, String>();
 		if (null != minPrice) {
 			filter.put("minPrice", minPrice);
@@ -67,11 +69,7 @@ public class ProductController extends BaseController {
 			filter.put("sort", "asc");
 		}
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
-
+		
 		JSONObject resp = productService.getProductList(request, at, status, filter);
 		if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
 			logger.error(resp.toString());
@@ -82,13 +80,9 @@ public class ProductController extends BaseController {
 
 	@RequestMapping(value = "/product/query/{productId}")
 	@ResponseBody
-	public String getProduct(HttpServletRequest request, HttpServletResponse response, @PathVariable String productId) {
+	public String getProduct(HttpServletRequest request, HttpServletResponse response, @PathVariable String productId) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
-
+		
 		JSONObject resp = productService.getProduct(request, at, productId);
 		if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
 			logger.error(resp.toString());
@@ -99,12 +93,8 @@ public class ProductController extends BaseController {
 
 	@RequestMapping(value = "/product/group/list")
 	@ResponseBody
-	public String getProductGroupList(HttpServletRequest request, HttpServletResponse response) {
+	public String getProductGroupList(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
 
 		JSONObject resp = productService.getProductGroupList(at);
 		if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
@@ -116,13 +106,9 @@ public class ProductController extends BaseController {
 
 	@RequestMapping(value = "/product/group/query/{groupId}")
 	@ResponseBody
-	public String getProductGroupDetail(HttpServletRequest request, HttpServletResponse response, @PathVariable String groupId) {
+	public String getProductGroupDetail(HttpServletRequest request, HttpServletResponse response, @PathVariable String groupId) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
-
+		
 		JSONObject resp = productService.getProductGroupDetail(at, groupId);
 		if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
 			logger.error(resp.toString());

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fujitsu.base.controller.BaseController;
 import com.fujitsu.base.entity.ErrorMsg;
+import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.service.impl.CoreService;
@@ -118,17 +119,15 @@ public class UserController extends BaseController {
 	 * @param response
 	 * @param openId
 	 * @return
+	 * @throws ConnectionFailedException 
+	 * @throws AccessTokenException 
 	 */
 	@RequestMapping(value = "/user/query/{openId}")
 	@ResponseBody
-	public String getWeChatUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) {
+	public String getWeChatUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) throws ConnectionFailedException, AccessTokenException {
 		// 调用接口获取access_token
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
-
+		
 		JSONObject resp = userService.getWeChatUserInfo(request, at, openId);
 		if (resp.containsKey("errcode")) {
 			logger.error(resp.toString());
@@ -140,12 +139,9 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/user/list/{nextOpenId}")
 	@ResponseBody
-	public String getWeChatUserList(HttpServletRequest request, HttpServletResponse response, @PathVariable String nextOpenId) {
+	public String getWeChatUserList(HttpServletRequest request, HttpServletResponse response, @PathVariable String nextOpenId) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
+		
 		if ("0".equals(nextOpenId))
 			nextOpenId = null;
 
@@ -159,12 +155,8 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/user/group/list")
 	@ResponseBody
-	public String getWeChatUserGroupList(HttpServletRequest request, HttpServletResponse response) {
+	public String getWeChatUserGroupList(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
 
 		JSONObject resp = userService.getWeChatUserGroupList(at);
 		if (resp.containsKey("errcode")) {
@@ -176,13 +168,9 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/user/group/query/{openId}")
 	@ResponseBody
-	public String getWeChatUserGroupByOpenId(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) {
+	public String getWeChatUserGroupByOpenId(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
-
+		
 		JSONObject resp = userService.getWeChatUserGroupByOpenId(at, openId);
 		if (resp.containsKey("errcode")) {
 			logger.error(resp.toString());

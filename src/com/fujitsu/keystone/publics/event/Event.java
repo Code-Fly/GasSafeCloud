@@ -7,9 +7,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.jasper.runtime.ProtectedFunctionMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fujitsu.base.exception.AccessTokenException;
+import com.fujitsu.base.exception.ConnectionFailedException;
 
 /**
  * @author Barrie
@@ -29,7 +31,7 @@ public abstract  class Event {
 	protected String ENTER = System.getProperty("line.separator");
 	
 	
-	public String execute(HttpServletRequest request, Map<String, String> requestMap) {
+	public String execute(HttpServletRequest request, Map<String, String> requestMap) throws ConnectionFailedException, AccessTokenException {
 		return null;
 	}
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fujitsu.base.controller.BaseController;
+import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.FileUtil;
 import com.fujitsu.base.helper.KeystoneUtil;
@@ -66,7 +67,7 @@ public class CoreController extends BaseController {
 
 	@RequestMapping(value = "/jsapi/ticket/query")
 	@ResponseBody
-	public String queryJsapiTicket(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException {
+	public String queryJsapiTicket(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException {
 		JSONObject resp = coreService.getJsapiTicket(KeystoneUtil.getAccessToken());
 		return resp.getString("ticket");
 	}

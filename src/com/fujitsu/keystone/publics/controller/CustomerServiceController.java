@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fujitsu.base.controller.BaseController;
+import com.fujitsu.base.exception.AccessTokenException;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.entity.customer.message.CouponMessage;
 import com.fujitsu.keystone.publics.entity.customer.message.WxCard;
@@ -33,13 +35,9 @@ public class CustomerServiceController extends BaseController {
 	@RequestMapping(value = "/customerservice/coupon/send")
 	@ResponseBody
 	public String send(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "touser", required = true) String touser,
-			@RequestParam(value = "cardId", required = true) String cardId) {
+			@RequestParam(value = "cardId", required = true) String cardId) throws ConnectionFailedException, AccessTokenException  {
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
-
+		
 		CouponMessage message = new CouponMessage();
 		message.setMsgtype(CustomerService.CUSTOMER_SERVICE_MESSAGE_TYPE_COUPON);
 		message.setTouser(touser);

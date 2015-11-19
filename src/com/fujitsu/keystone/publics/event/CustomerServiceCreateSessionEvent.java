@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fujitsu.base.exception.AccessTokenException;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.entity.customer.message.Text;
 import com.fujitsu.keystone.publics.entity.customer.message.TextMessage;
@@ -21,13 +23,9 @@ import com.fujitsu.keystone.publics.service.impl.MessageService;
  */
 public class CustomerServiceCreateSessionEvent extends Event {
 	@Override
-	public String execute(HttpServletRequest request, Map<String, String> requestMap) {
+	public String execute(HttpServletRequest request, Map<String, String> requestMap) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
-
+		
 		String respXml = null;
 		// 发送方帐号
 		String fromUserName = requestMap.get("FromUserName");

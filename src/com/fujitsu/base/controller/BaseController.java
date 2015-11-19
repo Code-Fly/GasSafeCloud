@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.fujitsu.base.entity.ErrorMsg;
+import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.Const;
 
@@ -43,6 +44,14 @@ public abstract class BaseController extends Const {
 		errMsg.setErrcode("-2");
 		errMsg.setErrmsg("链接失败");
 		return JSONObject.fromObject(errMsg).toString();
+	}
+	
+	@ExceptionHandler(AccessTokenException.class)
+	@ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
+	@ResponseBody
+	public String handleAccessTokenException(AccessTokenException ex) {
+		logger.error(ex.getMessage());
+		return ex.getMessage().toString();
 	}
 
 }

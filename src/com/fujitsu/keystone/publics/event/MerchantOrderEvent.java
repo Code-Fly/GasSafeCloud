@@ -14,6 +14,8 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
+import com.fujitsu.base.exception.AccessTokenException;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.base.helper.UrlUtil;
@@ -30,12 +32,8 @@ import com.fujitsu.keystone.publics.service.impl.ProductService;
 
 public class MerchantOrderEvent extends Event {
 	@Override
-	public String execute(HttpServletRequest request, Map<String, String> requestMap) {
+	public String execute(HttpServletRequest request, Map<String, String> requestMap) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
 
 		String respXml = null;
 

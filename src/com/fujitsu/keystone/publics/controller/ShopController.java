@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fujitsu.base.controller.BaseController;
+import com.fujitsu.base.exception.AccessTokenException;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.service.impl.CoreService;
 import com.fujitsu.keystone.publics.service.impl.ShopService;
@@ -35,13 +37,9 @@ public class ShopController extends BaseController {
 
 	@RequestMapping(value = "/shop/query/{poiId}")
 	@ResponseBody
-	public String getShop(HttpServletRequest request, HttpServletResponse response, @PathVariable String poiId) {
+	public String getShop(HttpServletRequest request, HttpServletResponse response, @PathVariable String poiId) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
-
+		
 		JSONObject resp = shopService.getShop(request, at, poiId);
 		if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
 			logger.error(resp.toString());
@@ -54,7 +52,7 @@ public class ShopController extends BaseController {
 	@RequestMapping(value = "/shop/list")
 	@ResponseBody
 	public String getShopList(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "begain", required = false) String begin,
-			@RequestParam(value = "limit", required = false) String limit) {
+			@RequestParam(value = "limit", required = false) String limit) throws ConnectionFailedException, AccessTokenException {
 		if (null == begin) {
 			begin = "0";
 		}
@@ -63,11 +61,7 @@ public class ShopController extends BaseController {
 		}
 
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
-
+		
 		JSONObject resp = shopService.getShopList(request, at, begin, limit);
 		if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
 			logger.error(resp.toString());

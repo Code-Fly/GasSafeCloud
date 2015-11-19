@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fujitsu.base.controller.BaseController;
+import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.ConfigUtil;
 import com.fujitsu.base.helper.Const;
@@ -40,14 +41,11 @@ public class MenuController extends BaseController {
 
 	@RequestMapping(value = "/menu/create")
 	@ResponseBody
-	public String create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConnectionFailedException {
+	public String create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConnectionFailedException, AccessTokenException {
 		String baseUrl = Const.MERCHANT_DOMAIN;
 		// 调用接口获取access_token
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
+		
 		String menuStr = ConfigUtil.getJson("menu.json");
 
 		String urlHome = URL_SNS_OAUTH2_REDIRECT.replace("REDIRECT_URI", UrlUtil.toUTF8(baseUrl + "/mobile/index")).replace("APPID", APP_ID).replace("SCOPE", "snsapi_base").replace("STATE", "STATE");

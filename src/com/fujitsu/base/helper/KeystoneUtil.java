@@ -3,6 +3,7 @@
  */
 package com.fujitsu.base.helper;
 
+import java.security.AccessControlException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.keystone.publics.service.impl.CoreService;
 
@@ -34,24 +36,17 @@ public class KeystoneUtil {
 
 	/**
 	 * @return the accessToken
+	 * @throws ConnectionFailedException
+	 * @throws AccessTokenException 
 	 */
-	public static String getAccessToken() {
+	public static String getAccessToken() throws ConnectionFailedException, AccessTokenException  {
 		JSONObject at = getRemoteAccessToken();
 		if (at.containsKey("access_token")) {
 			return at.getString("access_token");
 		} else {
-			return null;
+			throw new AccessTokenException(at.toString());
 		}
-	}
-
-	public static String getErrmsg() {
-		JSONObject at = getRemoteAccessToken();
-		if (at.containsKey("errmsg")) {
-			return at.getString("errmsg");
-		} else {
-			return null;
-		}
-	}
+	}	
 
 	/**
 	 * 验证签名
@@ -170,17 +165,15 @@ public class KeystoneUtil {
 		return sign;
 	}
 
-	public static void accessTokenKeeper() {
+	public static void accessTokenKeeper() throws ConnectionFailedException {
+
 		JSONObject at = refreshRemoteAccessToken();
-		if (null == at) {
-			logger.error("fail to refresh");
-			return;
-		} else if (at.containsKey("errcode")) {
+		if (at.containsKey("access_token")) {
+			logger.info("access token: " + at.getString("access_token"));
+		} else {
 			logger.error(at.toString());
-			return;
 		}
-		
-		logger.info("access token: " + at.getString("access_token"));
+
 	}
 
 	public static synchronized JSONObject getLocalAccessToken() throws ConnectionFailedException {
@@ -197,12 +190,11 @@ public class KeystoneUtil {
 
 	}
 
-	public static JSONObject getRemoteAccessToken() {
+	public static JSONObject getRemoteAccessToken() throws ConnectionFailedException {
 		String url = Const.MERCHANT_DOMAIN + "/api/keystone/token/query";
 		String resp = HttpClientUtil.doGet(url, null, "UTF-8");
 		if (null == resp) {
-			logger.error("fail to post");
-			return null;
+			throw new ConnectionFailedException();
 		}
 		return JSONObject.fromObject(resp);
 	}
@@ -210,24 +202,25 @@ public class KeystoneUtil {
 	public static synchronized JSONObject refreshLocalAccessToken() throws ConnectionFailedException {
 		CoreService coreService = new CoreService();
 		JSONObject at = coreService.getAccessToken(Const.APP_ID, Const.APP_SECRET);
-		if (at.containsKey("errcode")) {
+		if (at.containsKey("access_token")) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("token.api.accessToken", at.getString("access_token"));
+			map.put("token.api.expireTime", at.getString("expires_in"));
+			map.put("token.api.timestamp", Long.toString(new Date().getTime()));
+			ConfigUtil.setProperty("token.properties", map);
+			return at;
+		} else {
 			logger.error(at.toString());
 			return at;
 		}
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("token.api.accessToken", at.getString("access_token"));
-		map.put("token.api.expireTime", at.getString("expires_in"));
-		map.put("token.api.timestamp", Long.toString(new Date().getTime()));
-		ConfigUtil.setProperty("token.properties", map);
-		return at;
+
 	}
 
-	public static JSONObject refreshRemoteAccessToken() {
+	public static JSONObject refreshRemoteAccessToken() throws ConnectionFailedException {
 		String url = Const.MERCHANT_DOMAIN + "/api/keystone/token/refresh";
 		String resp = HttpClientUtil.doGet(url, null, "UTF-8");
 		if (null == resp) {
-			logger.error("fail to post");
-			return null;
+			throw new ConnectionFailedException();
 		}
 		return JSONObject.fromObject(resp);
 	}

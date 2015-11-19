@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fujitsu.base.controller.BaseController;
+import com.fujitsu.base.exception.AccessTokenException;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.impl.MaterialService;
@@ -36,16 +38,16 @@ public class MaterialController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws ConnectionFailedException
+	 * @throws AccessTokenException 
 	 */
 	@RequestMapping(value = "/material/list/{type}/{offset}/{count}")
 	@ResponseBody
-	public String getMaterialList(HttpServletRequest request, HttpServletResponse response, @PathVariable String type, @PathVariable int offset, @PathVariable int count) {
+	public String getMaterialList(HttpServletRequest request, HttpServletResponse response, @PathVariable String type, @PathVariable int offset, @PathVariable int count)
+			throws ConnectionFailedException, AccessTokenException {
 		// 调用接口获取access_token
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
+
 		JSONObject resp = materialService.getMaterialList(at, type, offset, count);
 		if (resp.containsKey("errcode")) {
 			logger.error(resp.toString());
@@ -59,16 +61,15 @@ public class MaterialController extends BaseController {
 	 * @param response
 	 * @param mediaId
 	 * @return
+	 * @throws ConnectionFailedException
+	 * @throws AccessTokenException 
 	 */
 	@RequestMapping(value = "/material/query/{mediaId}")
 	@ResponseBody
-	public String getMaterial(HttpServletRequest request, HttpServletResponse response, @PathVariable String mediaId) {
+	public String getMaterial(HttpServletRequest request, HttpServletResponse response, @PathVariable String mediaId) throws ConnectionFailedException, AccessTokenException {
 		// 调用接口获取access_token
 		String at = KeystoneUtil.getAccessToken();
-		if (null == at) {
-			logger.error(KeystoneUtil.getErrmsg());
-			return KeystoneUtil.getErrmsg();
-		}
+
 		JSONObject resp = materialService.getMaterial(at, mediaId);
 		if (resp.containsKey("errcode")) {
 			logger.error(resp.toString());
