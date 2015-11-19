@@ -14,6 +14,12 @@ import com.fujitsu.keystone.publics.service.impl.MessageService;
 
 public class ScancodeWaitmsgEvent extends Event {
 
+	public static String SCAN_RESULT = "ScanResult";
+
+	public static String SCAN_CODE_INFO = "ScanCodeInfo";
+
+	public static String EVENT_KEY = "EventKey";
+
 	/**
 	 * @throws AccessTokenException
 	 * @throws ConnectionFailedException
@@ -24,6 +30,7 @@ public class ScancodeWaitmsgEvent extends Event {
 
 		String fromUserName = requestJson.getString(FROM_USER_NAME);
 		String toUserName = requestJson.getString(TO_USER_NAME);
+		String eventKey = requestJson.getString(EVENT_KEY);
 		JSONObject scanCodeInfo = JSONObject.fromObject(requestJson.get(SCAN_CODE_INFO));
 		String scanResult = scanCodeInfo.getString(SCAN_RESULT);
 

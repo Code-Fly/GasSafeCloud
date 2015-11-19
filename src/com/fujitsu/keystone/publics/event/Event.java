@@ -30,17 +30,12 @@ public abstract class Event {
 	
 	public static String EVENT = "Event";
 
-	public static String EVENT_KEY = "EventKey";
+	
+	
 
-	public static String KF_ACCOUNT = "KfAccount";
+	
 
-	public static String SCAN_RESULT = "ScanResult";
-
-	public static String SCAN_CODE_INFO = "ScanCodeInfo";	
-
-	public static String PRODUCT_ID = "ProductId";
-
-	public static String ORDER_ID = "OrderId";
+	
 
 	public static String ENTER = System.getProperty("line.separator");
 

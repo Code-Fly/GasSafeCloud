@@ -4,15 +4,10 @@
 package com.fujitsu.keystone.publics.event;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONObject;
-
-import org.springframework.stereotype.Service;
 
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
@@ -31,6 +26,10 @@ import com.fujitsu.keystone.publics.service.impl.ProductService;
  */
 
 public class MerchantOrderEvent extends Event {
+	public static String PRODUCT_ID = "ProductId";
+
+	public static String ORDER_ID = "OrderId";
+
 	@Override
 	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
@@ -38,31 +37,32 @@ public class MerchantOrderEvent extends Event {
 		String respXml = null;
 
 		// 发送方帐号
-		String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
+		String fromUserName = requestJson.getString(FROM_USER_NAME);
 		// 开发者微信号
-		String toUserName = requestJson.getString(Event.TO_USER_NAME);
-		String orderId = requestJson.getString(Event.ORDER_ID);
-		String createTime = requestJson.getString(Event.CREATE_TIME);
-		String productId = requestJson.getString(Event.PRODUCT_ID);
+		String toUserName = requestJson.getString(TO_USER_NAME);
+		String createTime = requestJson.getString(CREATE_TIME);
+		String orderId = requestJson.getString(ORDER_ID);
+
+		String productId = requestJson.getString(PRODUCT_ID);
 
 		TextMessage message = new TextMessage();
 		message.setMsgtype(CustomerService.CUSTOMER_SERVICE_MESSAGE_TYPE_TEXT);
 		message.setTouser(fromUserName);
 		Text t = new Text();
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("感谢您付款购买本店的服务！").append(Event.ENTER);
-		buffer.append(Event.ENTER);
-		buffer.append("服务名： ").append(Event.ENTER);
+		buffer.append("感谢您付款购买本店的服务！").append(ENTER);
+		buffer.append(ENTER);
+		buffer.append("服务名： ").append(ENTER);
 		Product p = (Product) JSONObject.toBean(new ProductService().getProduct(at, productId), Product.class);
-		buffer.append(p.getProduct_info().getProduct_base().getName()).append(Event.ENTER);
-		buffer.append(Event.ENTER);
-		buffer.append("订单编号：").append(Event.ENTER);
-		buffer.append(orderId).append(Event.ENTER);
-		buffer.append(Event.ENTER);
-		buffer.append("下单时间：").append(Event.ENTER);
-		buffer.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(createTime + "000"))).append(Event.ENTER);
-		buffer.append(Event.ENTER);
-		buffer.append("如果您有任何疑问，可以直接在下方输入与我们的在线客服联系。").append(Event.ENTER);
+		buffer.append(p.getProduct_info().getProduct_base().getName()).append(ENTER);
+		buffer.append(ENTER);
+		buffer.append("订单编号：").append(ENTER);
+		buffer.append(orderId).append(ENTER);
+		buffer.append(ENTER);
+		buffer.append("下单时间：").append(ENTER);
+		buffer.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(createTime + "000"))).append(ENTER);
+		buffer.append(ENTER);
+		buffer.append("如果您有任何疑问，可以直接在下方输入与我们的在线客服联系。").append(ENTER);
 		t.setContent(buffer.toString());
 		message.setText(t);
 

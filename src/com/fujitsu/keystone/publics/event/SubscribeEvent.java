@@ -23,9 +23,9 @@ public class SubscribeEvent extends Event {
 	public String execute(HttpServletRequest request, JSONObject requestJson) {
 		String respXml = null;
 		// 发送方帐号
-		String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
+		String fromUserName = requestJson.getString(FROM_USER_NAME);
 		// 开发者微信号
-		String toUserName = requestJson.getString(Event.TO_USER_NAME);
+		String toUserName = requestJson.getString(TO_USER_NAME);
 
 		TextMessage message = new TextMessage();
 

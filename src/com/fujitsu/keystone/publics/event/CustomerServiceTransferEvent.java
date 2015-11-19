@@ -30,9 +30,9 @@ public class CustomerServiceTransferEvent extends Event {
 		
 		String respXml = null;
 		// 发送方帐号
-		String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
+		String fromUserName = requestJson.getString(FROM_USER_NAME);
 		// 开发者微信号
-		String toUserName = requestJson.getString(Event.TO_USER_NAME);
+		String toUserName = requestJson.getString(TO_USER_NAME);
 
 		TransferCustomerService transferMessage = new TransferCustomerService();
 
@@ -49,7 +49,7 @@ public class CustomerServiceTransferEvent extends Event {
 		message.setTouser(fromUserName);
 		Text t = new Text();
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("请稍后，我们的客服人员马上会接待您。").append(Event.ENTER);
+		buffer.append("请稍后，我们的客服人员马上会接待您。").append(ENTER);
 		t.setContent(buffer.toString());
 		message.setText(t);
 		new CustomerService().sendTextMessage(at, message);
