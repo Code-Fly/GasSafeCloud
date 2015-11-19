@@ -36,7 +36,7 @@
                 {
                     "type": "scancode_waitmsg",
                     "name": "车用气瓶",
-                     "key": "GL_CYQP"
+                    "key": "GL_CYQP"
                 },
                 {
                     "type": "click",

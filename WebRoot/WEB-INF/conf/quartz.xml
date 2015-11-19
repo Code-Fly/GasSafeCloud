@@ -12,7 +12,7 @@
 
 	<bean id="simpleJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
-			<bean class="com.manicure.base.helper.KeystoneUtil" />
+			<bean class="com.fujitsu.base.helper.KeystoneUtil" />
 		</property>
 		<property name="targetMethod" value="accessTokenKeeper" />
 		<property name="concurrent" value="false" />
