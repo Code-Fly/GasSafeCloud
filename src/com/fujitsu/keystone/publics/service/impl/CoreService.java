@@ -5,9 +5,6 @@ package com.fujitsu.keystone.publics.service.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -19,13 +16,10 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
-import com.fujitsu.base.entity.ErrorMsg;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.base.service.BaseService;
-import com.fujitsu.keystone.publics.entity.push.response.Article;
-import com.fujitsu.keystone.publics.entity.push.response.NewsMessage;
-import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.event.ClickEvent;
 import com.fujitsu.keystone.publics.event.CustomerServiceCloseSessionEvent;
 import com.fujitsu.keystone.publics.event.CustomerServiceCreateSessionEvent;
@@ -34,6 +28,7 @@ import com.fujitsu.keystone.publics.event.Event;
 import com.fujitsu.keystone.publics.event.MerchantOrderEvent;
 import com.fujitsu.keystone.publics.event.SubscribeEvent;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
+import com.fujitsu.keystone.publics.service.iface.IMenuService;
 
 /**
  * @author Barrie
@@ -42,7 +37,7 @@ import com.fujitsu.keystone.publics.service.iface.ICoreService;
 @Service
 public class CoreService extends BaseService implements ICoreService {
 	@Resource
-	MenuService menuService;
+	IMenuService menuService;
 
 	/**
 	 * 确认请求来自微信服务器
@@ -94,8 +89,9 @@ public class CoreService extends BaseService implements ICoreService {
 	 * @param appsecret
 	 *            密钥
 	 * @return
+	 * @throws ConnectionFailedException 
 	 */
-	public JSONObject getAccessToken(String appid, String appsecret) {
+	public JSONObject getAccessToken(String appid, String appsecret) throws ConnectionFailedException {
 		// WeChatAccessToken accessToken = null;
 
 		String url = URL_GET_ACCESS_TOKEN.replace("APPID", appid).replace("APPSECRET", appsecret);
@@ -103,16 +99,12 @@ public class CoreService extends BaseService implements ICoreService {
 		JSONObject response = JSONObject.fromObject(HttpClientUtil.doHttpsRequest(url, "POST", null));
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}
 
-	public JSONObject getJsapiTicket(String accessToken) {
+	public JSONObject getJsapiTicket(String accessToken) throws ConnectionFailedException {
 		// WeChatAccessToken accessToken = null;
 
 		String url = URL_JSAPI_TICKET.replace("ACCESS_TOKEN", accessToken);
@@ -120,11 +112,7 @@ public class CoreService extends BaseService implements ICoreService {
 		JSONObject response = JSONObject.fromObject(HttpClientUtil.doHttpsRequest(url, "GET", null));
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}

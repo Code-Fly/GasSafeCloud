@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fujitsu.base.controller.BaseController;
 import com.fujitsu.base.entity.ErrorMsg;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.service.impl.CoreService;
 import com.fujitsu.keystone.publics.service.impl.UserService;
@@ -59,10 +60,11 @@ public class UserController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws ConnectionFailedException 
 	 */
 	@RequestMapping(value = "/user/sns/oauth")
 	@ResponseBody
-	public String SNSUserOAuth(HttpServletRequest request, HttpServletResponse response) {
+	public String SNSUserOAuth(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException {
 
 		// 用户同意授权后，能获取到code
 		String code = request.getParameter("code");

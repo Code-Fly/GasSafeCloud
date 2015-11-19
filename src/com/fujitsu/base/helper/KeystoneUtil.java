@@ -22,6 +22,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.keystone.publics.service.impl.CoreService;
 
 /**
@@ -182,7 +183,7 @@ public class KeystoneUtil {
 		logger.info("access token: " + at.getString("access_token"));
 	}
 
-	public static synchronized JSONObject getLocalAccessToken() {
+	public static synchronized JSONObject getLocalAccessToken() throws ConnectionFailedException {
 		String at = ConfigUtil.getProperty("token.properties", "token.api.accessToken");
 		String et = ConfigUtil.getProperty("token.properties", "token.api.expireTime");
 		if (null == at || null == et) {
@@ -206,7 +207,7 @@ public class KeystoneUtil {
 		return JSONObject.fromObject(resp);
 	}
 
-	public static synchronized JSONObject refreshLocalAccessToken() {
+	public static synchronized JSONObject refreshLocalAccessToken() throws ConnectionFailedException {
 		CoreService coreService = new CoreService();
 		JSONObject at = coreService.getAccessToken(Const.APP_ID, Const.APP_SECRET);
 		if (at.containsKey("errcode")) {

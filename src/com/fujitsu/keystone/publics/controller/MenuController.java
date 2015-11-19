@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fujitsu.base.controller.BaseController;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.ConfigUtil;
 import com.fujitsu.base.helper.Const;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.base.helper.UrlUtil;
-import com.fujitsu.keystone.publics.service.impl.CoreService;
+import com.fujitsu.keystone.publics.service.iface.ICoreService;
+import com.fujitsu.keystone.publics.service.iface.IMenuService;
 import com.fujitsu.keystone.publics.service.impl.MenuService;
 
 /**
@@ -32,13 +34,13 @@ import com.fujitsu.keystone.publics.service.impl.MenuService;
 @RequestMapping(value = "/api/keystone")
 public class MenuController extends BaseController {
 	@Resource
-	MenuService menuService;
+	IMenuService menuService;
 	@Resource
-	CoreService coreService;
+	ICoreService coreService;
 
 	@RequestMapping(value = "/menu/create")
 	@ResponseBody
-	public String create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public String create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConnectionFailedException {
 		String baseUrl = Const.MERCHANT_DOMAIN;
 		// 调用接口获取access_token
 		String at = KeystoneUtil.getAccessToken();
@@ -65,10 +67,6 @@ public class MenuController extends BaseController {
 		logger.info(menuStr);
 		// 调用接口创建菜单
 		JSONObject resp = JSONObject.fromObject(menuService.create(at, JSONObject.fromObject(menuStr)));
-		if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
-			logger.error(resp.toString());
-			return resp.toString();
-		}
 		return resp.toString();
 	}
 }

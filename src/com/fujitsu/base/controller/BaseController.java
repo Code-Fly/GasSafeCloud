@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.fujitsu.base.entity.ErrorMsg;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.Const;
 
 /**
@@ -25,11 +26,22 @@ public abstract class BaseController extends Const {
 	@ExceptionHandler(RuntimeException.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
-	public String handleUnexpectedServerError(RuntimeException ex) {
+	public String handleUnexpectedServerException(RuntimeException ex) {
 		logger.error("内部错误", ex);
 		ErrorMsg errMsg = new ErrorMsg();
 		errMsg.setErrcode("-1");
 		errMsg.setErrmsg("内部错误");
+		return JSONObject.fromObject(errMsg).toString();
+	}
+	
+	@ExceptionHandler(ConnectionFailedException.class)
+	@ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
+	@ResponseBody
+	public String handleConnectionFailedException(ConnectionFailedException ex) {
+		logger.error("链接失败", ex);
+		ErrorMsg errMsg = new ErrorMsg();
+		errMsg.setErrcode("-2");
+		errMsg.setErrmsg("链接失败");
 		return JSONObject.fromObject(errMsg).toString();
 	}
 

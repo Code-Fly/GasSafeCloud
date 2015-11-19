@@ -5,6 +5,8 @@ package com.fujitsu.keystone.publics.service.iface;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fujitsu.base.exception.ConnectionFailedException;
+
 import net.sf.json.JSONObject;
 
 /**
@@ -12,11 +14,9 @@ import net.sf.json.JSONObject;
  *
  */
 public interface IMenuService {
-	public JSONObject create(JSONObject json, String accessToken);
+	public JSONObject create(String accessToken, JSONObject json) throws ConnectionFailedException ;
 
-	public JSONObject get(String accessToken);
-
-	public JSONObject delete(String accessToken);
+	public JSONObject get(String accessToken) throws ConnectionFailedException;
 
 	public String processRequest(HttpServletRequest request);
 }

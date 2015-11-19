@@ -3,24 +3,15 @@
  */
 package com.fujitsu.keystone.publics.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
-import com.fujitsu.base.entity.ErrorMsg;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.service.BaseService;
-import com.fujitsu.keystone.publics.entity.push.response.Article;
-import com.fujitsu.keystone.publics.entity.push.response.NewsMessage;
-import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 
 /**
@@ -63,8 +54,9 @@ public class MenuService extends BaseService {
 	 * @param accessToken
 	 * @param json
 	 * @return
+	 * @throws ConnectionFailedException 
 	 */
-	public JSONObject create(String accessToken, JSONObject json) {
+	public JSONObject create(String accessToken, JSONObject json) throws ConnectionFailedException {
 
 		// 拼装创建菜单的url
 		String url = URL_MENU_CREATE.replace("ACCESS_TOKEN", accessToken);		
@@ -72,11 +64,7 @@ public class MenuService extends BaseService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", json.toString());
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();			
 		}
 		return response;
 	}
@@ -85,17 +73,14 @@ public class MenuService extends BaseService {
 	 * 
 	 * @param accessToken
 	 * @return
+	 * @throws ConnectionFailedException 
 	 */
-	public JSONObject get(String accessToken) {
+	public JSONObject get(String accessToken) throws ConnectionFailedException {
 		String url = URL_MENU_GET.replace("ACCESS_TOKEN", accessToken);
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", null);
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}
@@ -104,17 +89,14 @@ public class MenuService extends BaseService {
 	 * 
 	 * @param accessToken
 	 * @return
+	 * @throws ConnectionFailedException 
 	 */
-	public JSONObject delete(String accessToken) {
+	public JSONObject delete(String accessToken) throws ConnectionFailedException {
 		String url = URL_MENU_DELETE.replace("ACCESS_TOKEN", accessToken);
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", null);
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}
