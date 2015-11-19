@@ -12,7 +12,7 @@ import net.sf.json.JSONObject;
  *
  */
 public interface IProductService {
-	public JSONObject getProductList(String accessToken, int status);
+	public JSONObject getProductList(String accessToken, int status) throws ConnectionFailedException;
 
 	public JSONObject getProduct(String accessToken, String productId) throws ConnectionFailedException;
 

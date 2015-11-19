@@ -15,7 +15,6 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
-import com.fujitsu.base.entity.ErrorMsg;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.Const;
 import com.fujitsu.base.helper.FileUtil;
@@ -43,9 +42,10 @@ public class ProductService extends BaseService implements IProductService {
 	public final int STATUS_OFF_SHELVES = 2;
 
 	/**
+	 * @throws ConnectionFailedException 
 	 * 
 	 */
-	public JSONObject getProductList(String accessToken, int status) {
+	public JSONObject getProductList(String accessToken, int status) throws ConnectionFailedException {
 		String url = URL_PROGUCT_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
@@ -53,11 +53,7 @@ public class ProductService extends BaseService implements IProductService {
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
 
 		if (null == response) {
-			ErrorMsg errMsg = new ErrorMsg();
-			errMsg.setErrcode("-1");
-			errMsg.setErrmsg("server is busy");
-
-			return JSONObject.fromObject(errMsg);
+			throw new ConnectionFailedException();
 		}
 		return response;
 	}

@@ -42,10 +42,11 @@ public class UserController extends BaseController {
 	 * @param openId
 	 * @param accessToken
 	 * @return
+	 * @throws ConnectionFailedException 
 	 */
 	@RequestMapping(value = "/user/sns/query/{openId}/{accessToken}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String getSNSUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId, @PathVariable String accessToken) {
+	public String getSNSUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId, @PathVariable String accessToken) throws ConnectionFailedException {
 
 		JSONObject resp = userService.getSNSUserInfo(accessToken, openId);
 		if (resp.containsKey("errcode")) {
