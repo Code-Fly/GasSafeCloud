@@ -38,7 +38,7 @@ public class ScancodeWaitmsgEvent extends Event {
 		message.setToUserName(fromUserName);
 		message.setFromUserName(toUserName);
 		message.setCreateTime(new Date().getTime());
-		message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
+		message.setMsgType(Event.RESP_MESSAGE_TYPE_TEXT);
 
 		/**
 		 * 处理message 推送给用户的message

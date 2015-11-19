@@ -39,7 +39,7 @@ public class CustomerServiceTransferEvent extends Event {
 		transferMessage.setToUserName(fromUserName);
 		transferMessage.setFromUserName(toUserName);
 		transferMessage.setCreateTime(new Date().getTime());
-		transferMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_TRANSFER_CUSTOMER_SERVICE);
+		transferMessage.setMsgType(Event.RESP_MESSAGE_TYPE_TRANSFER_CUSTOMER_SERVICE);
 
 		// 将消息对象转换成xml
 		respXml = MessageService.messageToXml(transferMessage);

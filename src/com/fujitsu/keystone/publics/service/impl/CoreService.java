@@ -135,40 +135,40 @@ public class CoreService extends BaseService implements ICoreService {
 
 			logger.info(requestJson.toString());
 			// 事件推送
-			if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_EVENT)) {
+			if (msgType.equals(Event.REQ_MESSAGE_TYPE_EVENT)) {
 				// 事件类型
 				String eventType = requestJson.getString(Event.EVENT);
 				// 订阅
-				if (eventType.equals(MessageService.EVENT_TYPE_SUBSCRIBE)) {
+				if (eventType.equals(Event.EVENT_TYPE_SUBSCRIBE)) {
 					Event event = new SubscribeEvent();
 					respXml = event.execute(request, requestJson);
 				}
 				// 取消订阅
-				else if (eventType.equals(MessageService.EVENT_TYPE_UNSUBSCRIBE)) {
+				else if (eventType.equals(Event.EVENT_TYPE_UNSUBSCRIBE)) {
 					// TODO 暂不做处理
 					// 收到订单
-				} else if (eventType.equals(MessageService.EVENT_MERCHANT_ORDER)) {
+				} else if (eventType.equals(Event.EVENT_MERCHANT_ORDER)) {
 					Event event = new MerchantOrderEvent();
 					respXml = event.execute(request, requestJson);
 					// 开始客服会话
-				} else if (eventType.equals(MessageService.EVENT_CUSTOMER_SERVICE_CREATE_SESSION)) {
+				} else if (eventType.equals(Event.EVENT_CUSTOMER_SERVICE_CREATE_SESSION)) {
 					Event event = new CustomerServiceCreateSessionEvent();
 					respXml = event.execute(request, requestJson);
 					// 关闭客服会话
-				} else if (eventType.equals(MessageService.EVENT_CUSTOMER_SERVICE_CLOSE_SESSION)) {
+				} else if (eventType.equals(Event.EVENT_CUSTOMER_SERVICE_CLOSE_SESSION)) {
 					Event event = new CustomerServiceCloseSessionEvent();
 					respXml = event.execute(request, requestJson);
 					// 扫码推事件且弹出“消息接收中”提示框的事件推送
-				} else if (eventType.equals(MessageService.EVENT_SCANCODE_WAIT_MSG)) {
+				} else if (eventType.equals(Event.EVENT_SCANCODE_WAIT_MSG)) {
 					Event event = new ScancodeWaitmsgEvent();
 					respXml = event.execute(request, requestJson);
 					// 扫码推事件的事件推送
-				} else if (eventType.equals(MessageService.EVENT_SCANCODE_PUSH)) {
+				} else if (eventType.equals(Event.EVENT_SCANCODE_PUSH)) {
 					Event event = new ScancodePushEvent();
 					respXml = event.execute(request, requestJson);
 				}
 				// 自定义菜单点击事件
-				else if (eventType.equals(MessageService.EVENT_TYPE_CLICK)) {
+				else if (eventType.equals(Event.EVENT_TYPE_CLICK)) {
 					Event event = new ClickEvent();
 					respXml = event.execute(request, requestJson);
 				}
