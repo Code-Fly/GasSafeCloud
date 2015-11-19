@@ -13,13 +13,14 @@ import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
+import com.fujitsu.keystone.publics.service.iface.IMenuService;
 
 /**
  * @author Barrie
  *
  */
 @Service
-public class MenuService extends BaseService {
+public class MenuService extends BaseService  implements IMenuService{
 	
 	public static final String V1001_LOTTERY = "V1001_LOTTERY";
 	public static final String V1002_VOUVHER = "V1002_VOUVHER";
@@ -44,8 +45,6 @@ public class MenuService extends BaseService {
 	public static final String FW_YQAQ = "FW_YQAQ";
 	public static final String FW_ZXTS = "FW_ZXTS";
 
-	@Resource
-	ICoreService coreService;
 	@Resource
 	MessageService messageService;
 

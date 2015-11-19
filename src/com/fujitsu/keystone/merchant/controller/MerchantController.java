@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fujitsu.base.controller.BaseController;
 import com.fujitsu.base.helper.Const;
 import com.fujitsu.base.helper.KeystoneUtil;
-import com.fujitsu.keystone.merchant.service.impl.MerchantService;
-import com.fujitsu.keystone.publics.service.impl.CoreService;
+import com.fujitsu.keystone.merchant.service.iface.IMerchantService;
+import com.fujitsu.keystone.publics.service.iface.ICoreService;
 
 /**
  * @author Barrie
@@ -29,9 +29,9 @@ import com.fujitsu.keystone.publics.service.impl.CoreService;
 @RequestMapping(value = "/api/keystone")
 public class MerchantController extends BaseController {
 	@Resource
-	CoreService coreService;
+	ICoreService coreService;
 	@Resource
-	MerchantService merchantService;
+	IMerchantService merchantService;
 
 	@RequestMapping(value = "/merchant/redpack/send/{openId}")
 	@ResponseBody
