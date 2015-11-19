@@ -31,7 +31,11 @@ public class GasWebSocketClient {
 	    logger.info("Client onMessage: " + message);
         WebSocketResponseMessage messageObject = new WebSocketResponseMessage();
 		messageObject = (WebSocketResponseMessage)JSONObject.toBean(JSONObject.fromObject(message),WebSocketResponseMessage.class);
-		SOCKET_TOKEN = messageObject.getResult().getToken();
+		if (0== messageObject.getErrorCode()) {
+			SOCKET_TOKEN = messageObject.getResult().getToken();
+		} else {
+			SOCKET_TOKEN = "";
+		}
 		logger.info("SOCKET_TOKEN="+SOCKET_TOKEN);
    }
  

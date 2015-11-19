@@ -8,17 +8,19 @@ import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
+import com.fujitsu.base.helper.Const;
+
 /**
  * @author VM
  *
  */
 public class GasWebSocketConnect {
 	
-	private static String uri = "ws://t.qpsafe.cn:9900/ccst_getToken";
+	private static String uri = Const.CCST_GETTOKEN;
 	
-    private  Session session;
+	public  Session session;
  
-    private void start() {
+    public void start() {
         WebSocketContainer container = null;
         try {
             container = ContainerProvider.getWebSocketContainer();
@@ -38,11 +40,10 @@ public class GasWebSocketConnect {
     public static void main(String[] mains){
     	GasWebSocketConnect web = new GasWebSocketConnect();
     	web.start();
-    	
     	try {
 			web.session.getBasicRemote().sendText("authorizeID=o6_bmjrPTlm6_2sgVt7hMZOPfL2Mdddd&authorizeType=WebChat_QPSafe");
-			Thread.sleep(1000);
 			System.in.read();
+			web.session.close();
     	} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

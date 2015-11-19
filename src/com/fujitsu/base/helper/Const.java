@@ -90,10 +90,12 @@ public class Const {
 	public static final String URL_CUSTOMER_SERVICE_MESSAGE_SEND = ConfigUtil.getProperty(PUBLICS_CONF, "url.customer.service.message.send");
 
 	public static final String CCST_GETTOKEN = ConfigUtil.getProperty(WEBSOCKET_CONF, "ccst_getToken");
+	public static final String AUTHORIZEID = ConfigUtil.getProperty(WEBSOCKET_CONF, "authorizeID");
+	public static final String AUTHORIZETYPE = ConfigUtil.getProperty(WEBSOCKET_CONF, "authorizeType");
 	public static final String CCST_WC_BARCODEGETBOTTLE = ConfigUtil.getProperty(WEBSOCKET_CONF, "ccst_WC_BarcodegetBottle");
 	
 	/**
-	 * merchant platform API
+	 * merchant platform API	
 	 */
 
 	public static final String MCH_ID = ConfigUtil.getProperty(MERCHANT_CONF, "mchId");

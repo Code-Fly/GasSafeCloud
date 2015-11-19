@@ -17,25 +17,42 @@
 		<property name="targetMethod" value="accessTokenKeeper" />
 		<property name="concurrent" value="false" />
 	</bean>
-
+	
+	<bean id="getWSTokenJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.fujitsu.base.helper.GasWebSocketUtil" />
+		</property>
+		<property name="targetMethod" value="accessWSToken" />
+		<property name="concurrent" value="false" />
+	</bean>
 	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="simpleJobDetail" />
 		<property name="cronExpression" value="0 0 */1 * * ?" />
 	</bean>
+	
+	<bean id="getWSTokenTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getWSTokenJob" />
+		<property name="cronExpression" value="*/5 * * * * ?" />
+	</bean>
+	
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="jobDetails">
 			<list>
 				<ref bean="simpleJobDetail" />
+				<ref bean="getWSTokenJob" />
+				
 				<!-- <ref bean="complexJobDetail" /> -->
 			</list>
 		</property>
 
 		<property name="triggers">
 			<list>
-				<!-- <ref bean="simpleTrigger" /> -->
 				<ref bean="cronTrigger" />
+				<ref bean="getWSTokenTrigger" /> 
 			</list>
 		</property>
+		
+		
 	</bean>
 
 </beans>
