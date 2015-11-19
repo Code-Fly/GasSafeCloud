@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.service.BaseService;
-import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IMenuService;
+import com.fujitsu.keystone.publics.service.iface.IMessageService;
 
 /**
  * @author Barrie
@@ -21,16 +21,7 @@ import com.fujitsu.keystone.publics.service.iface.IMenuService;
  */
 @Service
 public class MenuService extends BaseService  implements IMenuService{
-	
-	public static final String V1001_LOTTERY = "V1001_LOTTERY";
-	public static final String V1002_VOUVHER = "V1002_VOUVHER";
-	public static final String V1003_NEW_ARRIVED = "V1003_NEW_ARRIVED";
-	public static final String V1004_NEWS = "V1004_NEWS";
-	public static final String V2001_USER_GUID = "V2001_USER_GUID";
-	public static final String V2002_WEB_HOME = "V2002_WEB_HOME";
-	public static final String V3001_ADDREDD = "V3001_ADDREDD";
-	public static final String V3002_ORDER = "V3002_ORDER";
-	
+		
 	public static final String QP_SFCX = "QP_SFCX";
 	public static final String QP_GZJL  = "QP_GZJL";
 	public static final String QP_LZGZ  = "QP_LZGZ";
@@ -46,7 +37,7 @@ public class MenuService extends BaseService  implements IMenuService{
 	public static final String FW_ZXTS = "FW_ZXTS";
 
 	@Resource
-	MessageService messageService;
+	IMessageService messageService;
 
 	/**
 	 * 

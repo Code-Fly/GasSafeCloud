@@ -3,6 +3,7 @@
  */
 package com.fujitsu.keystone.publics.service.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.util.HashMap;
@@ -12,10 +13,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.springframework.stereotype.Service;
 
+import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.entity.push.response.Article;
 import com.fujitsu.keystone.publics.entity.push.response.ImageMessage;
 import com.fujitsu.keystone.publics.entity.push.response.MusicMessage;
@@ -36,7 +39,7 @@ import com.thoughtworks.xstream.io.xml.XppDriver;
  *
  */
 @Service
-public class MessageService implements IMessageService {
+public class MessageService extends BaseService implements IMessageService {
 
 	// 请求消息类型：文本
 	public static final String REQ_MESSAGE_TYPE_TEXT = "text";
@@ -90,10 +93,11 @@ public class MessageService implements IMessageService {
 	 * 
 	 * @param request
 	 * @return Map<String, String>
-	 * @throws Exception
+	 * @throws IOException
+	 * @throws DocumentException 
 	 */
 	@SuppressWarnings("unchecked")
-	public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
+	public static Map<String, String> parseXml(HttpServletRequest request) throws IOException, DocumentException   {
 		// 将解析结果存储在HashMap中
 		Map<String, String> map = new HashMap<String, String>();
 

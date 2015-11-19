@@ -47,22 +47,7 @@ public class MenuController extends BaseController {
 		String at = KeystoneUtil.getAccessToken();
 		
 		String menuStr = ConfigUtil.getJson("menu.json");
-
-		String urlHome = URL_SNS_OAUTH2_REDIRECT.replace("REDIRECT_URI", UrlUtil.toUTF8(baseUrl + "/mobile/index")).replace("APPID", APP_ID).replace("SCOPE", "snsapi_base").replace("STATE", "STATE");
-		menuStr = menuStr.replace(MenuService.V2002_WEB_HOME, urlHome);
-		String urlOrder = URL_SNS_OAUTH2_REDIRECT.replace("REDIRECT_URI", UrlUtil.toUTF8(baseUrl + "/mobile/order-list")).replace("APPID", APP_ID).replace("SCOPE", "snsapi_base")
-				.replace("STATE", "STATE");
-		menuStr = menuStr.replace(MenuService.V3002_ORDER, urlOrder);
-		String urlNewArrived = URL_SNS_OAUTH2_REDIRECT.replace("REDIRECT_URI", UrlUtil.toUTF8(baseUrl + "/mobile/product-list?groupId=208216165&orderBy=sales&sort=desc")).replace("APPID", APP_ID)
-				.replace("SCOPE", "snsapi_base").replace("STATE", "STATE");
-		menuStr = menuStr.replace(MenuService.V1003_NEW_ARRIVED, urlNewArrived);
-		String urlLottery = URL_SNS_OAUTH2_REDIRECT.replace("REDIRECT_URI", UrlUtil.toUTF8(baseUrl + "/mobile/scratch-card")).replace("APPID", APP_ID).replace("SCOPE", "snsapi_base")
-				.replace("STATE", "STATE");
-		menuStr = menuStr.replace(MenuService.V1001_LOTTERY, urlLottery);
-		String urlAddress = URL_SNS_OAUTH2_REDIRECT.replace("REDIRECT_URI", UrlUtil.toUTF8(baseUrl + "/mobile/shop-list")).replace("APPID", APP_ID).replace("SCOPE", "snsapi_base")
-				.replace("STATE", "STATE");
-		menuStr = menuStr.replace(MenuService.V3001_ADDREDD, urlAddress);
-		logger.info(menuStr);
+		
 		// 调用接口创建菜单
 		JSONObject resp = JSONObject.fromObject(menuService.create(at, JSONObject.fromObject(menuStr)));
 		return resp.toString();
