@@ -34,7 +34,7 @@ public class OrderController extends BaseController {
 	@Resource
 	OrderService orderService;
 
-	@RequestMapping(value = "/order/list/{status}")
+	@RequestMapping(value = "/order/list/{status}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getOrderList(HttpServletRequest request, HttpServletResponse response, @PathVariable String status, @RequestParam(value = "beginTime", required = false) String beginTime,
 			@RequestParam(value = "endTime", required = false) String endTime) throws ConnectionFailedException, AccessTokenException {
@@ -56,7 +56,7 @@ public class OrderController extends BaseController {
 		return resp.toString();
 	}
 
-	@RequestMapping(value = "/order/query/{orderId}")
+	@RequestMapping(value = "/order/query/{orderId}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getOrder(HttpServletRequest request, HttpServletResponse response, @PathVariable String orderId) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();

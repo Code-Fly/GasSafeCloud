@@ -53,19 +53,19 @@ public class CoreController extends BaseController {
 
 	}
 
-	@RequestMapping(value = "/token/refresh")
+	@RequestMapping(value = "/token/refresh", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String refreshToken(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException {
 		return KeystoneUtil.refreshLocalAccessToken().toString();
 	}
 
-	@RequestMapping(value = "/token/query")
+	@RequestMapping(value = "/token/query", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String queryToken(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException {
 		return KeystoneUtil.getLocalAccessToken().toString();
 	}
 
-	@RequestMapping(value = "/jsapi/ticket/query")
+	@RequestMapping(value = "/jsapi/ticket/query", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String queryJsapiTicket(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException {
 		JSONObject resp = coreService.getJsapiTicket(KeystoneUtil.getAccessToken());

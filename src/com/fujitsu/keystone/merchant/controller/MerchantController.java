@@ -33,7 +33,7 @@ public class MerchantController extends BaseController {
 	@Resource
 	IMerchantService merchantService;
 
-	@RequestMapping(value = "/merchant/redpack/send/{openId}")
+	@RequestMapping(value = "/merchant/redpack/send/{openId}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String sendRedpack(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -64,7 +64,7 @@ public class MerchantController extends BaseController {
 
 	}
 
-	@RequestMapping(value = "/merchant/coupon/send/{couponStockId}/{openId}")
+	@RequestMapping(value = "/merchant/coupon/send/{couponStockId}/{openId}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String sendCoupon(HttpServletRequest request, HttpServletResponse response, @PathVariable String couponStockId, @PathVariable String openId) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -84,7 +84,7 @@ public class MerchantController extends BaseController {
 
 	}
 
-	@RequestMapping(value = "/merchant/pay/refund/{tradeId}")
+	@RequestMapping(value = "/merchant/pay/refund/{tradeId}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String payRefund(HttpServletRequest request, HttpServletResponse response, @PathVariable String tradeId) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();

@@ -19,7 +19,7 @@ import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
-import com.fujitsu.keystone.publics.service.impl.MaterialService;
+import com.fujitsu.keystone.publics.service.iface.IMaterialService;
 
 /**
  * @author Barrie
@@ -29,7 +29,7 @@ import com.fujitsu.keystone.publics.service.impl.MaterialService;
 @RequestMapping(value = "/api/keystone")
 public class MaterialController extends BaseController {
 	@Resource
-	MaterialService materialService;
+	IMaterialService materialService;
 	@Resource
 	ICoreService coreService;
 
@@ -41,7 +41,7 @@ public class MaterialController extends BaseController {
 	 * @throws ConnectionFailedException
 	 * @throws AccessTokenException 
 	 */
-	@RequestMapping(value = "/material/list/{type}/{offset}/{count}")
+	@RequestMapping(value = "/material/list/{type}/{offset}/{count}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getMaterialList(HttpServletRequest request, HttpServletResponse response, @PathVariable String type, @PathVariable int offset, @PathVariable int count)
 			throws ConnectionFailedException, AccessTokenException {
@@ -64,7 +64,7 @@ public class MaterialController extends BaseController {
 	 * @throws ConnectionFailedException
 	 * @throws AccessTokenException 
 	 */
-	@RequestMapping(value = "/material/query/{mediaId}")
+	@RequestMapping(value = "/material/query/{mediaId}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getMaterial(HttpServletRequest request, HttpServletResponse response, @PathVariable String mediaId) throws ConnectionFailedException, AccessTokenException {
 		// 调用接口获取access_token

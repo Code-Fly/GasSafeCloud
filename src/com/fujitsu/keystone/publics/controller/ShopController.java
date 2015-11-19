@@ -35,7 +35,7 @@ public class ShopController extends BaseController {
 	@Resource
 	ShopService shopService;
 
-	@RequestMapping(value = "/shop/query/{poiId}")
+	@RequestMapping(value = "/shop/query/{poiId}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getShop(HttpServletRequest request, HttpServletResponse response, @PathVariable String poiId) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
@@ -49,7 +49,7 @@ public class ShopController extends BaseController {
 
 	}
 
-	@RequestMapping(value = "/shop/list")
+	@RequestMapping(value = "/shop/list", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getShopList(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "begain", required = false) String begin,
 			@RequestParam(value = "limit", required = false) String limit) throws ConnectionFailedException, AccessTokenException {

@@ -43,7 +43,7 @@ public class UserController extends BaseController {
 	 * @param accessToken
 	 * @return
 	 */
-	@RequestMapping(value = "/user/sns/query/{openId}/{accessToken}")
+	@RequestMapping(value = "/user/sns/query/{openId}/{accessToken}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getSNSUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId, @PathVariable String accessToken) {
 
@@ -63,7 +63,7 @@ public class UserController extends BaseController {
 	 * @return
 	 * @throws ConnectionFailedException 
 	 */
-	@RequestMapping(value = "/user/sns/oauth")
+	@RequestMapping(value = "/user/sns/oauth", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String SNSUserOAuth(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException {
 
@@ -122,7 +122,7 @@ public class UserController extends BaseController {
 	 * @throws ConnectionFailedException 
 	 * @throws AccessTokenException 
 	 */
-	@RequestMapping(value = "/user/query/{openId}")
+	@RequestMapping(value = "/user/query/{openId}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getWeChatUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) throws ConnectionFailedException, AccessTokenException {
 		// 调用接口获取access_token
@@ -137,7 +137,7 @@ public class UserController extends BaseController {
 
 	}
 
-	@RequestMapping(value = "/user/list/{nextOpenId}")
+	@RequestMapping(value = "/user/list/{nextOpenId}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getWeChatUserList(HttpServletRequest request, HttpServletResponse response, @PathVariable String nextOpenId) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
@@ -153,7 +153,7 @@ public class UserController extends BaseController {
 		return resp.toString();
 	}
 
-	@RequestMapping(value = "/user/group/list")
+	@RequestMapping(value = "/user/group/list", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getWeChatUserGroupList(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
@@ -166,7 +166,7 @@ public class UserController extends BaseController {
 		return resp.toString();
 	}
 
-	@RequestMapping(value = "/user/group/query/{openId}")
+	@RequestMapping(value = "/user/group/query/{openId}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getWeChatUserGroupByOpenId(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -26,6 +27,7 @@ public abstract class BaseController extends Const {
 
 	@ExceptionHandler(RuntimeException.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	@RequestMapping(produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String handleUnexpectedServerException(RuntimeException ex) {
 		logger.error("内部错误", ex);
@@ -37,6 +39,7 @@ public abstract class BaseController extends Const {
 	
 	@ExceptionHandler(ConnectionFailedException.class)
 	@ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
+	@RequestMapping(produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String handleConnectionFailedException(ConnectionFailedException ex) {
 		logger.error("链接失败", ex);
@@ -48,6 +51,7 @@ public abstract class BaseController extends Const {
 	
 	@ExceptionHandler(AccessTokenException.class)
 	@ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
+	@RequestMapping(produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String handleAccessTokenException(AccessTokenException ex) {
 		logger.error(ex.getMessage());

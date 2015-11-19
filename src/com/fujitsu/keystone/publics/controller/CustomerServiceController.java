@@ -32,7 +32,7 @@ public class CustomerServiceController extends BaseController {
 	@Resource
 	CustomerService customerService;
 
-	@RequestMapping(value = "/customerservice/coupon/send")
+	@RequestMapping(value = "/customerservice/coupon/send", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String send(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "touser", required = true) String touser,
 			@RequestParam(value = "cardId", required = true) String cardId) throws ConnectionFailedException, AccessTokenException  {

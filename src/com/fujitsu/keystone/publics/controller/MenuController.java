@@ -39,7 +39,7 @@ public class MenuController extends BaseController {
 	@Resource
 	ICoreService coreService;
 
-	@RequestMapping(value = "/menu/create")
+	@RequestMapping(value = "/menu/create", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConnectionFailedException, AccessTokenException {
 		String baseUrl = Const.MERCHANT_DOMAIN;

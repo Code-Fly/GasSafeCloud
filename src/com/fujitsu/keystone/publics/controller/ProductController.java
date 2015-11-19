@@ -37,7 +37,7 @@ public class ProductController extends BaseController {
 	@Resource
 	ProductService productService;
 
-	@RequestMapping(value = "/product/list/{status}")
+	@RequestMapping(value = "/product/list/{status}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getProductList(HttpServletRequest request, HttpServletResponse response, @PathVariable int status, @RequestParam(value = "groupId", required = false) String groupId,
 			@RequestParam(value = "orderBy", required = false) String orderBy, @RequestParam(value = "sort", required = false) String sort,
@@ -78,7 +78,7 @@ public class ProductController extends BaseController {
 		return JSONObject.fromObject(resp).toString();
 	}
 
-	@RequestMapping(value = "/product/query/{productId}")
+	@RequestMapping(value = "/product/query/{productId}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getProduct(HttpServletRequest request, HttpServletResponse response, @PathVariable String productId) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
@@ -91,7 +91,7 @@ public class ProductController extends BaseController {
 		return resp.toString();
 	}
 
-	@RequestMapping(value = "/product/group/list")
+	@RequestMapping(value = "/product/group/list", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getProductGroupList(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
@@ -104,7 +104,7 @@ public class ProductController extends BaseController {
 		return resp.toString();
 	}
 
-	@RequestMapping(value = "/product/group/query/{groupId}")
+	@RequestMapping(value = "/product/group/query/{groupId}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getProductGroupDetail(HttpServletRequest request, HttpServletResponse response, @PathVariable String groupId) throws ConnectionFailedException, AccessTokenException {
 		String at = KeystoneUtil.getAccessToken();
