@@ -89,14 +89,14 @@ public class CoreService extends BaseService implements ICoreService {
 	 * @param appsecret
 	 *            密钥
 	 * @return
-	 * @throws ConnectionFailedException 
+	 * @throws ConnectionFailedException
 	 */
 	public JSONObject getAccessToken(String appid, String appsecret) throws ConnectionFailedException {
 		// WeChatAccessToken accessToken = null;
 
 		String url = URL_GET_ACCESS_TOKEN.replace("APPID", appid).replace("APPSECRET", appsecret);
 
-		JSONObject response = JSONObject.fromObject(HttpClientUtil.doHttpsRequest(url, "POST", null));
+		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", null);
 
 		if (null == response) {
 			throw new ConnectionFailedException();
@@ -109,7 +109,7 @@ public class CoreService extends BaseService implements ICoreService {
 
 		String url = URL_JSAPI_TICKET.replace("ACCESS_TOKEN", accessToken);
 
-		JSONObject response = JSONObject.fromObject(HttpClientUtil.doHttpsRequest(url, "GET", null));
+		JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", null);
 
 		if (null == response) {
 			throw new ConnectionFailedException();
