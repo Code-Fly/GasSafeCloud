@@ -26,6 +26,7 @@ import com.fujitsu.keystone.publics.event.CustomerServiceCreateSessionEvent;
 import com.fujitsu.keystone.publics.event.CustomerServiceTransferEvent;
 import com.fujitsu.keystone.publics.event.Event;
 import com.fujitsu.keystone.publics.event.MerchantOrderEvent;
+import com.fujitsu.keystone.publics.event.ScancodeWaitmsgEvent;
 import com.fujitsu.keystone.publics.event.SubscribeEvent;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IMenuService;
@@ -156,6 +157,10 @@ public class CoreService extends BaseService implements ICoreService {
 					// 关闭客服会话
 				} else if (eventType.equals(MessageService.EVENT_CUSTOMER_SERVICE_CLOSE_SESSION)) {
 					Event event = new CustomerServiceCloseSessionEvent();
+					respXml = event.execute(request, requestMap);
+
+				}else if (eventType.equals(MessageService.EVENT_SCANCODE_WAIT_MSG)) {
+					Event event = new ScancodeWaitmsgEvent();
 					respXml = event.execute(request, requestMap);
 
 				}

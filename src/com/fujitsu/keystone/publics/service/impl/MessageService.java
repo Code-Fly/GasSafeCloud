@@ -73,6 +73,11 @@ public class MessageService extends BaseService implements IMessageService {
 	public static final String EVENT_CUSTOMER_SERVICE_CREATE_SESSION = "kf_create_session";
 	
 	public static final String EVENT_CUSTOMER_SERVICE_CLOSE_SESSION  = "kf_close_session";
+	
+	public static final String EVENT_SCANCODE_WAIT_MSG  = "scancode_waitmsg";
+	
+	public static final String EVENT_SCANCODE_PUSH  = "scancode_push";
+	
 
 	public static final String RESP_MESSAGE_TYPE_TRANSFER_CUSTOMER_SERVICE = "transfer_customer_service";
 // 响应消息类型：文本
