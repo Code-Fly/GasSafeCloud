@@ -20,6 +20,8 @@ public class Const {
 	private static final String ENTERPRISE_CONF = "api/enterprise.properties";
 
 	private static final String MERCHANT_CONF = "api/merchant.properties";
+
+	private static final String WEBSOCKET_CONF = "api/webSocket.properties";
 	
 	/**
 	 * global config
@@ -87,6 +89,8 @@ public class Const {
 	
 	public static final String URL_CUSTOMER_SERVICE_MESSAGE_SEND = ConfigUtil.getProperty(PUBLICS_CONF, "url.customer.service.message.send");
 
+	public static final String CCST_GETTOKEN = ConfigUtil.getProperty(WEBSOCKET_CONF, "ccst_getToken");
+	public static final String CCST_WC_BARCODEGETBOTTLE = ConfigUtil.getProperty(WEBSOCKET_CONF, "ccst_WC_BarcodegetBottle");
 	
 	/**
 	 * merchant platform API
