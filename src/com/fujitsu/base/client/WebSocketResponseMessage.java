@@ -4,8 +4,8 @@ public class WebSocketResponseMessage {
 
 	String message;
 	int errorCode;
-	
 	Result result;
+	
 	public Result getResult() {
 		return result;
 	}

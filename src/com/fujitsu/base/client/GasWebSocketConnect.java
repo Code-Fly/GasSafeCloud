@@ -42,10 +42,12 @@ public class GasWebSocketConnect {
     	try {
 			web.session.getBasicRemote().sendText("authorizeID=o6_bmjrPTlm6_2sgVt7hMZOPfL2Mdddd&authorizeType=WebChat_QPSafe");
 			Thread.sleep(1000);
+			System.in.read();
     	} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    
     }
     
     
