@@ -14,13 +14,18 @@ import com.fujitsu.base.client.GasWebSocketConnect;
  */
 public class GasWebSocketUtil {
 	private static final Logger logger = LoggerFactory.getLogger(GasWebSocketUtil.class);
+	static GasWebSocketConnect web = null;
+	
+	static {
+		web = new GasWebSocketConnect();
+    	web.start();
+	}
 	
 	/**
 	 * 获取webSocket Token
 	 */
 	public static void accessWSToken(){
-		GasWebSocketConnect web = new GasWebSocketConnect();
-    	web.start();
+		
     	try {
 			web.session.getBasicRemote().sendText("authorizeID="+Const.AUTHORIZEID+"&authorizeType="+Const.AUTHORIZETYPE);
 			System.in.read();
