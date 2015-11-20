@@ -37,21 +37,6 @@
                     "type": "scancode_waitmsg",
                     "name": "车用气瓶",
                     "key": "GL_CYQP"
-                },
-                {
-                    "type": "click",
-                    "name": "充装存储",
-                    "key": "GL_CZCC"
-                },
-                {
-                    "type": "click",
-                    "name": "配送运输",
-                    "key": "GL_PSYS"
-                },
-                {
-                    "type": "click",
-                    "name": "检验检测",
-                    "key": "GL_JYJC"
                 }
             ]
         },
@@ -67,11 +52,6 @@
                     "type": "scancode_push",
                     "name": "用气安全",
                     "key": "FW_YQAQ"
-                },
-                {
-                    "type": "click",
-                    "name": "咨询投诉",
-                    "key": "FW_ZXTS"
                 }
             ]
         }
