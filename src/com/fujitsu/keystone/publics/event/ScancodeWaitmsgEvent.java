@@ -25,6 +25,7 @@ public class ScancodeWaitmsgEvent extends Event {
 	 * @throws ConnectionFailedException
 	 * 
 	 */
+	@Override
 	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException {
 		String respXml = null;
 
@@ -38,7 +39,7 @@ public class ScancodeWaitmsgEvent extends Event {
 		message.setToUserName(fromUserName);
 		message.setFromUserName(toUserName);
 		message.setCreateTime(new Date().getTime());
-		message.setMsgType(Event.RESP_MESSAGE_TYPE_TEXT);
+		message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
 
 		/**
 		 * 处理message 推送给用户的message

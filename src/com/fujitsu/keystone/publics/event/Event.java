@@ -51,36 +51,7 @@ public abstract class Event {
 	// 事件类型：scancode_waitmsg(扫码推事件且弹出“消息接收中”提示框的事件推送)
 	public static final String EVENT_SCANCODE_WAIT_MSG = "scancode_waitmsg";
 	// 事件类型：scancode_push(扫码推事件的事件推送)
-	public static final String EVENT_SCANCODE_PUSH = "scancode_push";
-
-	// 请求消息类型：文本
-	public static final String REQ_MESSAGE_TYPE_TEXT = "text";
-	// 请求消息类型：图片
-	public static final String REQ_MESSAGE_TYPE_IMAGE = "image";
-	// 请求消息类型：语音
-	public static final String REQ_MESSAGE_TYPE_VOICE = "voice";
-	// 请求消息类型：视频
-	public static final String REQ_MESSAGE_TYPE_VIDEO = "video";
-	// 请求消息类型：地理位置
-	public static final String REQ_MESSAGE_TYPE_LOCATION = "location";
-	// 请求消息类型：链接
-	public static final String REQ_MESSAGE_TYPE_LINK = "link";
-	// 请求消息类型：事件推送
-	public static final String REQ_MESSAGE_TYPE_EVENT = "event";
-
-	public static final String RESP_MESSAGE_TYPE_TRANSFER_CUSTOMER_SERVICE = "transfer_customer_service";
-	// 响应消息类型：文本
-	public static final String RESP_MESSAGE_TYPE_TEXT = "text";
-	// 响应消息类型：图片
-	public static final String RESP_MESSAGE_TYPE_IMAGE = "image";
-	// 响应消息类型：语音
-	public static final String RESP_MESSAGE_TYPE_VOICE = "voice";
-	// 响应消息类型：视频
-	public static final String RESP_MESSAGE_TYPE_VIDEO = "video";
-	// 响应消息类型：音乐
-	public static final String RESP_MESSAGE_TYPE_MUSIC = "music";
-	// 响应消息类型：图文
-	public static final String RESP_MESSAGE_TYPE_NEWS = "news";
+	public static final String EVENT_SCANCODE_PUSH = "scancode_push";	
 
 	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException {
 		return null;

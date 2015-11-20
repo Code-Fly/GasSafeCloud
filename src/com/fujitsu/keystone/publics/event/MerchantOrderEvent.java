@@ -75,10 +75,9 @@ public class MerchantOrderEvent extends Event {
 		params.put("orderId", orderId);
 		String resp = HttpClientUtil.doPostJson(url, params.toString(), "UTF-8");
 		if (null == resp) {
-			logger.error("fail to post");
-		} else {
-			logger.info(resp);
+			throw new ConnectionFailedException();
 		}
+		logger.info(resp);
 
 		return respXml;
 	}

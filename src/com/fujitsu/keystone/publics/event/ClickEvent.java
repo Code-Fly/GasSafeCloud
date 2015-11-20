@@ -36,7 +36,7 @@ public class ClickEvent extends Event {
 		textMessage.setToUserName(fromUserName);
 		textMessage.setFromUserName(toUserName);
 		textMessage.setCreateTime(new Date().getTime());
-		textMessage.setMsgType(Event.RESP_MESSAGE_TYPE_TEXT);
+		textMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
 		// 事件KEY值，与创建菜单时的key值对应
 		String eventKey = requestJson.getString(EVENT_KEY);
 		// 根据key值判断用户点击的按钮
@@ -53,7 +53,7 @@ public class ClickEvent extends Event {
 			newsMessage.setToUserName(fromUserName);
 			newsMessage.setFromUserName(toUserName);
 			newsMessage.setCreateTime(new Date().getTime());
-			newsMessage.setMsgType(Event.RESP_MESSAGE_TYPE_NEWS);
+			newsMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_NEWS);
 			newsMessage.setArticleCount(articleList.size());
 			newsMessage.setArticles(articleList);
 			respXml = MessageService.messageToXml(newsMessage);

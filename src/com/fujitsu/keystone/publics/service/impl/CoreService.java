@@ -28,6 +28,10 @@ import com.fujitsu.keystone.publics.event.MerchantOrderEvent;
 import com.fujitsu.keystone.publics.event.ScancodePushEvent;
 import com.fujitsu.keystone.publics.event.ScancodeWaitmsgEvent;
 import com.fujitsu.keystone.publics.event.SubscribeEvent;
+import com.fujitsu.keystone.publics.query.DistributionTransportationQuery;
+import com.fujitsu.keystone.publics.query.FillingStorageQuery;
+import com.fujitsu.keystone.publics.query.InspectionTestingQuery;
+import com.fujitsu.keystone.publics.query.Query;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IMenuService;
 
@@ -135,7 +139,7 @@ public class CoreService extends BaseService implements ICoreService {
 
 			logger.info(requestJson.toString());
 			// 事件推送
-			if (msgType.equals(Event.REQ_MESSAGE_TYPE_EVENT)) {
+			if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_EVENT)) {
 				// 事件类型
 				String eventType = requestJson.getString(Event.EVENT);
 				// 订阅
@@ -173,10 +177,28 @@ public class CoreService extends BaseService implements ICoreService {
 					respXml = event.execute(request, requestJson);
 				}
 			}
-			// 当用户发消息时
-			else {
-				Event event = new CustomerServiceTransferEvent();
-				respXml = event.execute(request, requestJson);
+			// 当用户发文本消息时
+			else if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_TEXT)) {
+				// 文本消息内容
+				String content = requestJson.getString("Content").trim();
+				// 查询配送运输
+				if (content.startsWith(Query.SEPARATOR + Query.DISTRIBUTION_TRANSPORTATION + Query.SEPARATOR)) {
+					Query query = new DistributionTransportationQuery();
+					respXml = query.execute(request, requestJson);
+					// 查询充装存储
+				} else if (content.startsWith(Query.SEPARATOR + Query.FILLING_STORAGE + Query.SEPARATOR)) {
+					Query query = new FillingStorageQuery();
+					respXml = query.execute(request, requestJson);
+					// 查询检验检测
+				} else if (content.startsWith(Query.SEPARATOR + Query.INSPECTION_TESTING + Query.SEPARATOR)) {
+					Query query = new InspectionTestingQuery();
+					respXml = query.execute(request, requestJson);
+					// 客服转接
+				} else if (content.startsWith(Query.SEPARATOR + Query.CUSTOMER_SERVICE + Query.SEPARATOR)) {
+					Event event = new CustomerServiceTransferEvent();
+					respXml = event.execute(request, requestJson);
+				}
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
