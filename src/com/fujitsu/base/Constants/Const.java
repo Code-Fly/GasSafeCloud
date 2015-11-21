@@ -1,7 +1,9 @@
 /**
  * 
  */
-package com.fujitsu.base.helper;
+package com.fujitsu.base.constants;
+
+import com.fujitsu.base.helper.ConfigUtil;
 
 import javax.servlet.http.HttpServletRequest;
 

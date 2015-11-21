@@ -16,7 +16,7 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.fujitsu.base.exception.ConnectionFailedException;
-import com.fujitsu.base.helper.Const;
+import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.helper.FileUtil;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.service.BaseService;

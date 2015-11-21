@@ -3,23 +3,14 @@
  */
 package com.fujitsu.keystone.merchant.service.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
-import com.fujitsu.base.helper.Const;
+import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.helper.HttpClientUtil;
-import com.fujitsu.base.helper.MD5Util;
 import com.fujitsu.base.helper.XmlUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.merchant.service.iface.IMerchantService;

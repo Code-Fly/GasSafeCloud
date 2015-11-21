@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONObject;
 
-import com.fujitsu.base.helper.Const;
+import com.fujitsu.base.constants.Const;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
 

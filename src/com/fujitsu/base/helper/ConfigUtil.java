@@ -12,10 +12,9 @@ import java.io.OutputStream;
 import java.util.Map;
 import java.util.Properties;
 
+import com.fujitsu.base.constants.Const;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.json.JSONObject;
 
 /**
  * @author Barrie

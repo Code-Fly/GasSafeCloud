@@ -16,7 +16,7 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.fujitsu.base.exception.ConnectionFailedException;
-import com.fujitsu.base.helper.Const;
+import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.helper.FileUtil;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.service.BaseService;
@@ -100,14 +100,13 @@ public class ProductService extends BaseService implements IProductService {
 	}
 
 	/**
-	 * formated product
-	 * 
+	 *
 	 * @param request
 	 * @param accessToken
-	 * @param groupId
+	 * @param productId
 	 * @return
-	 * @throws ConnectionFailedException 
-	 */
+	 * @throws ConnectionFailedException
+     */
 	public JSONObject getProduct(HttpServletRequest request, String accessToken, String productId) throws ConnectionFailedException {
 		JSONObject oList = orderService.getOrderList(accessToken, "0", "0", "0");
 
@@ -130,18 +129,14 @@ public class ProductService extends BaseService implements IProductService {
 	}
 
 	/**
-	 * get formated list
-	 * 
+	 *
 	 * @param request
 	 * @param accessToken
 	 * @param status
-	 * @param groupId
-	 * @param orderBy
-	 * @param sort
 	 * @param filter
 	 * @return
-	 * @throws ConnectionFailedException 
-	 */
+	 * @throws ConnectionFailedException
+     */
 	public JSONObject getProductList(HttpServletRequest request, String accessToken, int status, Map<String, String> filter) throws ConnectionFailedException {
 		ProductList pList = new ProductList();
 		String groupId = filter.get("groupId");

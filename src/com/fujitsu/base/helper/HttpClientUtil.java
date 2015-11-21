@@ -24,6 +24,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+import com.fujitsu.base.constants.Const;
 import net.sf.json.JSONObject;
 
 import org.apache.http.HttpEntity;

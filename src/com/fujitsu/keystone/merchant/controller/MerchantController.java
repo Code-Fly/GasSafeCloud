@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fujitsu.base.controller.BaseController;
-import com.fujitsu.base.helper.Const;
+import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.merchant.service.iface.IMerchantService;
 

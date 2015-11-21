@@ -3,6 +3,7 @@
  */
 package com.fujitsu.base.helper;
 
+import com.fujitsu.base.constants.Const;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +28,7 @@ public class GasWebSocketUtil {
 	public static void accessWSToken(){
 		
     	try {
-			web.session.getBasicRemote().sendText("authorizeID="+Const.AUTHORIZEID+"&authorizeType="+Const.AUTHORIZETYPE);
+			web.session.getBasicRemote().sendText("authorizeID="+ Const.AUTHORIZEID+"&authorizeType="+Const.AUTHORIZETYPE);
 			System.in.read();
 			web.session.close();
     	} catch (Exception e) {
