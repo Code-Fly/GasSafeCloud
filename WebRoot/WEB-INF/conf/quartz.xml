@@ -39,7 +39,7 @@
 		<property name="jobDetails">
 			<list>
 				<ref bean="simpleJobDetail" />
-				<ref bean="getWSTokenJob" />
+				<!--<ref bean="getWSTokenJob" />-->
 				
 				<!-- <ref bean="complexJobDetail" /> -->
 			</list>
@@ -48,7 +48,7 @@
 		<property name="triggers">
 			<list>
 				<ref bean="cronTrigger" />
-				<ref bean="getWSTokenTrigger" /> 
+				<!--<ref bean="getWSTokenTrigger" /> -->
 			</list>
 		</property>
 		
