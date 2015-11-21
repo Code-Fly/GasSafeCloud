@@ -13,7 +13,7 @@ import net.sf.json.JSONObject;
  */
 public interface IShopService {
 
-	public JSONObject getShop(String accessToken, String poi_id) throws ConnectionFailedException;
+	JSONObject getShop(String accessToken, String poi_id) throws ConnectionFailedException;
 
-	public JSONObject getShopList(String accessToken, String begin, String limit) throws ConnectionFailedException;
+	JSONObject getShopList(String accessToken, String begin, String limit) throws ConnectionFailedException;
 }

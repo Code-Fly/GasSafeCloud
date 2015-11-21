@@ -14,19 +14,19 @@ import net.sf.json.JSONObject;
  *
  */
 public interface IUserService {
-	public JSONObject getOauth2AccessToken(String appId, String appSecret, String code) throws ConnectionFailedException;
+	JSONObject getOauth2AccessToken(String appId, String appSecret, String code) throws ConnectionFailedException;
 
-	public JSONObject refreshOauth2AccessToken(String appId, String refreshToken) throws ConnectionFailedException;
+	JSONObject refreshOauth2AccessToken(String appId, String refreshToken) throws ConnectionFailedException;
 
-	public JSONObject getSNSUserInfo(String accessToken, String openId) throws ConnectionFailedException;
+	JSONObject getSNSUserInfo(String accessToken, String openId) throws ConnectionFailedException;
 
-	public JSONObject getWeChatUserInfo(String accessToken, String openId) throws ConnectionFailedException;
+	JSONObject getWeChatUserInfo(String accessToken, String openId) throws ConnectionFailedException;
 
-	public JSONObject getWeChatUserInfo(HttpServletRequest request, String accessToken, String openId) throws ConnectionFailedException;
+	JSONObject getWeChatUserInfo(HttpServletRequest request, String accessToken, String openId) throws ConnectionFailedException;
 
-	public JSONObject getWeChatUserList(String accessToken, String nextOpenId) throws ConnectionFailedException;
+	JSONObject getWeChatUserList(String accessToken, String nextOpenId) throws ConnectionFailedException;
 
-	public JSONObject getWeChatUserGroupList(String accessToken) throws ConnectionFailedException;
+	JSONObject getWeChatUserGroupList(String accessToken) throws ConnectionFailedException;
 
-	public JSONObject getWeChatUserGroupByOpenId(String accessToken, String openId) throws ConnectionFailedException;
+	JSONObject getWeChatUserGroupByOpenId(String accessToken, String openId) throws ConnectionFailedException;
 }

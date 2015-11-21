@@ -10,9 +10,9 @@ import java.util.Map;
  *
  */
 public interface IMerchantService {
-	public String sendCoupon(Map<String, Object> data);
+	String sendCoupon(Map<String, Object> data);
 
-	public Map<String, String> sendRedpack(Map<String, Object> data);
+	Map<String, String> sendRedpack(Map<String, Object> data);
 
-	public Map<String, String> payRefund(Map<String, Object> data);
+	Map<String, String> payRefund(Map<String, Object> data);
 }

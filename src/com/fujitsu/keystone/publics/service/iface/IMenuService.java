@@ -12,9 +12,9 @@ import com.fujitsu.base.exception.ConnectionFailedException;
  *
  */
 public interface IMenuService {
-	public JSONObject create(String accessToken, JSONObject json) throws ConnectionFailedException ;
+	JSONObject create(String accessToken, JSONObject json) throws ConnectionFailedException ;
 
-	public JSONObject get(String accessToken) throws ConnectionFailedException;
+	JSONObject get(String accessToken) throws ConnectionFailedException;
 	
-	public JSONObject delete(String accessToken) throws ConnectionFailedException;
+	JSONObject delete(String accessToken) throws ConnectionFailedException;
 }

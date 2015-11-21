@@ -3,6 +3,7 @@
  */
 package com.fujitsu.keystone.publics.service.impl;
 
+import com.fujitsu.base.constants.Const;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class CustomerService extends BaseService implements ICustomerService {
 	}
 
 	private JSONObject sendMessage(String accessToken, JSONObject message) throws ConnectionFailedException {
-		String url = URL_CUSTOMER_SERVICE_MESSAGE_SEND.replace("ACCESS_TOKEN", accessToken);
+		String url = Const.PublicPlatform.URL_CUSTOMER_SERVICE_MESSAGE_SEND.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", message.toString());
 

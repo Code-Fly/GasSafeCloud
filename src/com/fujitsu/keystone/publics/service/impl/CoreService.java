@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fujitsu.base.constants.Const;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
@@ -62,7 +63,7 @@ public class CoreService extends BaseService implements ICoreService {
 
 		PrintWriter out = response.getWriter();
 		// 通过检验signature对请求进行校验，若校验成功则原样返回echostr，表示接入成功，否则接入失败
-		if (KeystoneUtil.checkSignature(TOKEN, signature, timestamp, nonce)) {
+		if (KeystoneUtil.checkSignature(Const.TOKEN, signature, timestamp, nonce)) {
 			out.print(echostr);
 		}
 		out.close();
@@ -99,7 +100,7 @@ public class CoreService extends BaseService implements ICoreService {
 	public JSONObject getAccessToken(String appid, String appsecret) throws ConnectionFailedException {
 		// WeChatAccessToken accessToken = null;
 
-		String url = URL_GET_ACCESS_TOKEN.replace("APPID", appid).replace("APPSECRET", appsecret);
+		String url = Const.PublicPlatform.URL_GET_ACCESS_TOKEN.replace("APPID", appid).replace("APPSECRET", appsecret);
 
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", null);
 
@@ -112,7 +113,7 @@ public class CoreService extends BaseService implements ICoreService {
 	public JSONObject getJsapiTicket(String accessToken) throws ConnectionFailedException {
 		// WeChatAccessToken accessToken = null;
 
-		String url = URL_JSAPI_TICKET.replace("ACCESS_TOKEN", accessToken);
+		String url = Const.PublicPlatform.URL_JSAPI_TICKET.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", null);
 

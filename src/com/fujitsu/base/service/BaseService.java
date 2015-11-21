@@ -10,7 +10,7 @@ import com.fujitsu.base.constants.Const;
  * @author Barrie
  *
  */
-public class BaseService extends Const {
+public class BaseService {
 
 	// logger
 	protected Logger logger = LoggerFactory.getLogger(getClass());

@@ -46,7 +46,7 @@ public class ProductService extends BaseService implements IProductService {
 	 * 
 	 */
 	public JSONObject getProductList(String accessToken, int status) throws ConnectionFailedException {
-		String url = URL_PROGUCT_GET_LIST.replace("ACCESS_TOKEN", accessToken);
+		String url = Const.PublicPlatform.URL_PROGUCT_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
 		request.put("status", status);
@@ -59,7 +59,7 @@ public class ProductService extends BaseService implements IProductService {
 	}
 
 	public JSONObject getProduct(String accessToken, String productId) throws ConnectionFailedException {
-		String url = URL_PROGUCT_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
+		String url = Const.PublicPlatform.URL_PROGUCT_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
 		request.put("product_id", productId);
@@ -74,7 +74,7 @@ public class ProductService extends BaseService implements IProductService {
 	}
 
 	public JSONObject getProductGroupList(String accessToken) throws ConnectionFailedException {
-		String url = URL_PROGUCT_GROUP_GET_LIST.replace("ACCESS_TOKEN", accessToken);
+		String url = Const.PublicPlatform.URL_PROGUCT_GROUP_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", null);
 
@@ -86,7 +86,7 @@ public class ProductService extends BaseService implements IProductService {
 	}
 
 	public JSONObject getProductGroupDetail(String accessToken, String groupId) throws ConnectionFailedException {
-		String url = URL_PROGUCT_GROUP_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
+		String url = Const.PublicPlatform.URL_PROGUCT_GROUP_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
 		request.put("group_id", groupId);

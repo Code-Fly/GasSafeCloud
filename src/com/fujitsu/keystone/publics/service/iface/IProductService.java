@@ -12,11 +12,11 @@ import net.sf.json.JSONObject;
  *
  */
 public interface IProductService {
-	public JSONObject getProductList(String accessToken, int status) throws ConnectionFailedException;
+	JSONObject getProductList(String accessToken, int status) throws ConnectionFailedException;
 
-	public JSONObject getProduct(String accessToken, String productId) throws ConnectionFailedException;
+	JSONObject getProduct(String accessToken, String productId) throws ConnectionFailedException;
 
-	public JSONObject getProductGroupList(String accessToken) throws ConnectionFailedException;
+	JSONObject getProductGroupList(String accessToken) throws ConnectionFailedException;
 
-	public JSONObject getProductGroupDetail(String accessToken, String groupId) throws ConnectionFailedException;
+	JSONObject getProductGroupDetail(String accessToken, String groupId) throws ConnectionFailedException;
 }

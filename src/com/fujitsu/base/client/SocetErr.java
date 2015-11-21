@@ -14,7 +14,7 @@ public enum SocetErr {
 	
 	public int errorCode;
 	public String message;
-	private SocetErr(int errorCode,String message){
+	SocetErr(int errorCode, String message){
 		this.errorCode = errorCode;
 		this.message = message;
 	}

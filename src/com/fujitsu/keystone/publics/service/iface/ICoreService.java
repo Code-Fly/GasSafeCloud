@@ -18,11 +18,11 @@ import net.sf.json.JSONObject;
  *
  */
 public interface ICoreService {
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+	void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+	void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
-	public JSONObject getAccessToken(String appid, String appsecret) throws ConnectionFailedException;
+	JSONObject getAccessToken(String appid, String appsecret) throws ConnectionFailedException;
 
-	public JSONObject getJsapiTicket(String accessToken) throws ConnectionFailedException;
+	JSONObject getJsapiTicket(String accessToken) throws ConnectionFailedException;
 }

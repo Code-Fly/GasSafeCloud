@@ -147,10 +147,10 @@ public class HttpClientUtil {
 		try {
 			keyStore = KeyStore.getInstance("PKCS12");
 			// P12文件目录
-			instream = new FileInputStream(new File(Const.MCH_KEYSTONE));
-			keyStore.load(instream, Const.MCH_KEYSTONE_SECRET.toCharArray());// 这里写密码..默认是你的MCHID
+			instream = new FileInputStream(new File(Const.MerchantPlatform.MCH_KEYSTONE));
+			keyStore.load(instream, Const.MerchantPlatform.MCH_KEYSTONE_SECRET.toCharArray());// 这里写密码..默认是你的MCHID
 			// Trust own CA and all self-signed certs
-			SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, Const.MCH_KEYSTONE_SECRET.toCharArray())// 这里也是写密码的
+			SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, Const.MerchantPlatform.MCH_KEYSTONE_SECRET.toCharArray())// 这里也是写密码的
 					.build();
 			// Allow TLSv1 protocol only
 			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, new String[] { "TLSv1" }, null, SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
@@ -185,10 +185,10 @@ public class HttpClientUtil {
 		try {
 			keyStore = KeyStore.getInstance("PKCS12");
 			// P12文件目录
-			instream = new FileInputStream(new File(Const.MCH_KEYSTONE));
-			keyStore.load(instream, Const.MCH_KEYSTONE_SECRET.toCharArray());// 这里写密码..默认是你的MCHID
+			instream = new FileInputStream(new File(Const.MerchantPlatform.MCH_KEYSTONE));
+			keyStore.load(instream, Const.MerchantPlatform.MCH_KEYSTONE_SECRET.toCharArray());// 这里写密码..默认是你的MCHID
 			// Trust own CA and all self-signed certs
-			SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, Const.MCH_KEYSTONE_SECRET.toCharArray())// 这里也是写密码的
+			SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, Const.MerchantPlatform.MCH_KEYSTONE_SECRET.toCharArray())// 这里也是写密码的
 					.build();
 			// Allow TLSv1 protocol only
 			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, new String[] { "TLSv1" }, null, SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
@@ -235,10 +235,10 @@ public class HttpClientUtil {
 			// P12文件目录
 			// InputStream instream =
 			// TestUtil.class.getResourceAsStream(KEYSTORE_FILE);
-			instream = new FileInputStream(new File(Const.MCH_KEYSTONE));
-			keyStore.load(instream, Const.MCH_KEYSTONE_SECRET.toCharArray());// 这里写密码..默认是你的MCHID
+			instream = new FileInputStream(new File(Const.MerchantPlatform.MCH_KEYSTONE));
+			keyStore.load(instream, Const.MerchantPlatform.MCH_KEYSTONE_SECRET.toCharArray());// 这里写密码..默认是你的MCHID
 			// Trust own CA and all self-signed certs
-			SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, Const.MCH_KEYSTONE_SECRET.toCharArray())// 这里也是写密码的
+			SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, Const.MerchantPlatform.MCH_KEYSTONE_SECRET.toCharArray())// 这里也是写密码的
 					.build();
 			// Allow TLSv1 protocol only
 			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, new String[] { "TLSv1" }, null, SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
@@ -381,7 +381,7 @@ public class HttpClientUtil {
 		return jsonObject;
 	}
 
-	private static String toJson(HttpEntity entity, String defaultCharset) throws Exception, IOException {
+	private static String toJson(HttpEntity entity, String defaultCharset) throws Exception {
 		final InputStream instream = entity.getContent();
 		if (instream == null) {
 			return null;

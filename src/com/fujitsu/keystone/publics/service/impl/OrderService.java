@@ -42,7 +42,7 @@ public class OrderService extends BaseService implements IOrderService {
 	public final int STATUS_DONE = 5;
 
 	public JSONObject getOrderList(String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException {
-		String url = URL_ORDER_GET_LIST.replace("ACCESS_TOKEN", accessToken);
+		String url = Const.PublicPlatform.URL_ORDER_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 		JSONObject request = new JSONObject();
 		if (!"0".equals(status)) {
 			request.put("status", status);
@@ -85,7 +85,7 @@ public class OrderService extends BaseService implements IOrderService {
 	}
 
 	public JSONObject getOrder(String accessToken, String orderId) throws ConnectionFailedException {
-		String url = URL_ORDER_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
+		String url = Const.PublicPlatform.URL_ORDER_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
 		request.put("order_id", orderId);

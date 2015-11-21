@@ -14,13 +14,13 @@ import net.sf.json.JSONObject;
  *
  */
 public interface IOrderService {
-	public JSONObject getOrderList(String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException;
+	JSONObject getOrderList(String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException;
 
-	public JSONObject getOrderList(HttpServletRequest request, String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException;
+	JSONObject getOrderList(HttpServletRequest request, String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException;
 
-	public JSONObject getOrder(String accessToken, String orderId) throws ConnectionFailedException;
+	JSONObject getOrder(String accessToken, String orderId) throws ConnectionFailedException;
 
-	public JSONObject getOrder(HttpServletRequest request, String accessToken, String orderId) throws ConnectionFailedException;
+	JSONObject getOrder(HttpServletRequest request, String accessToken, String orderId) throws ConnectionFailedException;
 
-	public int getOrderCount(JSONObject oList, String productId);
+	int getOrderCount(JSONObject oList, String productId);
 }

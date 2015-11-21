@@ -14,7 +14,7 @@ import com.fujitsu.keystone.publics.entity.customer.message.TextMessage;
  *
  */
 public interface ICustomerService {
-	public JSONObject sendTextMessage(String accessToken, TextMessage message) throws ConnectionFailedException;
+	JSONObject sendTextMessage(String accessToken, TextMessage message) throws ConnectionFailedException;
 	
-	public JSONObject sendCouponMessage(String accessToken, CouponMessage message) throws ConnectionFailedException;
+	JSONObject sendCouponMessage(String accessToken, CouponMessage message) throws ConnectionFailedException;
 }
