@@ -16,10 +16,7 @@ import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.Const;
 
 /**
- * 
- * @author Barrie
  *
- * @param <T>
  */
 public abstract class BaseController extends Const {
 
@@ -37,7 +34,7 @@ public abstract class BaseController extends Const {
 	}
 	
 	@ExceptionHandler(ConnectionFailedException.class)
-	@ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	@ResponseBody
 	public String handleConnectionFailedException(ConnectionFailedException ex) {
 		logger.error("连接失败", ex);
