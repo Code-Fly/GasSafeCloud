@@ -38,8 +38,8 @@ private Logger logger = LoggerFactory.getLogger(getClass());
     }
    
    @OnError
-   public void onError(Exception ex) {
-	   logger.error("BarcodegetBottleClient error:",ex);
+   public void onError(Throwable throwable) {
+	   logger.error("BarcodegetBottleClient error:",throwable);
    }
    
 }

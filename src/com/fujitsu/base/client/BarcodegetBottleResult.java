@@ -18,6 +18,16 @@ public class BarcodegetBottleResult {
 	String pid;
 	String pnoName;
 	String fDate;
+	
+	String qpStructureName;
+	String pDate;
+	String typeName;
+	int dimension;
+	int quality;
+	String rnoidTzsbName;
+	String zcdm;
+	String mediumName;
+	
 	public int getpPress() {
 		return pPress;
 	}
@@ -168,12 +178,4 @@ public class BarcodegetBottleResult {
 	public void setMediumName(String mediumName) {
 		this.mediumName = mediumName;
 	}
-	String qpStructureName;
-	String pDate;
-	String typeName;
-	int dimension;
-	int quality;
-	String rnoidTzsbName;
-	String zcdm;
-	String mediumName;
 }
