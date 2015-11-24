@@ -22,7 +22,7 @@ public class GasWebSocketConnect {
 	
 	private static Logger logger = LoggerFactory.getLogger(GasWebSocketConnect.class);
 	
-	public  Session session;
+	public  static Session session;
  
     public void start() {
     	logger.info("start to connect " + uri);
@@ -41,7 +41,14 @@ public class GasWebSocketConnect {
         }
         logger.info("end to connect " + uri);
     }
-    
+    public static void sengMsg(String msg){
+    	try {
+			session.getBasicRemote().sendText(msg);
+			System.in.read();
+    	} catch (Exception e) {
+    		logger.error("get web Socket Token Error",e);
+		}
+    }
     public static void main(String[] mains){
     	GasWebSocketConnect web = new GasWebSocketConnect();
     	web.start();
