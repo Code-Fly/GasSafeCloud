@@ -1,6 +1,5 @@
 package com.fujitsu.keystone.publics.event;
 
-import java.io.IOException;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;

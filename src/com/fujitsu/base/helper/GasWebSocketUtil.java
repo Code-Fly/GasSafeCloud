@@ -3,7 +3,6 @@
  */
 package com.fujitsu.base.helper;
 
-import com.fujitsu.base.constants.Const;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +19,7 @@ public class GasWebSocketUtil {
 	static {
 		web = new GasWebSocketConnect();
     	web.start();
+    	accessWSToken();
 	}
 	
 	/**
