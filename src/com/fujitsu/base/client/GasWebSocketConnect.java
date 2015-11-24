@@ -46,13 +46,9 @@ public class GasWebSocketConnect {
     	GasWebSocketConnect web = new GasWebSocketConnect();
     	web.start();
     	try {
-    		do{
-    			web.session.getBasicRemote().sendText("authorizeID=o6_bmjrPTlm6_2sgVt7hMZOPfL2Mdddd&authorizeType=WebChat_QPSafe");
-    			System.in.read();
-    			web.session.close();
-    			return;
-    		} while(true);
-			
+			web.session.getBasicRemote().sendText("authorizeID=o6_bmjrPTlm6_2sgVt7hMZOPfL2Mdddd&authorizeType=WebChat_QPSafe");
+			System.in.read();
+			web.session.close();
     	} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

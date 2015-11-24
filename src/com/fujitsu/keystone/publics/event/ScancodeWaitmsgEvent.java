@@ -97,12 +97,7 @@ public class ScancodeWaitmsgEvent extends Event {
 	 * @return
 	 */
 	private BarcodegetBottleResMsg getBarResMsg(String socketParams,int times){
-		try {
-			GasBarcodegetBottleConnect.session.getBasicRemote().sendText(socketParams.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		GasBarcodegetBottleConnect.sendMsg(socketParams.toString());
 		String socketMessage = GasBarcodegetBottleClient.message;
 		BarcodegetBottleResMsg messageObject = new BarcodegetBottleResMsg();
 		messageObject = (BarcodegetBottleResMsg)JSONObject.toBean(JSONObject.fromObject(socketMessage),BarcodegetBottleResMsg.class);
