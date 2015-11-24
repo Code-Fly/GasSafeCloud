@@ -66,21 +66,25 @@ public class ScancodeWaitmsgEvent extends Event {
 			 .append("&pDate=").append(messArray[4])
 			 .append("&bfrq=").append(messArray[5]);
 			 BarcodegetBottleResMsg barMsg = getBarResMsg(socketParams.toString(),0);
-			
-			 sengMsg.append( "气瓶使用证编号:").append(barMsg.getResult().getSyzbh())
-			 		.append( "气瓶注册代码:").append(barMsg.getResult().getZcdm())
-			 		.append( "单位自有编号:").append(barMsg.getResult().getZybh())
-			 		.append( "气瓶充装单位(编号):").append(barMsg.getResult().getZybh())
-			 		.append( "气瓶制造单位:").append(barMsg.getResult().getPnoName())
-			 		.append( "气瓶品种:").append(barMsg.getResult().getClassName())
-			 		.append( "气瓶型号:").append(barMsg.getResult().getTypeName())
-			 		.append( "充装介质:").append(barMsg.getResult().getMediumName())
-			 		.append( "出厂日期:").append(barMsg.getResult().getpDate())
-			 		.append( "上检日期:").append(barMsg.getResult().getfDate())
-			 		.append( "检验周期:").append(barMsg.getResult().getJyzq()+"年")
-			 		.append( "报废年限:").append(barMsg.getResult().getBf())
-			 		.append( "下检日期:").append(barMsg.getResult().getXjrq())
-			 		.append( "报废日期:").append(barMsg.getResult().getBfrq());
+			if (0 == barMsg.getErrorCode()) {
+				sengMsg.append( "气瓶使用证编号:").append(barMsg.getResult().getSyzbh())
+		 		.append( "气瓶注册代码:").append(barMsg.getResult().getZcdm())
+		 		.append( "单位自有编号:").append(barMsg.getResult().getZybh())
+		 		.append( "气瓶充装单位(编号):").append(barMsg.getResult().getZybh())
+		 		.append( "气瓶制造单位:").append(barMsg.getResult().getPnoName())
+		 		.append( "气瓶品种:").append(barMsg.getResult().getClassName())
+		 		.append( "气瓶型号:").append(barMsg.getResult().getTypeName())
+		 		.append( "充装介质:").append(barMsg.getResult().getMediumName())
+		 		.append( "出厂日期:").append(barMsg.getResult().getpDate())
+		 		.append( "上检日期:").append(barMsg.getResult().getfDate())
+		 		.append( "检验周期:").append(barMsg.getResult().getJyzq()+"年")
+		 		.append( "报废年限:").append(barMsg.getResult().getBf())
+		 		.append( "下检日期:").append(barMsg.getResult().getXjrq())
+		 		.append( "报废日期:").append(barMsg.getResult().getBfrq());
+			} else {
+				sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
+			}
+			 
 			 		//.append( "气瓶当前状态:").append(barMsg.getResult().getStatus());
 		}
 		message.setContent(sengMsg.toString());
