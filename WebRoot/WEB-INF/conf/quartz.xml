@@ -26,21 +26,21 @@
 	
 	<bean id="getWSTokenTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="getWSTokenJob" />
-		<property name="cronExpression" value="0 0 */12 * * ?" />
+		<property name="cronExpression" >
+		 	<value>0 */10 * * * ? </value> 
+		</property>
 		<property name="startDelay">    
-           <value>1000</value>    
+           <value>5000</value>    
        	</property>
 	</bean>
 	
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-		<property name="jobDetails">
+			<!-- <property name="jobDetails">
 			<list>
 				<ref bean="simpleJobDetail" />
-				<ref bean="getWSTokenJob" />
-				
-				<!-- <ref bean="complexJobDetail" /> -->
+				 <ref bean="complexJobDetail" /> 
 			</list>
-		</property>
+		</property>-->
 
 		<property name="triggers">
 			<list>

@@ -45,7 +45,6 @@ public class GasWebSocketClient {
 			SOCKET_TOKEN = "";
 		}
 		logger.info("SOCKET_TOKEN="+SOCKET_TOKEN);
-		return;
    }
  
    @OnClose

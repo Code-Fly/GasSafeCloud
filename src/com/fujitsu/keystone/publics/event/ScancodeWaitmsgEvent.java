@@ -45,7 +45,7 @@ public class ScancodeWaitmsgEvent extends Event {
 		message.setToUserName(fromUserName);
 		message.setFromUserName(toUserName);
 		message.setCreateTime(new Date().getTime());
-		message.setMsgType(Event.EVENT_SCANCODE_WAIT_MSG);
+		message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
 		/**
 		 * 处理message 推送给用户的message
 		 * [QP02001,132020000001,AG,323232,2015年09月,2045年09月]气瓶安全云www.qpsafe.cn
@@ -55,7 +55,6 @@ public class ScancodeWaitmsgEvent extends Event {
 		String tmp = scanResult.substring(1, lastIndex);
 		// [QP02001,132020000001,AG,323232,2015年09月,2045年09月]
 		String[] messArray = tmp.split(",");
-		StringBuffer buffer = new StringBuffer();
 		StringBuffer sengMsg = new StringBuffer();
 		// 身份查询
 		if (MenuService.QP_SFCX.equals(eventKey)) {
