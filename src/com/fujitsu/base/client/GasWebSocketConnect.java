@@ -24,7 +24,7 @@ public class GasWebSocketConnect {
 	
 	public  static Session session;
  
-    public void start() {
+    static {
     	logger.info("start to connect " + uri);
         WebSocketContainer container = null;
         try {
@@ -50,10 +50,9 @@ public class GasWebSocketConnect {
 		}
     }
     public static void main(String[] mains){
-    	GasWebSocketConnect web = new GasWebSocketConnect();
-    	web.start();
+    
     	try {
-			web.session.getBasicRemote().sendText("authorizeID=o6_bmjrPTlm6_2sgVt7hMZOPfL2Mdddd&authorizeType=WebChat_QPSafe");
+    		session.getBasicRemote().sendText("authorizeID=o6_bmjrPTlm6_2sgVt7hMZOPfL2Mdddd&authorizeType=WebChat_QPSafe");
 			System.in.read();
     	} catch (Exception e) {
 			// TODO Auto-generated catch block
