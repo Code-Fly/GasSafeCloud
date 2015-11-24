@@ -30,7 +30,6 @@ public class GasWebSocketUtil {
     	try {
 			web.session.getBasicRemote().sendText("authorizeID="+"o6_bmjrPTlm6_2sgVt7hMZOPfL2Mdddd"+"&authorizeType="+"WebChat_QPSafe");
 			System.in.read();
-			web.session.close();
     	} catch (Exception e) {
     		logger.error("get web Socket Token Error",e);
 		}
