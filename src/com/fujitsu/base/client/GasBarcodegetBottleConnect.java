@@ -46,9 +46,11 @@ public class GasBarcodegetBottleConnect {
 		logger.info("msg = " + msg);
 		try {
 			session.getBasicRemote().sendText(msg);
+			Thread.sleep(2000);
 			System.in.read();
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException e) {
 			logger.error("sendMsg(String msg) error " + uri,e);
-		}
+		} 
+		logger.info("end sendMsg(String msg)");
 	}
  }

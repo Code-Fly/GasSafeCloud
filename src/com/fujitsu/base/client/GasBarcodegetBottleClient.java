@@ -2,6 +2,7 @@ package com.fujitsu.base.client;
 
 import javax.websocket.ClientEndpoint;
 import javax.websocket.OnClose;
+import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -18,7 +19,7 @@ private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@OnOpen
     public void onOpen(Session session) {
-		logger.info("To open get token session");
+		logger.info("To open BarcodegetBottleClient session");
     }
  
 	/**
@@ -33,6 +34,12 @@ private Logger logger = LoggerFactory.getLogger(getClass());
  
    @OnClose
     public void onClose() {
-	   logger.info("To close token session.");
+	   logger.info("To close BarcodegetBottleClient session.");
     }
+   
+   @OnError
+   public void onError(Exception ex) {
+	   logger.error("BarcodegetBottleClient error:",ex);
+   }
+   
 }
