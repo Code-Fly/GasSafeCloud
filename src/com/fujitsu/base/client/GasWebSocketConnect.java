@@ -45,7 +45,7 @@ public class GasWebSocketConnect {
     public static void sengMsg(String msg){
     	try {
 			session.getBasicRemote().sendText(msg);
-			System.in.read();
+			Thread.sleep(400);
     	} catch (Exception e) {
     		logger.error("get web Socket Token Error",e);
 		}
@@ -54,7 +54,8 @@ public class GasWebSocketConnect {
     
     	try {
     		session.getBasicRemote().sendText("authorizeID=o6_bmjrPTlm6_2sgVt7hMZOPfL2Mdddd&authorizeType=WebChat_QPSafe");
-			System.in.read();
+			Thread.sleep(400);
+			System.out.println("GasWebSocketClient1."+GasWebSocketClient.SOCKET_TOKEN);
     	} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

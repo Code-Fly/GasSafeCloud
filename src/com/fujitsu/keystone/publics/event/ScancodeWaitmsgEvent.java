@@ -110,13 +110,13 @@ public class ScancodeWaitmsgEvent extends Event {
 				 		//.append( "充装单位许可证号:").append(barMsg.getResult().get(0).getpDate())
 				 		.append( "充装工:").append(barMsg.getResult().get(0).getWorkNum()).append(ENTER)
 				 		//.append( "作业证号:").append(barMsg.getResult().get(0).getJyzq()+"年")
-				 		.append( "最后一次充装日期:").append(barMsg.getResult().get(0).getCheckDatetimeStart()).append(ENTER)
-				 		.append( "充装时间:").append(barMsg.getResult().get(0).getCheckDatetimeEnd()).append(ENTER)
+				 		.append( "最后二次充装日期:").append(barMsg.getResult().get(1).getCheckDatetimeStart()).append(ENTER)
+				 		.append( "充装时间:").append(barMsg.getResult().get(1).getCheckDatetimeEnd()).append(ENTER)
 				 		//.append( "气瓶型号:").append(barMsg.getResult().get(0).getClassName())
-				 		.append( "充装量:").append(barMsg.getResult().get(0).getFillWeight()).append(ENTER)
+				 		.append( "充装量:").append(barMsg.getResult().get(1).getFillWeight()).append(ENTER)
 				 		//.append( "充装单位:").append(barMsg.getResult().get(0).getMediumName())
 				 		//.append( "充装单位许可证号:").append(barMsg.getResult().get(0).getpDate())
-				 		.append( "充装工:").append(barMsg.getResult().get(0).getWorkNum()).append(ENTER);
+				 		.append( "充装工:").append(barMsg.getResult().get(1).getWorkNum()).append(ENTER);
 				 		//.append( "作业证号:").append(barMsg.getResult().get(0).getJyzq()+"年")
 				 		
 					} else {
@@ -138,7 +138,10 @@ public class ScancodeWaitmsgEvent extends Event {
 	 */
 	private BarcodegetBottleResMsg getBarResMsg(String socketParams,int times){
 		logger.info("getBarResMsg times="+times);
+		Long systemTime = System.currentTimeMillis();
+		logger.info("system time :="+systemTime);
 		GasBarcodegetBottleConnect.sendMsg(socketParams.toString());
+		logger.info("system time :="+(System.currentTimeMillis()-systemTime));
 		BarcodegetBottleResMsg messageObject = GasBarcodegetBottleClient.messageObject;
 		if((times) < 1 &&(SocketFailCode.CODE_100001 == messageObject.getErrorCode() 
 				|| SocketFailCode.CODE_100002 == messageObject.getErrorCode())){

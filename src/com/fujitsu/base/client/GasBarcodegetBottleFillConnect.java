@@ -47,8 +47,10 @@ private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_BarcodegetBottleFill"
 		logger.info("msg = " + msg);
 		try {
 			session.getBasicRemote().sendText(msg);
-			System.in.read();
+			Thread.sleep(400);
 		} catch (IOException e) {
+			logger.error("sendMsg(String msg) error " + uri,e);
+		} catch (InterruptedException e) {
 			logger.error("sendMsg(String msg) error " + uri,e);
 		} 
 		logger.info("end sendMsg(String msg)");
