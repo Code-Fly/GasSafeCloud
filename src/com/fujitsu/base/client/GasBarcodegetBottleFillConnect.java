@@ -43,7 +43,7 @@ private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_BarcodegetBottleFill"
         logger.info("end to connect " + uri);
     }
     
-	public static void sendMsg(String msg){
+	public static synchronized void sendMsg(String msg){
 		logger.info("msg = " + msg);
 		try {
 			session.getBasicRemote().sendText(msg);

@@ -52,7 +52,7 @@ public class GasBarcodegetBottleConnect {
         logger.info("end to connect " + uri);
     }
     
-	public static void sendMsg(String msg){
+	public synchronized static  void sendMsg(String msg){
 		logger.info("msg = " + msg);
 		try {
 			session.getBasicRemote().sendText(msg);
