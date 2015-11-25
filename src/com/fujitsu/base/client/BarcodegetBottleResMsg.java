@@ -1,14 +1,17 @@
 package com.fujitsu.base.client;
 
+import java.util.List;
+
 public class BarcodegetBottleResMsg {
 	String message;
 	int errorCode;
-	BarcodegetBottleResult result;
+	List<BarcodegetBottleResult> result;
 	
-	public BarcodegetBottleResult getResult() {
+	
+	public List<BarcodegetBottleResult> getResult() {
 		return result;
 	}
-	public void setResult(BarcodegetBottleResult result) {
+	public void setResult(List<BarcodegetBottleResult> result) {
 		this.result = result;
 	}
 	public String getMessage() {

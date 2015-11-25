@@ -5,6 +5,8 @@ package com.fujitsu.base.client;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
@@ -14,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+import net.sf.json.JsonConfig;
 
 
 /**
@@ -27,22 +31,6 @@ public class GasBarcodegetBottleConnect {
 	
 	public  static Session session;
 	
-	static  {
-    	logger.info("start to connect " + uri);
-        WebSocketContainer container = null;
-        try {
-            container = ContainerProvider.getWebSocketContainer();
-        } catch (Exception ex) {
-        	logger.info("error" + ex);
-        }
-        try {
-            URI r = URI.create(uri);
-            session = container.connectToServer(GasBarcodegetBottleClient.class, r);
-        } catch (Exception e) {
-        	logger.error("connectToServer:"+uri,e);
-        }
-        logger.info("end to connect " + uri);
-    }
 	
 	public static void sendMsg(String msg){
 		logger.info("msg = " + msg);
@@ -67,7 +55,13 @@ public class GasBarcodegetBottleConnect {
 		//sendMsg(socketParams.toString());
 		//String socketMessage = GasBarcodegetBottleClient.message;
 		BarcodegetBottleResMsg messageObject = new BarcodegetBottleResMsg();
-		messageObject = (BarcodegetBottleResMsg)JSONObject.toBean(JSONObject.fromObject("{\"message\":\"Success\",\"result\":[{\"bf\":20,\"bfrq\":\"2035-09-01 00:00:00\",\"className\":\"钢质焊接气瓶\",\"dimension\":30,\"fDate\":\"2015-09-01 00:00:00\",\"jyzq\":2,\"mediumName\":\"环氧乙烷\",\"ownName\":\"自有\",\"pDate\":\"2015-09-01 00:00:00\",\"pPress\":30,\"pid\":\"3211231\",\"ply\":3,\"pnoName\":\"青岛钢瓶厂\",\"press\":30,\"qpStructureName\":\"焊接气瓶\",\"quality\":30,\"regTime\":\"2015-11-24 00:00:00\",\"rno\":\"CCST32A0001\",\"rnoidTzsbName\":\"江苏省无锡质量技术监督局\",\"status\":0,\"syzbh\":\"QP00101\",\"typeName\":\"中容积\",\"xjrq\":\"2017-09-01 00:00:00\",\"zcdm\":\"232001000002\",\"zybh\":\"32A00012320003000002\"}],\"errorCode\":0}"),BarcodegetBottleResMsg.class);
-System.out.println(messageObject.getResult().getBfrq());
+		JsonConfig jsonConfig = new JsonConfig();
+        jsonConfig.setRootClass(BarcodegetBottleResMsg.class);
+        Map<String,Class> classMap = new HashMap<String,Class>();
+        classMap.put("result", BarcodegetBottleResult.class);
+        jsonConfig.setClassMap(classMap);
+      //  jsonConfig.setCollectionType(collectionType);
+		messageObject = (BarcodegetBottleResMsg)JSONObject.toBean(JSONObject.fromObject("{\"message\":\"Success\",\"result\":[{\"bf\":20,\"bfrq\":\"2035-09-01 00:00:00\",\"className\":\"钢质焊接气瓶\",\"dimension\":30,\"fDate\":\"2015-09-01 00:00:00\",\"jyzq\":2,\"mediumName\":\"环氧乙烷\",\"ownName\":\"自有\",\"pDate\":\"2015-09-01 00:00:00\",\"pPress\":30,\"pid\":\"3211231\",\"ply\":3,\"pnoName\":\"青岛钢瓶厂\",\"press\":30,\"qpStructureName\":\"焊接气瓶\",\"quality\":30,\"regTime\":\"2015-11-24 00:00:00\",\"rno\":\"CCST32A0001\",\"rnoidTzsbName\":\"江苏省无锡质量技术监督局\",\"status\":0,\"syzbh\":\"QP00101\",\"typeName\":\"中容积\",\"xjrq\":\"2017-09-01 00:00:00\",\"zcdm\":\"232001000002\",\"zybh\":\"32A00012320003000002\"}],\"errorCode\":0}"),jsonConfig);
+		System.out.println(messageObject.getResult().get(0).getBfrq());
 	}
  }

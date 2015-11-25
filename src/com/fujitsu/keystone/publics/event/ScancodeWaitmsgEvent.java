@@ -67,20 +67,20 @@ public class ScancodeWaitmsgEvent extends Event {
 			 .append("&bfrq=").append(messArray[5]);
 			 BarcodegetBottleResMsg barMsg = getBarResMsg(socketParams.toString(),0);
 			if (0 == barMsg.getErrorCode()) {
-				sengMsg.append( "气瓶使用证编号:").append(barMsg.getResult().getSyzbh())
-		 		.append( "气瓶注册代码:").append(barMsg.getResult().getZcdm())
-		 		.append( "单位自有编号:").append(barMsg.getResult().getZybh())
-		 		.append( "气瓶充装单位(编号):").append(barMsg.getResult().getZybh())
-		 		.append( "气瓶制造单位:").append(barMsg.getResult().getPnoName())
-		 		.append( "气瓶品种:").append(barMsg.getResult().getClassName())
-		 		.append( "气瓶型号:").append(barMsg.getResult().getTypeName())
-		 		.append( "充装介质:").append(barMsg.getResult().getMediumName())
-		 		.append( "出厂日期:").append(barMsg.getResult().getpDate())
-		 		.append( "上检日期:").append(barMsg.getResult().getfDate())
-		 		.append( "检验周期:").append(barMsg.getResult().getJyzq()+"年")
-		 		.append( "报废年限:").append(barMsg.getResult().getBf())
-		 		.append( "下检日期:").append(barMsg.getResult().getXjrq())
-		 		.append( "报废日期:").append(barMsg.getResult().getBfrq());
+				sengMsg.append( "气瓶使用证编号:").append(barMsg.getResult().get(0).getSyzbh())
+		 		.append( "气瓶注册代码:").append(barMsg.getResult().get(0).getZcdm())
+		 		.append( "单位自有编号:").append(barMsg.getResult().get(0).getZybh())
+		 		.append( "气瓶充装单位(编号):").append(barMsg.getResult().get(0).getZybh())
+		 		.append( "气瓶制造单位:").append(barMsg.getResult().get(0).getPnoName())
+		 		.append( "气瓶品种:").append(barMsg.getResult().get(0).getClassName())
+		 		.append( "气瓶型号:").append(barMsg.getResult().get(0).getTypeName())
+		 		.append( "充装介质:").append(barMsg.getResult().get(0).getMediumName())
+		 		.append( "出厂日期:").append(barMsg.getResult().get(0).getpDate())
+		 		.append( "上检日期:").append(barMsg.getResult().get(0).getfDate())
+		 		.append( "检验周期:").append(barMsg.getResult().get(0).getJyzq()+"年")
+		 		.append( "报废年限:").append(barMsg.getResult().get(0).getBf())
+		 		.append( "下检日期:").append(barMsg.getResult().get(0).getXjrq())
+		 		.append( "报废日期:").append(barMsg.getResult().get(0).getBfrq());
 			} else {
 				sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
 			}
@@ -101,9 +101,8 @@ public class ScancodeWaitmsgEvent extends Event {
 	 */
 	private BarcodegetBottleResMsg getBarResMsg(String socketParams,int times){
 		GasBarcodegetBottleConnect.sendMsg(socketParams.toString());
-		String socketMessage = GasBarcodegetBottleClient.message;
-		BarcodegetBottleResMsg messageObject = new BarcodegetBottleResMsg();
-		messageObject = (BarcodegetBottleResMsg)JSONObject.toBean(JSONObject.fromObject(socketMessage),BarcodegetBottleResMsg.class);
+		BarcodegetBottleResMsg messageObject = GasBarcodegetBottleClient.messageObject;
+		// messageObject = (BarcodegetBottleResMsg)JSONObject.toBean(JSONObject.fromObject(socketMessage),BarcodegetBottleResMsg.class);
 		// token 过期，获取token后重试一次
 		if((times) < 1 &(SocketFailCode.CODE_100001 == messageObject.getErrorCode() 
 				|| SocketFailCode.CODE_100002 == messageObject.getErrorCode())){
