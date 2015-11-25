@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author VM
  *
  */
-public class GasWebSocketConnect implements ServletContextListener{
+public class GasWebSocketConnect {
 	
 	private static String uri = "ws://t.qpsafe.cn:9900/ccst_getToken";
 	
@@ -63,21 +63,5 @@ public class GasWebSocketConnect implements ServletContextListener{
 		}
     
     }
-	@Override
-	public void contextDestroyed(ServletContextEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void contextInitialized(ServletContextEvent arg0) {
-		try {
-    		session.getBasicRemote().sendText("authorizeID=o6_bmjrPTlm6_2sgVt7hMZOPfL2Mdddd&authorizeType=WebChat_QPSafe");
-			System.in.read();
-    	} catch (Exception e) {
-    		logger.error("contextInitialized get web Socket Token Error",e);
-		}
-		
-	}
-    
     
 }
