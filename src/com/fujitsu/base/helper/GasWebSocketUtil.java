@@ -12,7 +12,7 @@ import com.fujitsu.base.client.GasWebSocketConnect;
  */
 public class GasWebSocketUtil {
 	
-	public GasWebSocketUtil(){
+	static {
 		accessWSToken();
 	}
 	/**
