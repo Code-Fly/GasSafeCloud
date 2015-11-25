@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.fujitsu.base.client;
+package com.fujitsu.base.client.entity;
 
 /**
  * @author VM

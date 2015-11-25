@@ -12,6 +12,8 @@ import javax.websocket.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fujitsu.base.client.entity.WebSocketResponseMessage;
+
 import net.sf.json.JSONObject;
 
 

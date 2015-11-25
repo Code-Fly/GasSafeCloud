@@ -1,17 +1,8 @@
-package com.fujitsu.base.client;
+package com.fujitsu.base.client.entity;
 
-public class WebSocketResponseMessage {
-
+public class BaseEntity {
 	String message;
 	int errorCode;
-	Result result;
-	
-	public Result getResult() {
-		return result;
-	}
-	public void setResult(Result result) {
-		this.result = result;
-	}
 	public String getMessage() {
 		return message;
 	}
@@ -24,5 +15,5 @@ public class WebSocketResponseMessage {
 	public void setErrorCode(int errorCode) {
 		this.errorCode = errorCode;
 	}
-
+	
 }

@@ -1,9 +1,11 @@
+/**
+ * 
+ */
 package com.fujitsu.base.client;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.websocket.ClientEndpoint;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -19,12 +21,12 @@ import com.fujitsu.base.client.entity.BarcodegetBottleResult;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
-@ClientEndpoint
-public class GasBarcodegetBottleClient {
-	
-private Logger logger = LoggerFactory.getLogger(getClass());
-	
-	public static BarcodegetBottleResMsg messageObject;
+/**
+ * @author Administrator
+ *
+ */
+public class GasBarcodegetBottleFillClient {
+	private Logger logger = LoggerFactory.getLogger(GasBarcodegetBottleFillClient.class);
 	
 	@OnOpen
     public void onOpen(Session session) {

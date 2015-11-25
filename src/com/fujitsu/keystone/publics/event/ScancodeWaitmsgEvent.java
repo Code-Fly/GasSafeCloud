@@ -6,11 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONObject;
 
-import com.fujitsu.base.client.BarcodegetBottleResMsg;
 import com.fujitsu.base.client.GasBarcodegetBottleClient;
 import com.fujitsu.base.client.GasBarcodegetBottleConnect;
 import com.fujitsu.base.client.GasWebSocketClient;
-import com.fujitsu.base.client.SocketFailCode;
+import com.fujitsu.base.client.entity.BarcodegetBottleResMsg;
+import com.fujitsu.base.client.entity.SocketFailCode;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.GasWebSocketUtil;
@@ -85,7 +85,15 @@ public class ScancodeWaitmsgEvent extends Event {
 				sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
 			}
 			 
-			 		//.append( "气瓶当前状态:").append(barMsg.getResult().getStatus());
+		} else if (MenuService.QP_GZJL.equals(eventKey)) {
+			  StringBuffer socketParams = new StringBuffer();
+				 socketParams.append("syzbh=").append(messArray[0])
+				 .append("&zcdm=").append(messArray[1])
+				 .append("&token=").append(GasWebSocketClient.SOCKET_TOKEN)
+				 .append("&pcode=").append(messArray[2])
+				 .append("&pid=").append(messArray[3])
+				 .append("&pDate=").append(messArray[4])
+				 .append("&bfrq=").append(messArray[5]);
 		}
 		message.setContent(sengMsg.toString());
 		// 将消息对象转换成xml

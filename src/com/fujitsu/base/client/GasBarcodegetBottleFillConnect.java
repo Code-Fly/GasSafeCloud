@@ -3,6 +3,7 @@
  */
 package com.fujitsu.base.client;
 
+import java.io.IOException;
 import java.net.URI;
 
 import javax.websocket.ContainerProvider;
@@ -12,19 +13,18 @@ import javax.websocket.WebSocketContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
- * @author VM
- *
+ * @author Administrator
+ *通过扫描气瓶二维码获取气瓶最后2笔灌装记录信息
  */
-public class GasWebSocketConnect {
+public class GasBarcodegetBottleFillConnect {
+private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_BarcodegetBottleFill";
 	
-	private static String uri = "ws://t.qpsafe.cn:9900/ccst_getToken";
-	
-	private static Logger logger = LoggerFactory.getLogger(GasWebSocketConnect.class);
+	private static Logger logger = LoggerFactory.getLogger(GasBarcodegetBottleFillConnect.class);
 	
 	public  static Session session;
- 
+	
+
     static {
     	logger.info("start to connect " + uri);
         WebSocketContainer container = null;
@@ -36,30 +36,21 @@ public class GasWebSocketConnect {
  
         try {
             URI r = URI.create(uri);
-            session = container.connectToServer(GasWebSocketClient.class, r);
+            session = container.connectToServer(GasBarcodegetBottleFillClient.class, r);
         } catch (Exception e) {
         	logger.error("connectToServer:"+uri,e);
         }
         logger.info("end to connect " + uri);
     }
-    public static void sengMsg(String msg){
-    	try {
+    
+	public static void sendMsg(String msg){
+		logger.info("msg = " + msg);
+		try {
 			session.getBasicRemote().sendText(msg);
 			System.in.read();
-    	} catch (Exception e) {
-    		logger.error("get web Socket Token Error",e);
-		}
-    }
-    public static void main(String[] mains){
-    
-    	try {
-    		session.getBasicRemote().sendText("authorizeID=o6_bmjrPTlm6_2sgVt7hMZOPfL2Mdddd&authorizeType=WebChat_QPSafe");
-			System.in.read();
-    	} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    
-    }
-    
+		} catch (IOException e) {
+			logger.error("sendMsg(String msg) error " + uri,e);
+		} 
+		logger.info("end sendMsg(String msg)");
+	}
 }
