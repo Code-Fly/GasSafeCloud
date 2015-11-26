@@ -36,7 +36,7 @@ public class CustomerServiceCloseSessionEvent extends Event {
 		customerMsg.setTouser(fromUserName);
 		Text t = new Text();
 		StringBuffer buffer = new StringBuffer();
-		buffer.append(kfAccount + " 祝您购物愉快。").append(ENTER);
+		buffer.append("感谢您使用客服服务.").append(ENTER);
 		t.setContent(buffer.toString());
 		customerMsg.setText(t);
 		new CustomerService().sendTextMessage(at, customerMsg);
