@@ -11,6 +11,7 @@ import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.event.*;
 import com.fujitsu.keystone.publics.query.CompanyDetailQuery;
 import com.fujitsu.keystone.publics.query.CompanyListQuery;
+import com.fujitsu.keystone.publics.query.DefaultQuery;
 import com.fujitsu.keystone.publics.query.Query;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IMenuService;
@@ -195,6 +196,11 @@ public class CoreService extends BaseService implements ICoreService {
                 else if (Pattern.compile(regCustomerService).matcher(content).matches()) {
                     Event event = new CustomerServiceTransferEvent();
                     respXml = event.execute(request, requestJson);
+                }
+                //其它
+                else {
+                    Query query = new DefaultQuery();
+                    respXml = query.execute(request, requestJson);
                 }
 
             }

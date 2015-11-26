@@ -36,16 +36,20 @@ public class CompanyDetailQuery extends Query {
             queryType = QUERY_CMD.get(queryCmd);
         }
 
-        // 将搜索字符及后面的+、空格、-等特殊符号去掉
-        String keyWord = content.replaceAll("^" + Query.SEPARATOR + queryCmd + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "[\\+ ~!@#%^-_=]?", "");
-
         TextMessage message = new TextMessage();
 
         message.setToUserName(fromUserName);
         message.setFromUserName(toUserName);
         message.setCreateTime(new Date().getTime());
         message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
-        message.setContent("正在查询单位详情 " + queryType + ":" + keyWord);
+
+        if (null != queryType) {
+            // 将搜索字符及后面的+、空格、-等特殊符号去掉
+            String keyWord = content.replaceAll("^" + Query.SEPARATOR + queryCmd + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "[\\+ ~!@#%^-_=]?", "");
+            message.setContent("正在查询单位详情 " + queryType + ":" + keyWord);
+        } else {
+            message.setContent("输入有误! ");
+        }
 
         // 将消息对象转换成xml
         respXml = MessageService.messageToXml(message);
