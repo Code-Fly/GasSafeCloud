@@ -23,7 +23,7 @@ public abstract class Query {
 
     public static final String INSPECTION_TESTING = "C";
 
-    public static final Map<String, String> QUERY_CMD = new HashMap<String, String>() {
+    public static final Map<String, String> QUERY_CMD_TYPE = new HashMap<String, String>() {
         {
             put(FILLING_STORAGE, "A");
             put(DISTRIBUTION_TRANSPORTATION, "B");

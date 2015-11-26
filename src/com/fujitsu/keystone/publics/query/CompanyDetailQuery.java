@@ -33,7 +33,7 @@ public class CompanyDetailQuery extends Query {
         Matcher m = p.matcher(content);
         while (m.find()) {
             queryCmd = m.group(1);
-            queryType = QUERY_CMD.get(queryCmd);
+            queryType = QUERY_CMD_TYPE.get(queryCmd);
         }
 
         TextMessage message = new TextMessage();
