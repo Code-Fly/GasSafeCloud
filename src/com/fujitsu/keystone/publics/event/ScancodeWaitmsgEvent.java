@@ -10,8 +10,11 @@ import com.fujitsu.base.client.GasBarcodegetBottleClient;
 import com.fujitsu.base.client.GasBarcodegetBottleConnect;
 import com.fujitsu.base.client.GasBarcodegetBottleFillClient;
 import com.fujitsu.base.client.GasBarcodegetBottleFillConnect;
+import com.fujitsu.base.client.GasBarcodegetBottlePostClient;
+import com.fujitsu.base.client.GasBarcodegetBottlePostConnect;
 import com.fujitsu.base.client.GasWebSocketClient;
 import com.fujitsu.base.client.entity.BarcodegetBottleFillResMsg;
+import com.fujitsu.base.client.entity.BarcodegetBottlePostResMsg;
 import com.fujitsu.base.client.entity.BarcodegetBottleResMsg;
 import com.fujitsu.base.client.entity.SocketFailCode;
 import com.fujitsu.base.exception.AccessTokenException;
@@ -87,8 +90,8 @@ public class ScancodeWaitmsgEvent extends Event {
 			} else {
 				sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
 			}
-			 
-		} else if (MenuService.QP_GZJL.equals(eventKey)) {
+		}
+		else if (MenuService.QP_GZJL.equals(eventKey)) {
 			  StringBuffer socketParams = new StringBuffer();
 				 socketParams.append("syzbh=").append(messArray[0])
 				 .append("&zcdm=").append(messArray[1])
@@ -97,8 +100,7 @@ public class ScancodeWaitmsgEvent extends Event {
 				 .append("&pid=").append(messArray[3])
 				 .append("&pDate=").append(messArray[4])
 				 .append("&bfrq=").append(messArray[5]);
-				 
-				 BarcodegetBottleFillResMsg barMsg = getBottleResMsg(socketParams.toString(),0);
+				  BarcodegetBottleFillResMsg barMsg = getBottleResMsg(socketParams.toString(),0);
 					if (0 == barMsg.getErrorCode()) {
 						sengMsg.append( "气瓶编号 :").append(barMsg.getResult().get(0).getPid()).append(ENTER)
 				 		.append( "气瓶制造单位:").append(barMsg.getResult().get(0).getpCode()).append(ENTER)
@@ -118,6 +120,29 @@ public class ScancodeWaitmsgEvent extends Event {
 				 		//.append( "充装单位许可证号:").append(barMsg.getResult().get(0).getpDate())
 				 		.append( "充装工:").append(barMsg.getResult().get(1).getWorkNum()).append(ENTER);
 				 		//.append( "作业证号:").append(barMsg.getResult().get(0).getJyzq()+"年")
+				 		
+					} else {
+						sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
+					}
+		} else if (MenuService.QP_LZGZ.equals(eventKey)) {
+			  StringBuffer socketParams = new StringBuffer();
+				 socketParams.append("syzbh=").append(messArray[0])
+				 .append("&zcdm=").append(messArray[1])
+				 .append("&token=").append(GasWebSocketClient.SOCKET_TOKEN)
+				 .append("&pcode=").append(messArray[2])
+				 .append("&pid=").append(messArray[3])
+				 .append("&pDate=").append(messArray[4])
+				 .append("&bfrq=").append(messArray[5]);
+				 
+				 BarcodegetBottlePostResMsg barMsg = getBottlePostResMsg(socketParams.toString(),0);
+					if (0 == barMsg.getErrorCode()) {
+						sengMsg.append( "气瓶编号 :").append(barMsg.getResult().get(0).getPid()).append(ENTER)
+				 		.append( "气瓶制造单位:").append(barMsg.getResult().get(0).getpCode()).append(ENTER)
+				 		.append( "配送日期:").append(barMsg.getResult().get(0).getPsStart()).append(ENTER)
+				 		.append( "配送单位:").append("?").append(ENTER)
+				 		.append( "用户:").append("?").append(ENTER)
+				 		.append( "用户位置:").append("?").append(ENTER)
+				 		.append( "灌装量:").append("?").append(ENTER);
 				 		
 					} else {
 						sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
@@ -172,6 +197,27 @@ public class ScancodeWaitmsgEvent extends Event {
 		logger.info("getBottleResMsg messageObject="+messageObject.getMessage());
 		return messageObject;
 	}
-		
+	
+	/**
+	 * 流转跟踪
+	 * 当token过期或者错误时 重新获得token，然后发送请求
+	 * @param socketParams
+	 * @param times
+	 * @return
+	 */
+	private BarcodegetBottlePostResMsg getBottlePostResMsg(String socketParams,int times){
+		logger.info("getBottleResMsg times="+times);
+		GasBarcodegetBottlePostConnect.sendMsg(socketParams.toString());
+		BarcodegetBottlePostResMsg messageObject = GasBarcodegetBottlePostClient.messageObject;
+		if((times) < 1 &&(SocketFailCode.CODE_100001 == messageObject.getErrorCode() 
+				|| SocketFailCode.CODE_100002 == messageObject.getErrorCode())){
+			logger.info("Bottle times="+times);
+			GasWebSocketUtil.accessWSToken();
+			getBottlePostResMsg(socketParams,times+1);
+		} 
+		logger.info("getBottleResMsg messageObject="+messageObject.getMessage());
+		return messageObject;
+	}
+	
 	}
 
