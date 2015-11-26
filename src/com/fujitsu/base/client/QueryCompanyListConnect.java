@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Created by Barrie on 15/11/26.
  */
-public class QueryInspectionTestingConnect {
+public class QueryCompanyListConnect {
     private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_BarcodegetBottle";
 
     private static Logger logger = LoggerFactory.getLogger(GasBarcodegetBottleConnect.class);
@@ -37,7 +37,7 @@ public class QueryInspectionTestingConnect {
 
         try {
             URI r = URI.create(uri);
-            session = container.connectToServer(QueryInspectionTestingClient.class, r);
+            session = container.connectToServer(QueryCompanyListClient.class, r);
         } catch (Exception e) {
             logger.error("connectToServer:" + uri, e);
         }

@@ -9,8 +9,8 @@ import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.event.*;
+import com.fujitsu.keystone.publics.query.CompanyDetailQuery;
 import com.fujitsu.keystone.publics.query.CompanyListQuery;
-import com.fujitsu.keystone.publics.query.InspectionTestingQuery;
 import com.fujitsu.keystone.publics.query.Query;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IMenuService;
@@ -137,24 +137,29 @@ public class CoreService extends BaseService implements ICoreService {
                 // 取消订阅
                 else if (eventType.equals(Event.EVENT_TYPE_UNSUBSCRIBE)) {
                     // TODO 暂不做处理
-                    // 收到订单
-                } else if (eventType.equals(Event.EVENT_MERCHANT_ORDER)) {
+                }
+                // 收到订单
+                else if (eventType.equals(Event.EVENT_MERCHANT_ORDER)) {
                     Event event = new MerchantOrderEvent();
                     respXml = event.execute(request, requestJson);
-                    // 开始客服会话
-                } else if (eventType.equals(Event.EVENT_CUSTOMER_SERVICE_CREATE_SESSION)) {
+                }
+                // 开始客服会话
+                else if (eventType.equals(Event.EVENT_CUSTOMER_SERVICE_CREATE_SESSION)) {
                     Event event = new CustomerServiceCreateSessionEvent();
                     respXml = event.execute(request, requestJson);
-                    // 关闭客服会话
-                } else if (eventType.equals(Event.EVENT_CUSTOMER_SERVICE_CLOSE_SESSION)) {
+                }
+                // 关闭客服会话
+                else if (eventType.equals(Event.EVENT_CUSTOMER_SERVICE_CLOSE_SESSION)) {
                     Event event = new CustomerServiceCloseSessionEvent();
                     respXml = event.execute(request, requestJson);
-                    // 扫码推事件且弹出“消息接收中”提示框的事件推送
-                } else if (eventType.equals(Event.EVENT_SCANCODE_WAIT_MSG)) {
+                }
+                // 扫码推事件且弹出“消息接收中”提示框的事件推送
+                else if (eventType.equals(Event.EVENT_SCANCODE_WAIT_MSG)) {
                     Event event = new ScancodeWaitmsgEvent();
                     respXml = event.execute(request, requestJson);
-                    // 扫码推事件的事件推送
-                } else if (eventType.equals(Event.EVENT_SCANCODE_PUSH)) {
+                }
+                // 扫码推事件的事件推送
+                else if (eventType.equals(Event.EVENT_SCANCODE_PUSH)) {
                     Event event = new ScancodePushEvent();
                     respXml = event.execute(request, requestJson);
                 }
@@ -175,15 +180,19 @@ public class CoreService extends BaseService implements ICoreService {
                 String regCorpDetail = "^" + Query.SEPARATOR + "[^" + Query.SEPARATOR + "]+" + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "[^" + Query.SEPARATOR + "]+$";
                 // 客服消息正则
                 String regCustomerService = "^" + Query.SEPARATOR + Query.CUSTOMER_SERVICE + "$";
+
                 // 查询企业列表
                 if (Pattern.compile(regCorpList).matcher(content).matches()) {
-                    ;
-                    // 查询企业详情
-                } else if (Pattern.compile(regCorpDetail).matcher(content).matches()) {
                     Query query = new CompanyListQuery();
                     respXml = query.execute(request, requestJson);
-                    //客服消息
-                } else if (Pattern.compile(regCustomerService).matcher(content).matches()) {
+                }
+                // 查询企业详情
+                else if (Pattern.compile(regCorpDetail).matcher(content).matches()) {
+                    Query query = new CompanyDetailQuery();
+                    respXml = query.execute(request, requestJson);
+                }
+                //客服消息
+                else if (Pattern.compile(regCustomerService).matcher(content).matches()) {
                     Event event = new CustomerServiceTransferEvent();
                     respXml = event.execute(request, requestJson);
                 }

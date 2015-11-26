@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Barrie on 15/11/26.
  */
-public class CompanyListQuery extends Query {
+public class CompanyDetailQuery extends Query {
     @Override
     public String execute(HttpServletRequest request, JSONObject requestJson) {
         String respXml = null;
@@ -37,7 +37,7 @@ public class CompanyListQuery extends Query {
         }
 
         // 将搜索字符及后面的+、空格、-等特殊符号去掉
-        String keyWord = content.replaceAll("^" + Query.SEPARATOR + queryCmd + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "[\\+ ~!@#%^-_=]?", "");
+        String keyWord = content.replaceAll("^" + Query.SEPARATOR + queryCmd + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "[\\+ ~!@#%^-_=]?", "");
 
         TextMessage message = new TextMessage();
 
@@ -45,7 +45,7 @@ public class CompanyListQuery extends Query {
         message.setFromUserName(toUserName);
         message.setCreateTime(new Date().getTime());
         message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
-        message.setContent("正在查询单位列表 " + queryType + ":" + keyWord);
+        message.setContent("正在查询单位详情 " + queryType + ":" + keyWord);
 
         // 将消息对象转换成xml
         respXml = MessageService.messageToXml(message);

@@ -16,7 +16,7 @@ import java.util.Map;
  * Created by Barrie on 15/11/26.
  */
 @ClientEndpoint
-public class QueryInspectionTestingClient {
+public class QueryCompanyListClient {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     public static BarcodegetBottleResMsg messageObject;
