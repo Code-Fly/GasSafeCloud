@@ -86,7 +86,7 @@ public class ClickEvent extends Event {
             respXml = MessageService.messageToXml(textMessage);
         }
         // 咨询投诉
-        else if (eventKey.equals(MenuService.GL_JYJC)) {
+        else if (eventKey.equals(MenuService.FW_ZXTS)) {
             StringBuffer buffer = new StringBuffer();
             buffer.append("咨询投诉").append(ENTER);
             buffer.append(ENTER);
