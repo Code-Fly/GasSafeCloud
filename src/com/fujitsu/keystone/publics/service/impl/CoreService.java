@@ -173,7 +173,7 @@ public class CoreService extends BaseService implements ICoreService {
             // 当用户发文本消息时
             else if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_TEXT)) {
                 // 文本消息内容
-                String content = requestJson.getString("Content").trim();
+                String content = requestJson.getString("Content").trim().toUpperCase();
 
                 // 企业列表正则
                 String regCorpList = "^" + Query.SEPARATOR + "[^" + Query.SEPARATOR + "]+" + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "[^" + Query.SEPARATOR + "]+$";

@@ -27,7 +27,7 @@ public class CompanyListQuery extends Query {
         // 开发者微信号
         String toUserName = requestJson.getString(Event.TO_USER_NAME);
 
-        String content = requestJson.getString("Content").trim();
+        String content = requestJson.getString("Content").trim().toUpperCase();
 
         String queryCmd = null;
         String queryType = null;
