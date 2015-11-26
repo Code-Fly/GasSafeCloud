@@ -17,11 +17,11 @@ import java.util.Map;
 public abstract class Query {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    public static final String FILLING_STORAGE = "CZCC";
+    public static final String FILLING_STORAGE = "A";
 
-    public static final String DISTRIBUTION_TRANSPORTATION = "PSYS";
+    public static final String DISTRIBUTION_TRANSPORTATION = "B";
 
-    public static final String INSPECTION_TESTING = "JYJC";
+    public static final String INSPECTION_TESTING = "C";
 
     public static final Map<String, String> QUERY_CMD = new HashMap<String, String>() {
         {
@@ -33,9 +33,9 @@ public abstract class Query {
 
     public static final String CUSTOMER_SERVICE = "KF";
 
-    public static final String QUERY_LIST = "LB";
+    public static final String QUERY_LIST = "A";
 
-    public static final String QUERY_DETAIL = "CX";
+    public static final String QUERY_DETAIL = "B";
 
     public static final String SEPARATOR = "#";
 
