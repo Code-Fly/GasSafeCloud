@@ -58,16 +58,12 @@ public class ClickEvent extends Event {
         // 配送运输
         else if (eventKey.equals(MenuService.GL_PSYS)) {
             StringBuffer buffer = new StringBuffer();
-            buffer.append("——————————————").append(ENTER);
             buffer.append("配送运输信息查询").append(ENTER);
-            buffer.append("——————————————").append(ENTER);
             buffer.append("查询该单位燃气配送、运输许可信息和从业人员信息。").append(ENTER);
             buffer.append("输入格式:").append(ENTER);
             buffer.append(Query.SEPARATOR + Query.DISTRIBUTION_TRANSPORTATION + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "单位全名").append(ENTER);
             buffer.append(ENTER);
-            buffer.append("——————————————————").append(ENTER);
             buffer.append("配送运输单位名称查询").append(ENTER);
-            buffer.append("——————————————————").append(ENTER);
             buffer.append("支持模糊查询").append(ENTER);
             buffer.append("输入格式:").append(ENTER);
             buffer.append(Query.SEPARATOR + Query.DISTRIBUTION_TRANSPORTATION + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "查询名").append(ENTER);
@@ -77,16 +73,12 @@ public class ClickEvent extends Event {
         // 检验检测
         else if (eventKey.equals(MenuService.GL_JYJC)) {
             StringBuffer buffer = new StringBuffer();
-            buffer.append("——————————————").append(ENTER);
             buffer.append("检验检测信息查询").append(ENTER);
-            buffer.append("——————————————").append(ENTER);
             buffer.append("查询该单位气瓶检验信息和检验人员信息。").append(ENTER);
             buffer.append("输入格式:").append(ENTER);
             buffer.append(Query.SEPARATOR + Query.INSPECTION_TESTING + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "单位全名").append(ENTER);
             buffer.append(ENTER);
-            buffer.append("——————————————————").append(ENTER);
             buffer.append("检验检测单位名称查询").append(ENTER);
-            buffer.append("——————————————————").append(ENTER);
             buffer.append("支持模糊查询").append(ENTER);
             buffer.append("输入格式:").append(ENTER);
             buffer.append(Query.SEPARATOR + Query.INSPECTION_TESTING + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "查询名").append(ENTER);
@@ -96,9 +88,7 @@ public class ClickEvent extends Event {
         // 咨询投诉
         else if (eventKey.equals(MenuService.GL_JYJC)) {
             StringBuffer buffer = new StringBuffer();
-            buffer.append("———————").append(ENTER);
             buffer.append("咨询投诉").append(ENTER);
-            buffer.append("———————").append(ENTER);
             buffer.append(ENTER);
             buffer.append("气瓶用户对任何环节有疑问均可通过微信方式咨询，并提出投诉和建议。").append(ENTER);
             buffer.append("输入格式:").append(ENTER);
