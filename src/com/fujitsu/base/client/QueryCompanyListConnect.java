@@ -21,7 +21,7 @@ import java.util.Map;
 public class QueryCompanyListConnect {
     private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_BarcodegetBottle";
 
-    private static Logger logger = LoggerFactory.getLogger(GasBarcodegetBottleConnect.class);
+    private static Logger logger = LoggerFactory.getLogger(QueryCompanyListConnect.class);
 
     public static Session session;
 

@@ -26,6 +26,7 @@ public class MenuService extends BaseService implements IMenuService {
     public static final String QP_SMSY = "QP_SMSY";
     public static final String QP_AQDW = "QP_AQDW";
 
+    public static final String GL_CYQP = "GL_CYQP";
     public static final String GL_CZCC = "GL_CZCC";
     public static final String GL_PSYS = "GL_PSYS";
     public static final String GL_JYJC = "GL_JYJC";

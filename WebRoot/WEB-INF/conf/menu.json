@@ -1,59 +1,79 @@
 {
-    "button": [
+  "button": [
+    {
+      "name": "气瓶",
+      "sub_button": [
         {
-            "name": "气瓶",
-            "sub_button": [
-                {
-                    "type": "scancode_waitmsg",
-                    "name": "身份查询",
-                    "key": "QP_SFCX"
-                },
-                {
-                    "type": "scancode_waitmsg",
-                    "name": "灌装记录",
-                    "key": "QP_GZJL"
-                },
-                {
-                    "type": "scancode_waitmsg",
-                    "name": "流转跟踪",
-                    "key": "QP_LZGZ"
-                },
-                {
-                    "type": "scancode_waitmsg",
-                    "name": "实名使用",
-                    "key": "QP_SMSY"
-                },
-                {
-                    "type": "scancode_waitmsg",
-                    "name": "安全定位",
-                    "key": "QP_AQDW"
-                }
-            ]
+          "type": "scancode_waitmsg",
+          "name": "身份查询",
+          "key": "QP_SFCX"
         },
         {
-            "name": "管理",
-            "sub_button": [
-                {
-                    "type": "scancode_waitmsg",
-                    "name": "车用气瓶",
-                    "key": "GL_CYQP"
-                }
-            ]
+          "type": "scancode_waitmsg",
+          "name": "灌装记录",
+          "key": "QP_GZJL"
         },
         {
-            "name": "服务",
-            "sub_button": [
-                {
-                    "type": "scancode_push",
-                    "name": "认识气瓶",
-                    "key": "FW_RSQP"
-                },
-                {
-                    "type": "scancode_push",
-                    "name": "用气安全",
-                    "key": "FW_YQAQ"
-                }
-            ]
+          "type": "scancode_waitmsg",
+          "name": "流转跟踪",
+          "key": "QP_LZGZ"
+        },
+        {
+          "type": "scancode_waitmsg",
+          "name": "实名使用",
+          "key": "QP_SMSY"
+        },
+        {
+          "type": "scancode_waitmsg",
+          "name": "安全定位",
+          "key": "QP_AQDW"
         }
-    ]
+      ]
+    },
+    {
+      "name": "管理",
+      "sub_button": [
+        {
+          "type": "scancode_waitmsg",
+          "name": "车用气瓶",
+          "key": "GL_CYQP"
+        },
+        {
+          "type": "click",
+          "name": "充装存储",
+          "key": "GL_CZCC"
+        },
+        {
+          "type": "click",
+          "name": "配送运输",
+          "key": "GL_PSYS"
+        },
+        {
+          "type": "click",
+          "name": "检验检测",
+          "key": "GL_JYJC"
+        }
+      ]
+    },
+    {
+      "name": "服务",
+      "sub_button": [
+        {
+          "type": "scancode_push",
+          "name": "认识气瓶",
+          "key": "FW_RSQP"
+        },
+        {
+          "type": "scancode_push",
+          "name": "用气安全",
+          "key": "FW_YQAQ"
+        },
+        {
+          "type": "click",
+          "name": "咨询投诉",
+          "key": "FW_ZXTS"
+        }
+      ]
+    }
+  ]
 }

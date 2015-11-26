@@ -1,9 +1,6 @@
 package com.fujitsu.base.client;
 
-import com.fujitsu.base.client.entity.BarcodegetBottleResMsg;
-import com.fujitsu.base.client.entity.BarcodegetBottleResult;
-import com.fujitsu.base.client.entity.CompanyListResMsg;
-import com.fujitsu.base.client.entity.WebSocketResFiled;
+import com.fujitsu.base.client.entity.*;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import org.slf4j.Logger;
@@ -38,9 +35,9 @@ public class QueryCompanyListClient {
             QueryCompanyListClient.messageObject = messageObject;
         } else {
             JsonConfig jsonConfig = new JsonConfig();
-            jsonConfig.setRootClass(BarcodegetBottleResMsg.class);
+            jsonConfig.setRootClass(CompanyListResMsg.class);
             Map<String, Class> classMap = new HashMap<String, Class>();
-            classMap.put("result", BarcodegetBottleResult.class);
+            classMap.put("result", CompanyListResult.class);
             jsonConfig.setClassMap(classMap);
             messageObject = (CompanyListResMsg) JSONObject.toBean(object, jsonConfig);
             QueryCompanyListClient.messageObject = messageObject;
