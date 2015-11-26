@@ -24,6 +24,10 @@ public abstract class Query {
 	public static final String INSPECTION_TESTING = "JYJC";
 	
 	public static final String CUSTOMER_SERVICE = "KF";
+
+	public static final String QUERY_LIST = "LB";
+
+	public static final String QUERY_DETAIL = "CX";
 	
 	public static final String SEPARATOR = "#";
 

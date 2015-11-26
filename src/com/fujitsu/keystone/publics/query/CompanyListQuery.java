@@ -1,13 +1,5 @@
-/**
- *
- */
 package com.fujitsu.keystone.publics.query;
 
-import com.fujitsu.base.client.GasBarcodegetBottleClient;
-import com.fujitsu.base.client.GasBarcodegetBottleConnect;
-import com.fujitsu.base.client.entity.BarcodegetBottleResMsg;
-import com.fujitsu.base.client.entity.SocketFailCode;
-import com.fujitsu.base.helper.GasWebSocketUtil;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.event.Event;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
@@ -15,18 +7,13 @@ import net.sf.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * @author Barrie
+ * Created by Barrie on 15/11/26.
  */
-public class InspectionTestingQuery extends Query {
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.fujitsu.keystone.publics.query.Query#execute(javax.servlet.http.
-     * HttpServletRequest, net.sf.json.JSONObject)
-     */
+public class CompanyListQuery extends Query {
     @Override
     public String execute(HttpServletRequest request, JSONObject requestJson) {
         String respXml = null;
@@ -53,20 +40,5 @@ public class InspectionTestingQuery extends Query {
         return respXml;
     }
 
-    private BarcodegetBottleResMsg getBarResMsg(String socketParams, int times) {
-        logger.info("getBarResMsg times=" + times);
-        Long systemTime = System.currentTimeMillis();
-        logger.info("system time :=" + systemTime);
-        GasBarcodegetBottleConnect.sendMsg(socketParams.toString());
-        logger.info("system time :=" + (System.currentTimeMillis() - systemTime));
-        BarcodegetBottleResMsg messageObject = GasBarcodegetBottleClient.messageObject;
-        if ((times) < 1 && (SocketFailCode.CODE_100001 == messageObject.getErrorCode()
-                || SocketFailCode.CODE_100002 == messageObject.getErrorCode())) {
-            logger.info("Bar times=" + times);
-            GasWebSocketUtil.accessWSToken();
-            getBarResMsg(socketParams, 1);
-        }
-        logger.info("getBarResMsg messageObject=" + messageObject.getMessage());
-        return messageObject;
-    }
+
 }
