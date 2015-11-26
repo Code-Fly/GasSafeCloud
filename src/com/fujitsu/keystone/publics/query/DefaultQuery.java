@@ -1,6 +1,5 @@
 package com.fujitsu.keystone.publics.query;
 
-import com.fujitsu.base.constants.Const;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.event.Event;
 import com.fujitsu.keystone.publics.service.impl.MessageService;

@@ -2,6 +2,7 @@ package com.fujitsu.base.client;
 
 import com.fujitsu.base.client.entity.BarcodegetBottleResMsg;
 import com.fujitsu.base.client.entity.BarcodegetBottleResult;
+import com.fujitsu.base.client.entity.CompanyListResMsg;
 import com.fujitsu.base.client.entity.WebSocketResFiled;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -19,40 +20,40 @@ import java.util.Map;
 public class QueryCompanyListClient {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    public static BarcodegetBottleResMsg messageObject;
+    public static CompanyListResMsg messageObject;
 
     @OnOpen
     public void onOpen(Session session) {
-        logger.info("To open BarcodegetBottleClient session");
+        logger.info("To open QueryCompanyListClient session");
     }
 
     @OnMessage
     public synchronized void onMessage(String message) {
         logger.info("GasBarcodegetBottle message:" + message);
-        BarcodegetBottleResMsg messageObject = new BarcodegetBottleResMsg();
+        CompanyListResMsg messageObject = new CompanyListResMsg();
         JSONObject object = JSONObject.fromObject(message);
         if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
             messageObject.setErrorCode((int) object.get(WebSocketResFiled.ERROR_CODE));
             messageObject.setMessage((String) object.get(WebSocketResFiled.MESSAGE));
-            GasBarcodegetBottleClient.messageObject = messageObject;
+            QueryCompanyListClient.messageObject = messageObject;
         } else {
             JsonConfig jsonConfig = new JsonConfig();
             jsonConfig.setRootClass(BarcodegetBottleResMsg.class);
             Map<String, Class> classMap = new HashMap<String, Class>();
             classMap.put("result", BarcodegetBottleResult.class);
             jsonConfig.setClassMap(classMap);
-            messageObject = (BarcodegetBottleResMsg) JSONObject.toBean(object, jsonConfig);
-            GasBarcodegetBottleClient.messageObject = messageObject;
+            messageObject = (CompanyListResMsg) JSONObject.toBean(object, jsonConfig);
+            QueryCompanyListClient.messageObject = messageObject;
         }
     }
 
     @OnClose
     public void onClose() {
-        logger.info("To close BarcodegetBottleClient session.");
+        logger.info("To close QueryCompanyListClient session.");
     }
 
     @OnError
     public void onError(Throwable throwable) {
-        logger.error("BarcodegetBottleClient error:", throwable);
+        logger.error("QueryCompanyListClient error:", throwable);
     }
 }
