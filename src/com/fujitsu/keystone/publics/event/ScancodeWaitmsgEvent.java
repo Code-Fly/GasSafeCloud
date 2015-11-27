@@ -105,21 +105,19 @@ public class ScancodeWaitmsgEvent extends Event {
 						sengMsg.append( "气瓶编号 :").append(barMsg.getResult().get(0).getPid()).append(ENTER)
 				 		.append( "气瓶制造单位:").append(barMsg.getResult().get(0).getpCode()).append(ENTER)
 				 		.append( "最后一次充装日期:").append(barMsg.getResult().get(0).getCheckDatetimeStart()).append(ENTER)
-				 		.append( "充装时间:").append(barMsg.getResult().get(0).getCheckDatetimeEnd()).append(ENTER)
-				 		//.append( "气瓶型号:").append(barMsg.getResult().get(0).getClassName())
+				 		.append( "充装时间:").append(barMsg.getResult().get(0).getCzTime()).append(ENTER)
+				 		.append( "气瓶型号:").append(barMsg.getResult().get(0).getTypeName()).append(ENTER)
 				 		.append( "充装量:").append(barMsg.getResult().get(0).getFillWeight()).append(ENTER)
-				 		//.append( "充装单位:").append(barMsg.getResult().get(0).getMediumName())
-				 		//.append( "充装单位许可证号:").append(barMsg.getResult().get(0).getpDate())
+				 		.append( "充装单位:").append(barMsg.getResult().get(0).getRname()).append(ENTER)
+				 		.append( "充装单位许可证号:").append(barMsg.getResult().get(0).getQpczLicbh()).append(ENTER)
 				 		.append( "充装工:").append(barMsg.getResult().get(0).getWorkNum()).append(ENTER)
-				 		//.append( "作业证号:").append(barMsg.getResult().get(0).getJyzq()+"年")
 				 		.append( "最后二次充装日期:").append(barMsg.getResult().get(1).getCheckDatetimeStart()).append(ENTER)
-				 		.append( "充装时间:").append(barMsg.getResult().get(1).getCheckDatetimeEnd()).append(ENTER)
-				 		//.append( "气瓶型号:").append(barMsg.getResult().get(0).getClassName())
+				 		.append( "充装时间:").append(barMsg.getResult().get(1).getCzTime()).append(ENTER)
+				 		.append( "气瓶型号:").append(barMsg.getResult().get(1).getTypeName()).append(ENTER)
 				 		.append( "充装量:").append(barMsg.getResult().get(1).getFillWeight()).append(ENTER)
-				 		//.append( "充装单位:").append(barMsg.getResult().get(0).getMediumName())
-				 		//.append( "充装单位许可证号:").append(barMsg.getResult().get(0).getpDate())
+				 		.append( "充装单位:").append(barMsg.getResult().get(1).getRname()).append(ENTER)
+				 		.append( "充装单位许可证号:").append(barMsg.getResult().get(1).getQpczLicbh()).append(ENTER)
 				 		.append( "充装工:").append(barMsg.getResult().get(1).getWorkNum()).append(ENTER);
-				 		//.append( "作业证号:").append(barMsg.getResult().get(0).getJyzq()+"年")
 				 		
 					} else {
 						sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
@@ -133,17 +131,20 @@ public class ScancodeWaitmsgEvent extends Event {
 				 .append("&pid=").append(messArray[3])
 				 .append("&pDate=").append(messArray[4])
 				 .append("&bfrq=").append(messArray[5]);
-				 
 				 BarcodegetBottlePostResMsg barMsg = getBottlePostResMsg(socketParams.toString(),0);
 					if (0 == barMsg.getErrorCode()) {
 						sengMsg.append( "气瓶编号 :").append(barMsg.getResult().get(0).getPid()).append(ENTER)
 				 		.append( "气瓶制造单位:").append(barMsg.getResult().get(0).getpCode()).append(ENTER)
 				 		.append( "配送日期:").append(barMsg.getResult().get(0).getPsStart()).append(ENTER)
-				 		.append( "配送单位:").append("?").append(ENTER)
-				 		.append( "用户:").append("?").append(ENTER)
-				 		.append( "用户位置:").append("?").append(ENTER)
-				 		.append( "灌装量:").append("?").append(ENTER);
-				 		
+				 		.append( "配送单位:").append(barMsg.getResult().get(0).getUnitName()).append(ENTER)
+				 		.append( "用户:").append(barMsg.getResult().get(0).getUserName()).append(ENTER)
+				 		.append( "用户位置:").append(barMsg.getResult().get(0).getUserinfo()).append(ENTER);
+						if(barMsg.getResult().size()>1){
+							sengMsg.append( "配送日期:").append(barMsg.getResult().get(1).getPsStart()).append(ENTER)
+					 		.append( "配送单位:").append(barMsg.getResult().get(1).getUnitName()).append(ENTER)
+					 		.append( "用户:").append(barMsg.getResult().get(1).getUserName()).append(ENTER)
+					 		.append( "用户位置:").append(barMsg.getResult().get(1).getUserinfo()).append(ENTER);
+						}
 					} else {
 						sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
 					}
@@ -206,7 +207,7 @@ public class ScancodeWaitmsgEvent extends Event {
 	 * @return
 	 */
 	private BarcodegetBottlePostResMsg getBottlePostResMsg(String socketParams,int times){
-		logger.info("getBottleResMsg times="+times);
+		logger.info("getBottlePostResMsg times="+times);
 		GasBarcodegetBottlePostConnect.sendMsg(socketParams.toString());
 		BarcodegetBottlePostResMsg messageObject = GasBarcodegetBottlePostClient.messageObject;
 		if((times) < 1 &&(SocketFailCode.CODE_100001 == messageObject.getErrorCode() 
@@ -215,7 +216,7 @@ public class ScancodeWaitmsgEvent extends Event {
 			GasWebSocketUtil.accessWSToken();
 			getBottlePostResMsg(socketParams,times+1);
 		} 
-		logger.info("getBottleResMsg messageObject="+messageObject.getMessage());
+		logger.info("getBottlePostResMsg messageObject="+messageObject.getMessage());
 		return messageObject;
 	}
 	
