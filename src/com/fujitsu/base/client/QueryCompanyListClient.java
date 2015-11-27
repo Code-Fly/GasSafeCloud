@@ -26,7 +26,7 @@ public class QueryCompanyListClient {
 
     @OnMessage
     public synchronized void onMessage(String message) {
-        logger.info("GasBarcodegetBottle message:" + message);
+        logger.info("QueryCompanyListClient message:" + message);
         CompanyListResMsg messageObject = new CompanyListResMsg();
         JSONObject object = JSONObject.fromObject(message);
         if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
