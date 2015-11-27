@@ -4,8 +4,14 @@ package com.fujitsu.base.client.entity;
  * Created by Barrie on 15/11/27.
  */
 public class CompanyDetailResult extends com.fujitsu.base.entity.BaseEntity {
+
     private String fillAddress;
     private String fillType;
+    private String fillinggasType;
+    private String qpStructure;
+    private String qpczLicbh;
+
+
     private String qybh;
 
     private String licenceId;
@@ -22,6 +28,30 @@ public class CompanyDetailResult extends com.fujitsu.base.entity.BaseEntity {
     private String rnoId;
     private String unitAddress;
     private String unitName;
+
+    public String getFillinggasType() {
+        return fillinggasType;
+    }
+
+    public void setFillinggasType(String fillinggasType) {
+        this.fillinggasType = fillinggasType;
+    }
+
+    public String getQpStructure() {
+        return qpStructure;
+    }
+
+    public void setQpStructure(String qpStructure) {
+        this.qpStructure = qpStructure;
+    }
+
+    public String getQpczLicbh() {
+        return qpczLicbh;
+    }
+
+    public void setQpczLicbh(String qpczLicbh) {
+        this.qpczLicbh = qpczLicbh;
+    }
 
     public String getFillAddress() {
         return fillAddress;
