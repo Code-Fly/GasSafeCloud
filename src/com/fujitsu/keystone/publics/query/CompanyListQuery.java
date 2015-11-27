@@ -9,7 +9,6 @@ import com.fujitsu.base.helper.GasWebSocketUtil;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.event.Event;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
-import com.sun.tools.javac.comp.Enter;
 import net.sf.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,9 +59,12 @@ public class CompanyListQuery extends Query {
             socketParams.append("&token=").append(GasWebSocketClient.SOCKET_TOKEN);
             socketParams.append("&qyType=").append(queryType);
             CompanyListResMsg retMsg = getCompanyListResMsg(socketParams.toString(), 0);
-            buffer.append("正在查询单位列表 " + queryType + ":" + keyWord).append(ENTER);
             if (0 == retMsg.getErrorCode()) {
-                buffer.append(retMsg.getResult());
+                buffer.append("搜索结果:").append(ENTER);
+                buffer.append(ENTER);
+                for (int i = 0; i < retMsg.getResult().size(); i++) {
+                    buffer.append(retMsg.getResult().get(i).getUnitName()).append(ENTER);
+                }
             } else {
                 buffer.append("系统请求socket出现异常:").append(retMsg.getErrorCode()).append(ENTER);
             }
