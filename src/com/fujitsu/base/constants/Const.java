@@ -12,15 +12,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Const {
 	
-	public static final long WEB_SOCKET_SLEEP = 800;
+	
     /**
      * config file location
      */
     private static final String GLOBAL_CONF = "api/global.properties";
 
     private static final String PUBLICS_CONF = "api/publics.properties";
-
-    private static final String ENTERPRISE_CONF = "api/enterprise.properties";
 
     private static final String MERCHANT_CONF = "api/merchant.properties";
 
@@ -119,7 +117,9 @@ public class Const {
     }
 
     public static class WebSocket {
-
+    	
+    	public static final long WEB_SOCKET_SLEEP = 800;
+    	
         public static final String CCST_GETTOKEN = ConfigUtil.getProperty(WEBSOCKET_CONF, "ccst_getToken");
 
         public static final String AUTHORIZEID = ConfigUtil.getProperty(WEBSOCKET_CONF, "authorizeID");

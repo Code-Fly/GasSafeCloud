@@ -4,6 +4,8 @@ import com.fujitsu.base.client.entity.BarcodegetBottleResMsg;
 import com.fujitsu.base.client.entity.BarcodegetBottleResult;
 import com.fujitsu.base.client.entity.CompanyListResMsg;
 import com.fujitsu.base.client.entity.CompanyListResult;
+import com.fujitsu.base.constants.Const.WebSocket;
+
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import org.slf4j.Logger;
@@ -51,7 +53,7 @@ public class QueryCompanyListConnect {
         try {
             session.getBasicRemote().sendText(msg);
             System.in.read();
-            Thread.sleep(400);
+            Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
         } catch (IOException e) {
             logger.error("sendMsg(String msg) error " + uri, e);
         } catch (InterruptedException e) {

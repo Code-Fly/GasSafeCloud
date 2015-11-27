@@ -3,7 +3,6 @@
  */
 package com.fujitsu.base.client;
 
-import java.io.IOException;
 import java.net.URI;
 
 import javax.websocket.ContainerProvider;
@@ -12,8 +11,7 @@ import javax.websocket.WebSocketContainer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.fujitsu.base.constants.Const;
+import com.fujitsu.base.constants.Const.WebSocket;
 
 /**
  * @author Administrator
@@ -53,7 +51,7 @@ private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_BarcodegetBottleFill"
 		logger.info("msg = " + msg);
 		try {
 			session.getBasicRemote().sendText(msg);
-			Thread.sleep(Const.WEB_SOCKET_SLEEP);
+			Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
 			System.in.read();
 		} catch (Exception e) {
 			logger.error("sendMsg(String msg) error " + uri,e);
@@ -67,7 +65,7 @@ private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_BarcodegetBottleFill"
 		logger.info("msg = " + msg);
 		try {
 			session.getBasicRemote().sendText(msg);
-			Thread.sleep(Const.WEB_SOCKET_SLEEP);
+			Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
 			System.in.read();
 		} catch (Exception e) {
 			logger.error("sendMsg(String msg) error " + uri,e);

@@ -3,10 +3,6 @@
  */
 package com.fujitsu.base.client;
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
@@ -15,12 +11,8 @@ import javax.websocket.WebSocketContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fujitsu.base.client.entity.BarcodegetBottlePostResMsg;
-import com.fujitsu.base.client.entity.BarcodegetBottlePostResult;
-import com.fujitsu.base.constants.Const;
+import com.fujitsu.base.constants.Const.WebSocket;
 
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 
 
 /**
@@ -61,7 +53,7 @@ public class GasBarcodegetBottlePostConnect {
 		logger.info("msg = " + msg);
 		try {
 			session.getBasicRemote().sendText(msg);
-			Thread.sleep(Const.WEB_SOCKET_SLEEP);
+			Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
 			System.in.read();
 		} catch (Exception e) {
 			logger.error("sendMsg(String msg) error " + uri,e);
@@ -75,7 +67,7 @@ public class GasBarcodegetBottlePostConnect {
 		logger.info("msg = " + msg);
 		try {
 			session.getBasicRemote().sendText(msg);
-			Thread.sleep(Const.WEB_SOCKET_SLEEP);
+			Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
 			System.in.read();
 		} catch (Exception e) {
 			logger.error("sendMsg(String msg) error " + uri,e);

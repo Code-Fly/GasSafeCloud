@@ -12,7 +12,7 @@ import javax.websocket.WebSocketContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fujitsu.base.constants.Const;
+import com.fujitsu.base.constants.Const.WebSocket;
 
 
 /**
@@ -52,7 +52,7 @@ public class GasWebSocketConnect {
     public static void sengMsg(String msg){
     	try {
 			session.getBasicRemote().sendText(msg);
-			 Thread.sleep(Const.WEB_SOCKET_SLEEP);
+			 Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
     	} catch (Exception e) {
     		logger.error("get web Socket Token Error",e);
     		/**
@@ -67,7 +67,7 @@ public class GasWebSocketConnect {
     public static void sengMsgTwoTime(String msg){
     	try {
 			session.getBasicRemote().sendText(msg);
-			 Thread.sleep(Const.WEB_SOCKET_SLEEP);
+			 Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
     	} catch (Exception e) {
     		logger.error("get web Socket TokenTwoTime Error",e);
 		}

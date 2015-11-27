@@ -3,6 +3,9 @@ package com.fujitsu.base.client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fujitsu.base.constants.Const;
+import com.fujitsu.base.constants.Const.WebSocket;
+
 import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
@@ -43,7 +46,7 @@ public class QueryCompanyDetailConnect {
         try {
             session.getBasicRemote().sendText(msg);
             System.in.read();
-            Thread.sleep(400);
+            Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
         } catch (IOException e) {
             logger.error("sendMsg(String msg) error " + uri, e);
         } catch (InterruptedException e) {
