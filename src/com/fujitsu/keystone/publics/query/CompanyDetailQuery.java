@@ -1,5 +1,11 @@
 package com.fujitsu.keystone.publics.query;
 
+import com.fujitsu.base.client.GasWebSocketClient;
+import com.fujitsu.base.client.QueryCompanyDetailClient;
+import com.fujitsu.base.client.QueryCompanyDetailConnect;
+import com.fujitsu.base.client.entity.CompanyDetailResMsg;
+import com.fujitsu.base.client.entity.SocketFailCode;
+import com.fujitsu.base.helper.GasWebSocketUtil;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.event.Event;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
@@ -44,9 +50,26 @@ public class CompanyDetailQuery extends Query {
         message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
 
         if (null != queryType) {
+            StringBuffer buffer = new StringBuffer();
             // 将搜索字符及后面的+、空格、-等特殊符号去掉
             String keyWord = content.replaceAll("^" + Query.SEPARATOR + queryCmd + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "[\\+ ~!@#%^-_=]?", "");
-            message.setContent("正在查询单位详情 " + queryType + ":" + keyWord);
+
+            StringBuffer socketParams = new StringBuffer();
+            socketParams.append("uName=").append(keyWord);
+            socketParams.append("&token=").append(GasWebSocketClient.SOCKET_TOKEN);
+            socketParams.append("&qyType=").append(queryType);
+            CompanyDetailResMsg retMsg = getCompanyDetailResMsg(socketParams.toString(), 0);
+            if (0 == retMsg.getErrorCode()) {
+                buffer.append("搜索结果:").append(ENTER);
+                buffer.append(ENTER);
+                for (int i = 0; i < retMsg.getResult().size(); i++) {
+                    buffer.append(retMsg.getResult().get(i).toString()).append(ENTER);
+                }
+            } else {
+                buffer.append("系统请求socket出现异常:").append(retMsg.getErrorCode()).append(ENTER);
+            }
+            message.setContent(buffer.toString());
+
         } else {
             message.setContent("输入有误! ");
         }
@@ -54,5 +77,24 @@ public class CompanyDetailQuery extends Query {
         // 将消息对象转换成xml
         respXml = MessageService.messageToXml(message);
         return respXml;
+    }
+
+    /**
+     * @param socketParams
+     * @param times
+     * @return
+     */
+    private CompanyDetailResMsg getCompanyDetailResMsg(String socketParams, int times) {
+        logger.info("getCompanyDetailResMsg times=" + times);
+        QueryCompanyDetailConnect.sendMsg(socketParams.toString());
+        CompanyDetailResMsg messageObject = QueryCompanyDetailClient.messageObject;
+        if ((times) < 1 && (SocketFailCode.CODE_100001 == messageObject.getErrorCode()
+                || SocketFailCode.CODE_100002 == messageObject.getErrorCode())) {
+            logger.info("Bottle times=" + times);
+            GasWebSocketUtil.accessWSToken();
+            getCompanyDetailResMsg(socketParams, times + 1);
+        }
+        logger.info("getCompanyDetailResMsg messageObject=" + messageObject.getMessage());
+        return messageObject;
     }
 }

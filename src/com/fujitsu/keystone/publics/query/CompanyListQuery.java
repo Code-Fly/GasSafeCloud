@@ -63,7 +63,7 @@ public class CompanyListQuery extends Query {
                 buffer.append("搜索结果:").append(ENTER);
                 buffer.append(ENTER);
                 for (int i = 0; i < retMsg.getResult().size(); i++) {
-                    buffer.append(retMsg.getResult().get(i).getUnitName()).append(ENTER);
+                    buffer.append(i + 1 + "." + retMsg.getResult().get(i).getUnitName()).append(ENTER);
                 }
             } else {
                 buffer.append("系统请求socket出现异常:").append(retMsg.getErrorCode()).append(ENTER);
@@ -79,8 +79,6 @@ public class CompanyListQuery extends Query {
     }
 
     /**
-     * 流转跟踪
-     * 当token过期或者错误时 重新获得token，然后发送请求
      *
      * @param socketParams
      * @param times
