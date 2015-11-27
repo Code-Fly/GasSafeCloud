@@ -80,8 +80,6 @@ public class GasBarcodegetBottleConnect {
 			 System.in.read();
 		} catch (Exception e) {
 			logger.error("sendMsg(String msg) error " + uri,e);
-			getSession();
-    		sengMsgTwoTime(msg);
 		} 
 		logger.info("end sendMsg(String msg)");
 	}
