@@ -63,6 +63,7 @@ public class CompanyDetailQuery extends Query {
                 // 充装存储
                 if (Query.FILLING_STORAGE.equals(queryCmd)) {
                     for (int i = 0; i < retMsg.getResult().size(); i++) {
+                        logger.info(retMsg.getResult().get(i).toString());
                         buffer.append("==查询结果(" + i + 1 + ")==").append(ENTER);
                         buffer.append("授权编号:" + retMsg.getResult().get(i).getRnoId()).append(ENTER);
                         buffer.append("单位名称:" + retMsg.getResult().get(i).getUnitName()).append(ENTER);
@@ -82,7 +83,8 @@ public class CompanyDetailQuery extends Query {
                 // 配送运输
                 else if (Query.DISTRIBUTION_TRANSPORTATION.equals(queryCmd)) {
                     for (int i = 0; i < retMsg.getResult().size(); i++) {
-                        buffer.append("==查询结果(" + i + 1 + ")==").append(ENTER);
+                        logger.info(retMsg.getResult().get(i).toString());
+                        buffer.append("==查询结果(" + (i + 1) + ")==").append(ENTER);
                         buffer.append("授权编号:" + retMsg.getResult().get(i).getRnoId()).append(ENTER);
                         buffer.append("单位名称:" + retMsg.getResult().get(i).getUnitName()).append(ENTER);
                         buffer.append("企业社会信用:" + retMsg.getResult().get(i).getOrganizationCode()).append(ENTER);
@@ -99,7 +101,8 @@ public class CompanyDetailQuery extends Query {
                 // 检验监测
                 else if (Query.INSPECTION_TESTING.equals(queryCmd)) {
                     for (int i = 0; i < retMsg.getResult().size(); i++) {
-                        buffer.append("==查询结果(" + i + 1 + ")==").append(ENTER);
+                        logger.info(retMsg.getResult().get(i).toString());
+                        buffer.append("==查询结果(" + (i + 1) + ")==").append(ENTER);
                         buffer.append("授权编号:" + retMsg.getResult().get(i).getRnoId()).append(ENTER);
                         buffer.append("单位名称:" + retMsg.getResult().get(i).getUnitName()).append(ENTER);
                         buffer.append("企业社会信用:" + retMsg.getResult().get(i).getOrganizationCode()).append(ENTER);
