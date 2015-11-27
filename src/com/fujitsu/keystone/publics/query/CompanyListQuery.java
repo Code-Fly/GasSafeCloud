@@ -87,7 +87,7 @@ public class CompanyListQuery extends Query {
      * @return
      */
     private CompanyListResMsg getCompanyListResMsg(String socketParams, int times) {
-        logger.info("getBottleResMsg times=" + times);
+        logger.info("getCompanyListResMsg times=" + times);
         QueryCompanyListConnect.sendMsg(socketParams.toString());
         CompanyListResMsg messageObject = QueryCompanyListClient.messageObject;
         if ((times) < 1 && (SocketFailCode.CODE_100001 == messageObject.getErrorCode()
@@ -96,7 +96,7 @@ public class CompanyListQuery extends Query {
             GasWebSocketUtil.accessWSToken();
             getCompanyListResMsg(socketParams, times + 1);
         }
-        logger.info("getBottleResMsg messageObject=" + messageObject.getMessage());
+        logger.info("getCompanyListResMsg messageObject=" + messageObject.getMessage());
         return messageObject;
     }
 }
