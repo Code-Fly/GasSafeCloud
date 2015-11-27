@@ -15,6 +15,7 @@ import java.util.Map;
 /**
  * Created by Barrie on 15/11/27.
  */
+@ClientEndpoint
 public class QueryCompanyDetailClient {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
