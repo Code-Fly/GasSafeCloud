@@ -1,6 +1,6 @@
 package com.fujitsu.base.client.entity;
 
-public class BaseEntity extends com.fujitsu.base.entity.BaseEntity {
+public class BaseEntity {
     String message;
 
     int errorCode;

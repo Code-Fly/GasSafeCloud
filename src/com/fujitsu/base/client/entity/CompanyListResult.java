@@ -3,7 +3,7 @@ package com.fujitsu.base.client.entity;
 /**
  * Created by Barrie on 15/11/26.
  */
-public class CompanyListResult {
+public class CompanyListResult extends com.fujitsu.base.entity.BaseEntity {
     private String unitName;
 
     public String getUnitName() {
