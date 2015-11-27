@@ -49,9 +49,19 @@ public class CompanyListQuery extends Query {
         message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
 
         if (null != queryType) {
+            StringBuffer sengMsg = new StringBuffer();
             // 将搜索字符及后面的+、空格、-等特殊符号去掉
             String keyWord = content.replaceAll("^" + Query.SEPARATOR + queryCmd + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "[\\+ ~!@#%^-_=]?", "");
             message.setContent("正在查询单位列表 " + queryType + ":" + keyWord);
+            StringBuffer socketParams = new StringBuffer();
+            socketParams.append("uName=").append(keyWord)
+                    .append("&qyType=").append(queryType);
+            CompanyListResMsg retMsg = getCompanyListResMsg(socketParams.toString(), 0);
+            if (0 == retMsg.getErrorCode()) {
+                sengMsg.append(retMsg.getResult());
+            } else {
+                sengMsg.append("系统请求socket出现异常:").append(retMsg.getErrorCode());
+            }
         } else {
             message.setContent("输入有误! ");
         }
