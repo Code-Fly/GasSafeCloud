@@ -31,6 +31,10 @@ public class QueryCompanyListConnect {
 
 
     static {
+        getSession();
+    }
+
+    public static void getSession() {
         logger.info("start to connect " + uri);
         WebSocketContainer container = null;
         try {
@@ -52,11 +56,23 @@ public class QueryCompanyListConnect {
         logger.info("msg = " + msg);
         try {
             session.getBasicRemote().sendText(msg);
-            System.in.read();
             Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
-        } catch (IOException e) {
+            System.in.read();
+        } catch (Exception e) {
             logger.error("sendMsg(String msg) error " + uri, e);
-        } catch (InterruptedException e) {
+            getSession();
+            sendMsgTwoTime(msg);
+        }
+        logger.info("end sendMsg(String msg)");
+    }
+
+    public synchronized static void sendMsgTwoTime(String msg) {
+        logger.info("msg = " + msg);
+        try {
+            session.getBasicRemote().sendText(msg);
+            Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
+            System.in.read();
+        } catch (Exception e) {
             logger.error("sendMsg(String msg) error " + uri, e);
         }
         logger.info("end sendMsg(String msg)");

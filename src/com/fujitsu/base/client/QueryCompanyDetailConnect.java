@@ -1,15 +1,12 @@
 package com.fujitsu.base.client;
 
+import com.fujitsu.base.constants.Const.WebSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.fujitsu.base.constants.Const;
-import com.fujitsu.base.constants.Const.WebSocket;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
-import java.io.IOException;
 import java.net.URI;
 
 /**
@@ -24,6 +21,10 @@ public class QueryCompanyDetailConnect {
 
 
     static {
+        getSession();
+    }
+
+    public static void getSession() {
         logger.info("start to connect " + uri);
         WebSocketContainer container = null;
         try {
@@ -45,11 +46,23 @@ public class QueryCompanyDetailConnect {
         logger.info("msg = " + msg);
         try {
             session.getBasicRemote().sendText(msg);
-            System.in.read();
             Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
-        } catch (IOException e) {
+            System.in.read();
+        } catch (Exception e) {
             logger.error("sendMsg(String msg) error " + uri, e);
-        } catch (InterruptedException e) {
+            getSession();
+            sendMsgTwoTime(msg);
+        }
+        logger.info("end sendMsg(String msg)");
+    }
+
+    public synchronized static void sendMsgTwoTime(String msg) {
+        logger.info("msg = " + msg);
+        try {
+            session.getBasicRemote().sendText(msg);
+            Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
+            System.in.read();
+        } catch (Exception e) {
             logger.error("sendMsg(String msg) error " + uri, e);
         }
         logger.info("end sendMsg(String msg)");
