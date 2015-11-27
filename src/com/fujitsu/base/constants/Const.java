@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Barrie
  */
 public class Const {
+	
+	public static final long WEB_SOCKET_SLEEP = 500;
     /**
      * config file location
      */

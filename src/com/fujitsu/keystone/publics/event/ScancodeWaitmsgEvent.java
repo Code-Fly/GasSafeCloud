@@ -73,7 +73,7 @@ public class ScancodeWaitmsgEvent extends Event {
 			 .append("&bfrq=").append(messArray[5]);
 			 BarcodegetBottleResMsg barMsg = getBarResMsg(socketParams.toString(),0);
 			if (0 == barMsg.getErrorCode()) {
-				sengMsg.append( "气瓶使用证编号:").append(barMsg.getResult().get(0).getSyzbh())
+				sengMsg.append( "气瓶使用证编号:").append(barMsg.getResult().get(0).getSyzbh()).append(ENTER)
 		 		.append( "气瓶注册代码:").append(barMsg.getResult().get(0).getZcdm()).append(ENTER)
 		 		.append( "单位自有编号:").append(barMsg.getResult().get(0).getZybh()).append(ENTER)
 		 		.append( "气瓶充装单位(编号):").append(barMsg.getResult().get(0).getZybh()).append(ENTER)
@@ -172,7 +172,7 @@ public class ScancodeWaitmsgEvent extends Event {
 				|| SocketFailCode.CODE_100002 == messageObject.getErrorCode())){
 			logger.info("Bar times="+times);
 			GasWebSocketUtil.accessWSToken();
-			getBarResMsg(socketParams,1);
+			getBarResMsg(socketParams,times+1);
 		} 
 		logger.info("getBarResMsg messageObject="+messageObject.getMessage());
 		return messageObject;
@@ -192,7 +192,7 @@ public class ScancodeWaitmsgEvent extends Event {
 				|| SocketFailCode.CODE_100002 == messageObject.getErrorCode())){
 			logger.info("Bottle times="+times);
 			GasWebSocketUtil.accessWSToken();
-			getBottleResMsg(socketParams,1);
+			getBottleResMsg(socketParams,times+1);
 		} 
 		logger.info("getBottleResMsg messageObject="+messageObject.getMessage());
 		return messageObject;

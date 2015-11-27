@@ -12,6 +12,8 @@ import javax.websocket.WebSocketContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fujitsu.base.constants.Const;
+
 
 /**
  * @author VM
@@ -26,6 +28,10 @@ public class GasWebSocketConnect {
 	public  static Session session;
  
     static {
+    	getSession();
+    }
+    
+    public static void getSession(){
     	logger.info("start to connect " + uri);
         WebSocketContainer container = null;
         try {
@@ -42,14 +48,31 @@ public class GasWebSocketConnect {
         }
         logger.info("end to connect " + uri);
     }
+    
     public static void sengMsg(String msg){
     	try {
 			session.getBasicRemote().sendText(msg);
-			Thread.sleep(400);
+			 Thread.sleep(Const.WEB_SOCKET_SLEEP);
     	} catch (Exception e) {
     		logger.error("get web Socket Token Error",e);
+    		/**
+    		 * 发生错误重新获取session后重新发送消息
+    		 */
+    		getSession();
+    		sengMsgTwoTime(msg);
+    		
 		}
     }
+    
+    public static void sengMsgTwoTime(String msg){
+    	try {
+			session.getBasicRemote().sendText(msg);
+			 Thread.sleep(Const.WEB_SOCKET_SLEEP);
+    	} catch (Exception e) {
+    		logger.error("get web Socket TokenTwoTime Error",e);
+		}
+    }
+    
     public static void main(String[] mains){
     
     	try {

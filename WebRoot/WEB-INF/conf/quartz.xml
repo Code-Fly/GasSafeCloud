@@ -45,8 +45,6 @@
 				<ref bean="getWSTokenTrigger" /> 
 			</list>
 		</property>
-		
-		
 	</bean>
 
 </beans>

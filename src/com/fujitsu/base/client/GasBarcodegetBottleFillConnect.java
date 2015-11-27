@@ -13,6 +13,8 @@ import javax.websocket.WebSocketContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fujitsu.base.constants.Const;
+
 /**
  * @author Administrator
  *通过扫描气瓶二维码获取气瓶最后2笔灌装记录信息
@@ -26,6 +28,10 @@ private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_BarcodegetBottleFill"
 	
 
     static {
+    	getSession();
+    }
+    
+    public static void getSession(){
     	logger.info("start to connect " + uri);
         WebSocketContainer container = null;
         try {
@@ -47,10 +53,23 @@ private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_BarcodegetBottleFill"
 		logger.info("msg = " + msg);
 		try {
 			session.getBasicRemote().sendText(msg);
-			Thread.sleep(400);
-		} catch (IOException e) {
+			Thread.sleep(Const.WEB_SOCKET_SLEEP);
+			System.in.read();
+		} catch (Exception e) {
 			logger.error("sendMsg(String msg) error " + uri,e);
-		} catch (InterruptedException e) {
+			getSession();
+			sendMsgTwoTime(msg);
+		} 
+		logger.info("end sendMsg(String msg)");
+	}
+	
+	public static synchronized void sendMsgTwoTime(String msg){
+		logger.info("msg = " + msg);
+		try {
+			session.getBasicRemote().sendText(msg);
+			Thread.sleep(Const.WEB_SOCKET_SLEEP);
+			System.in.read();
+		} catch (Exception e) {
 			logger.error("sendMsg(String msg) error " + uri,e);
 		} 
 		logger.info("end sendMsg(String msg)");
