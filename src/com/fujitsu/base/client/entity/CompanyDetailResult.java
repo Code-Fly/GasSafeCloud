@@ -3,8 +3,14 @@ package com.fujitsu.base.client.entity;
 /**
  * Created by Barrie on 15/11/27.
  */
-public class CompanyDetailResult {
-    // C
+public class CompanyDetailResult extends com.fujitsu.base.entity.BaseEntity {
+    private String fillAddress;
+    private String fillType;
+    private String qybh;
+
+    private String licenceId;
+    private String pszl;
+
     private String areaCode;
     private String businessCode;
     private String classID;
@@ -16,6 +22,46 @@ public class CompanyDetailResult {
     private String rnoId;
     private String unitAddress;
     private String unitName;
+
+    public String getFillAddress() {
+        return fillAddress;
+    }
+
+    public void setFillAddress(String fillAddress) {
+        this.fillAddress = fillAddress;
+    }
+
+    public String getFillType() {
+        return fillType;
+    }
+
+    public void setFillType(String fillType) {
+        this.fillType = fillType;
+    }
+
+    public String getQybh() {
+        return qybh;
+    }
+
+    public void setQybh(String qybh) {
+        this.qybh = qybh;
+    }
+
+    public String getLicenceId() {
+        return licenceId;
+    }
+
+    public void setLicenceId(String licenceId) {
+        this.licenceId = licenceId;
+    }
+
+    public String getPszl() {
+        return pszl;
+    }
+
+    public void setPszl(String pszl) {
+        this.pszl = pszl;
+    }
 
     public String getAreaCode() {
         return areaCode;
