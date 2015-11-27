@@ -1,7 +1,7 @@
 package com.fujitsu.base.client;
 
 import com.fujitsu.base.client.entity.CompanyDetailResMsg;
-import com.fujitsu.base.client.entity.CompanyListResult;
+import com.fujitsu.base.client.entity.CompanyDetailResult;
 import com.fujitsu.base.client.entity.WebSocketResFiled;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -38,7 +38,7 @@ public class QueryCompanyDetailClient {
             JsonConfig jsonConfig = new JsonConfig();
             jsonConfig.setRootClass(CompanyDetailResMsg.class);
             Map<String, Class> classMap = new HashMap<String, Class>();
-            classMap.put("result", CompanyListResult.class);
+            classMap.put("result", CompanyDetailResult.class);
             jsonConfig.setClassMap(classMap);
             messageObject = (CompanyDetailResMsg) JSONObject.toBean(object, jsonConfig);
             QueryCompanyDetailClient.messageObject = messageObject;
