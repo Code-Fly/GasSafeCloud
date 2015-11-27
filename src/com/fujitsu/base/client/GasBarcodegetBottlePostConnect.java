@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fujitsu.base.constants.Const.WebSocket;
 
+import java.net.URI;
 
 
 /**

@@ -10,6 +10,7 @@ import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
+import com.fujitsu.base.constants.Const;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,8 +54,8 @@ public class GasBarcodegetBottleConnect {
 		logger.info("msg = " + msg);
 		try {
 			session.getBasicRemote().sendText(msg);
-			
-			 Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
+
+			Thread.sleep(Const.WebSocket.WEB_SOCKET_SLEEP);
 			 System.in.read();
 		} catch (Exception e) {
 			logger.error("sendMsg(String msg) error " + uri,e);
@@ -68,7 +69,7 @@ public class GasBarcodegetBottleConnect {
 		logger.info("msg = " + msg);
 		try {
 			session.getBasicRemote().sendText(msg);
-			 Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);
+			Thread.sleep(Const.WebSocket.WEB_SOCKET_SLEEP);
 			 System.in.read();
 		} catch (Exception e) {
 			logger.error("sendMsg(String msg) error " + uri,e);
