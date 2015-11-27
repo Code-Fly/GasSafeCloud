@@ -79,7 +79,6 @@ public class GasBarcodegetBottlePostConnect {
 			System.in.read();
 		} catch (Exception e) {
 			logger.error("sendMsg(String msg) error " + uri,e);
-			getSession();
 		} 
 		logger.info("end sendMsg(String msg)");
 	}
