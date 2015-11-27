@@ -1,5 +1,6 @@
 package com.fujitsu.keystone.publics.query;
 
+import com.fujitsu.base.client.GasWebSocketClient;
 import com.fujitsu.base.client.QueryCompanyListClient;
 import com.fujitsu.base.client.QueryCompanyListConnect;
 import com.fujitsu.base.client.entity.CompanyListResMsg;
@@ -54,8 +55,9 @@ public class CompanyListQuery extends Query {
             String keyWord = content.replaceAll("^" + Query.SEPARATOR + queryCmd + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "[\\+ ~!@#%^-_=]?", "");
             message.setContent("正在查询单位列表 " + queryType + ":" + keyWord);
             StringBuffer socketParams = new StringBuffer();
-            socketParams.append("uName=").append(keyWord)
-                    .append("&qyType=").append(queryType);
+            socketParams.append("uName=").append(keyWord);
+            socketParams.append("&token=").append(GasWebSocketClient.SOCKET_TOKEN);
+            socketParams.append("&qyType=").append(queryType);
             CompanyListResMsg retMsg = getCompanyListResMsg(socketParams.toString(), 0);
             if (0 == retMsg.getErrorCode()) {
                 sengMsg.append(retMsg.getResult());
