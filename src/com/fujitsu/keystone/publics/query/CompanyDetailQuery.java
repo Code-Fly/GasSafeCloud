@@ -84,7 +84,6 @@ public class CompanyDetailQuery extends Query {
                 else if (Query.DISTRIBUTION_TRANSPORTATION.equals(queryCmd)) {
                     for (int i = 0; i < retMsg.getResult().size(); i++) {
                         logger.info(retMsg.getResult().get(i).toString());
-                        int count = i + 1;
                         buffer.append("==查询结果(" + (i + 1) + ")==").append(ENTER);
                         buffer.append("授权编号:" + retMsg.getResult().get(i).getRnoId()).append(ENTER);
                         buffer.append("单位名称:" + retMsg.getResult().get(i).getUnitName()).append(ENTER);
