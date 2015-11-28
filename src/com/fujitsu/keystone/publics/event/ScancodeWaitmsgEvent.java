@@ -128,32 +128,6 @@ public class ScancodeWaitmsgEvent extends Event {
 					} else {
 						sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
 					}
-		} else if (MenuService.QP_LZGZ.equals(eventKey)) {
-			  StringBuffer socketParams = new StringBuffer();
-				 socketParams.append("syzbh=").append(messArray[0])
-				 .append("&zcdm=").append(messArray[1])
-				 .append("&token=").append(GasWebSocketClient.SOCKET_TOKEN)
-				 .append("&pcode=").append(messArray[2])
-				 .append("&pid=").append(messArray[3])
-				 .append("&pDate=").append(messArray[4])
-				 .append("&bfrq=").append(messArray[5]);
-				 BarcodegetBottlePostResMsg barMsg = getBottlePostResMsg(socketParams.toString(),0);
-					if (0 == barMsg.getErrorCode()) {
-						sengMsg.append( "气瓶编号 :").append(barMsg.getResult().get(0).getPid()).append(ENTER)
-				 		.append( "气瓶制造单位:").append(barMsg.getResult().get(0).getpCode()).append(ENTER)
-				 		.append( "配送日期:").append(barMsg.getResult().get(0).getPsStart()).append(ENTER)
-				 		.append( "配送单位:").append(barMsg.getResult().get(0).getUnitName()).append(ENTER)
-				 		.append( "用户:").append(barMsg.getResult().get(0).getUserName()).append(ENTER)
-				 		.append( "用户位置:").append(barMsg.getResult().get(0).getUserinfo()).append(ENTER);
-						if(barMsg.getResult().size()>1){
-							sengMsg.append( "配送日期:").append(barMsg.getResult().get(1).getPsStart()).append(ENTER)
-					 		.append( "配送单位:").append(barMsg.getResult().get(1).getUnitName()).append(ENTER)
-					 		.append( "用户:").append(barMsg.getResult().get(1).getUserName()).append(ENTER)
-					 		.append( "用户位置:").append(barMsg.getResult().get(1).getUserinfo());
-						}
-					} else {
-						sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
-					}
 		}
 		else if (MenuService.QP_LZGZ.equals(eventKey)) {
 			  StringBuffer socketParams = new StringBuffer();
