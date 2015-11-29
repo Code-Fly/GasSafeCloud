@@ -37,8 +37,6 @@ public class GasWebSocketClient {
     public synchronized  void onMessage(String message) {
 	    logger.info("Client onMessage: " + message);
 	     // 防止重复获得token 
-	    if(!"".equals(SOCKET_TOKEN)) 
-	    	return;
         WebSocketResponseMessage messageObject = new WebSocketResponseMessage();
 		messageObject = (WebSocketResponseMessage)JSONObject.toBean(JSONObject.fromObject(message),WebSocketResponseMessage.class);
 		if (0== messageObject.getErrorCode()) {
