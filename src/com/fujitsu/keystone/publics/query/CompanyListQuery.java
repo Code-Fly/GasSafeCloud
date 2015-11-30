@@ -60,7 +60,7 @@ public class CompanyListQuery extends Query {
             socketParams.append("&qyType=").append(queryType);
             CompanyListResMsg retMsg = getCompanyListResMsg(socketParams.toString(), 0);
             if (0 == retMsg.getErrorCode()) {
-                buffer.append("搜索结果:").append(ENTER);
+                buffer.append("单位列表:").append(ENTER);
                 buffer.append(ENTER);
                 for (int i = 0; i < retMsg.getResult().size(); i++) {
                     buffer.append(i + 1 + "." + retMsg.getResult().get(i).getUnitName()).append(ENTER);
