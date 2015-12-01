@@ -83,13 +83,26 @@ public class ScancodeWaitmsgEvent extends Event {
 		 		.append( "气瓶制造单位:").append(barMsg.getResult().get(0).getPnoName()).append(ENTER)
 		 		.append( "气瓶品种:").append(barMsg.getResult().get(0).getClassName()).append(ENTER)
 		 		.append( "气瓶型号:").append(barMsg.getResult().get(0).getTypeName()).append(ENTER)
+		 		.append( "气瓶编号:").append(barMsg.getResult().get(0).getPid()).append(ENTER)
 		 		.append( "充装介质:").append(barMsg.getResult().get(0).getMediumName()).append(ENTER)
 		 		.append( "出厂日期:").append(barMsg.getResult().get(0).getpDate()).append(ENTER)
 		 		.append( "上检日期:").append(barMsg.getResult().get(0).getfDate()).append(ENTER)
 		 		.append( "检验周期:").append(barMsg.getResult().get(0).getJyzq()+"年").append(ENTER)
 		 		.append( "报废年限:").append(barMsg.getResult().get(0).getBf()).append(ENTER)
 		 		.append( "下检日期:").append(barMsg.getResult().get(0).getXjrq()).append(ENTER)
-		 		.append( "报废日期:").append(barMsg.getResult().get(0).getBfrq());
+		 		.append( "报废日期:").append(barMsg.getResult().get(0).getBfrq()).append(ENTER);
+		 		switch (barMsg.getResult().get(0).getStatus()) {
+				case 0:
+					sengMsg.append( "气瓶当前状态:").append("正常");
+					break;
+				case 1:
+					sengMsg.append( "气瓶当前状态:").append("过期");
+					break;
+				case 2:
+					sengMsg.append( "气瓶当前状态:").append("报废");
+					break;
+				}
+		 		
 			} else {
 				sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
 			}
