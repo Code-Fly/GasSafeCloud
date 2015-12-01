@@ -50,6 +50,7 @@ public class GasWebSocketConnect {
     }
     
     public static void sengMsg(String msg){
+    	logger.info("msg="+msg);
     	try {
 			session.getBasicRemote().sendText(msg);
 			 Thread.sleep(WebSocket.WEB_SOCKET_SLEEP);

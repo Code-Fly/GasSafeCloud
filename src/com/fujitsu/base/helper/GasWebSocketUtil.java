@@ -17,6 +17,6 @@ public class GasWebSocketUtil {
 	 * 获取webSocket Token
 	 */
 	public static void accessWSToken(){
-		GasWebSocketConnect.sengMsg("authorizeID="+WebSocket.AUTHORIZEID+"&authorizeType="+WebSocket.WEB_SOCKET_SLEEP);
+		GasWebSocketConnect.sengMsg("authorizeID="+WebSocket.AUTHORIZEID+"&authorizeType="+WebSocket.AUTHORIZETYPE);
 	}
 }
