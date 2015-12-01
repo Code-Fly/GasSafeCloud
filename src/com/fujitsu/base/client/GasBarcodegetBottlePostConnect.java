@@ -21,7 +21,7 @@ import java.net.URI;
  *
  */
 public class GasBarcodegetBottlePostConnect {
-	private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_BarcodegetBottlePost";
+	private static String uri = WebSocket.URL+"/ccst_WC_BarcodegetBottlePost";
 	
 	private static Logger logger = LoggerFactory.getLogger(GasBarcodegetBottlePostConnect.class);
 	

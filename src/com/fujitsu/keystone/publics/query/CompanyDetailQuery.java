@@ -63,6 +63,7 @@ public class CompanyDetailQuery extends Query {
                 // 充装存储
                 if (Query.FILLING_STORAGE.equals(queryCmd)) {
                     buffer.append("单位信息:").append(ENTER);
+                    buffer.append(ENTER);
                     for (int i = 0; i < retMsg.getResult().size(); i++) {
                         logger.info(retMsg.getResult().get(i).toString());
                         buffer.append("授权编号:" + retMsg.getResult().get(i).getRnoId()).append(ENTER);
@@ -83,6 +84,7 @@ public class CompanyDetailQuery extends Query {
                 // 配送运输
                 else if (Query.DISTRIBUTION_TRANSPORTATION.equals(queryCmd)) {
                     buffer.append("单位信息:").append(ENTER);
+                    buffer.append(ENTER);
                     for (int i = 0; i < retMsg.getResult().size(); i++) {
                         logger.info(retMsg.getResult().get(i).toString());
                         buffer.append("授权编号:" + retMsg.getResult().get(i).getRnoId()).append(ENTER);
@@ -101,6 +103,7 @@ public class CompanyDetailQuery extends Query {
                 // 检验监测
                 else if (Query.INSPECTION_TESTING.equals(queryCmd)) {
                     buffer.append("单位信息:").append(ENTER);
+                    buffer.append(ENTER);
                     for (int i = 0; i < retMsg.getResult().size(); i++) {
                         logger.info(retMsg.getResult().get(i).toString());
                         buffer.append("授权编号:" + retMsg.getResult().get(i).getRnoId()).append(ENTER);
