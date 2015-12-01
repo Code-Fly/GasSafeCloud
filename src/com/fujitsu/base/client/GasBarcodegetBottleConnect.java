@@ -11,6 +11,8 @@ import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
 import com.fujitsu.base.constants.Const;
+import com.fujitsu.base.constants.Const.WebSocket;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class GasBarcodegetBottleConnect {
-	private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_BarcodegetBottle";
+	private static String uri = WebSocket.URL+"/ccst_WC_BarcodegetBottle";
 	
 	private static Logger logger = LoggerFactory.getLogger(GasBarcodegetBottleConnect.class);
 	

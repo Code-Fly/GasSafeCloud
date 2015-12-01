@@ -5,6 +5,7 @@ package com.fujitsu.base.helper;
 
 
 import com.fujitsu.base.client.GasWebSocketConnect;
+import com.fujitsu.base.constants.Const.WebSocket;
 
 /**
  * @author Administrator
@@ -16,6 +17,6 @@ public class GasWebSocketUtil {
 	 * 获取webSocket Token
 	 */
 	public static void accessWSToken(){
-		GasWebSocketConnect.sengMsg("authorizeID="+"o6_bmjrPTlm6_2sgVt7hMZOPfL2Mdddd"+"&authorizeType="+"WebChat_QPSafe");
+		GasWebSocketConnect.sengMsg("authorizeID="+WebSocket.AUTHORIZEID+"&authorizeType="+WebSocket.WEB_SOCKET_SLEEP);
 	}
 }

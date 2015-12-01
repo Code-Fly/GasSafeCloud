@@ -13,7 +13,7 @@ import java.net.URI;
  * Created by Barrie on 15/11/27.
  */
 public class QueryCompanyDetailConnect {
-    private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_GetDWInfo";
+    private static String uri = WebSocket.URL+"/ccst_WC_GetDWInfo";
 
     private static Logger logger = LoggerFactory.getLogger(QueryCompanyDetailConnect.class);
 

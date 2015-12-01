@@ -18,7 +18,7 @@ import com.fujitsu.base.constants.Const.WebSocket;
  *通过扫描气瓶二维码获取气瓶最后2笔灌装记录信息
  */
 public class GasBarcodegetBottleFillConnect {
-private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_BarcodegetBottleFill";
+private static String uri = WebSocket.URL+"/ccst_WC_BarcodegetBottleFill";
 	
 	private static Logger logger = LoggerFactory.getLogger(GasBarcodegetBottleFillConnect.class);
 	

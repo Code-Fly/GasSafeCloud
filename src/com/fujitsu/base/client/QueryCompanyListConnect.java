@@ -1,29 +1,20 @@
 package com.fujitsu.base.client;
 
-import com.fujitsu.base.client.entity.BarcodegetBottleResMsg;
-import com.fujitsu.base.client.entity.BarcodegetBottleResult;
-import com.fujitsu.base.client.entity.CompanyListResMsg;
-import com.fujitsu.base.client.entity.CompanyListResult;
 import com.fujitsu.base.constants.Const.WebSocket;
 
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
-import java.io.IOException;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Barrie on 15/11/26.
  */
 public class QueryCompanyListConnect {
-    private static String uri = "ws://t.qpsafe.cn:9900/ccst_WC_GetDWList";
+    private static String uri = WebSocket.URL+"/ccst_WC_GetDWList";
 
     private static Logger logger = LoggerFactory.getLogger(QueryCompanyListConnect.class);
 

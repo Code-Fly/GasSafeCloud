@@ -120,13 +120,11 @@ public class Const {
     	
     	public static final long WEB_SOCKET_SLEEP = 800;
     	
-        public static final String CCST_GETTOKEN = ConfigUtil.getProperty(WEBSOCKET_CONF, "ccst_getToken");
-
         public static final String AUTHORIZEID = ConfigUtil.getProperty(WEBSOCKET_CONF, "authorizeID");
 
         public static final String AUTHORIZETYPE = ConfigUtil.getProperty(WEBSOCKET_CONF, "authorizeType");
 
-        public static final String CCST_WC_BARCODEGETBOTTLE = ConfigUtil.getProperty(WEBSOCKET_CONF, "ccst_WC_BarcodegetBottle");
+        public static final String URL = ConfigUtil.getProperty(WEBSOCKET_CONF, "URL");
 
     }
 

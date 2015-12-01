@@ -21,7 +21,7 @@ import com.fujitsu.base.constants.Const.WebSocket;
  */
 public class GasWebSocketConnect {
 	
-	private static String uri = "ws://t.qpsafe.cn:9900/ccst_getToken";
+	private static String uri = WebSocket.URL+"/ccst_getToken";
 	
 	private static Logger logger = LoggerFactory.getLogger(GasWebSocketConnect.class);
 	
