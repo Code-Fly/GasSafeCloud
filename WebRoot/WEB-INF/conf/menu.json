@@ -59,12 +59,12 @@
       "name": "服务",
       "sub_button": [
         {
-          "type": "scancode_push",
+          "type": "scancode_waitmsg",
           "name": "认识气瓶",
           "key": "FW_RSQP"
         },
         {
-          "type": "scancode_push",
+          "type": "scancode_waitmsg",
           "name": "用气安全",
           "key": "FW_YQAQ"
         },
@@ -72,6 +72,16 @@
           "type": "click",
           "name": "咨询投诉",
           "key": "FW_ZXTS"
+        },
+        {
+          "type": "view",
+          "name": "安全云",
+          "url": "http://weweb.qpsafe.cn/"
+        },
+        {
+          "type": "view",
+          "name": "瓶安社区",
+          "url": "http://weweb.ppbpa.cn/"
         }
       ]
     }
