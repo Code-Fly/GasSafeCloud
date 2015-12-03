@@ -79,8 +79,8 @@ public class ScancodeWaitmsgEvent extends Event {
 				sengMsg.append( "气瓶使用证编号:").append(barMsg.getResult().get(0).getSyzbh()).append(ENTER)
 		 		.append( "气瓶注册代码:").append(barMsg.getResult().get(0).getZcdm()).append(ENTER)
 		 		.append( "单位自有编号:").append(barMsg.getResult().get(0).getZybh()).append(ENTER)
-		 		.append( "气瓶充装单位(编号):").append(barMsg.getResult().get(0).getZybh()).append(ENTER)
-		 		.append( "气瓶制造单位:").append(barMsg.getResult().get(0).getPnoName()).append(ENTER)
+		 		.append( "气瓶充装单位编号:").append(barMsg.getResult().get(0).getRno()).append(ENTER)
+		 		.append( "气瓶制造单位代号:").append(messArray[2]).append(ENTER)
 		 		.append( "气瓶品种:").append(barMsg.getResult().get(0).getClassName()).append(ENTER)
 		 		.append( "气瓶型号:").append(barMsg.getResult().get(0).getTypeName()).append(ENTER)
 		 		.append( "气瓶编号:").append(barMsg.getResult().get(0).getPid()).append(ENTER)
@@ -158,12 +158,14 @@ public class ScancodeWaitmsgEvent extends Event {
 				 		.append( "配送日期:").append(barMsg.getResult().get(0).getPsStart()).append(ENTER)
 				 		.append( "配送单位:").append(barMsg.getResult().get(0).getUnitName()).append(ENTER)
 				 		.append( "用户:").append(barMsg.getResult().get(0).getUserName()).append(ENTER)
-				 		.append( "用户位置:").append(barMsg.getResult().get(0).getUserinfo()).append(ENTER);
+				 		.append( "用户位置:").append(barMsg.getResult().get(0).getUserinfo()).append(ENTER)
+				 		.append( "灌装量:").append(barMsg.getResult().get(0).getFillWeight()).append(ENTER);
 						if(barMsg.getResult().size()>1){
 							sengMsg.append( "配送日期:").append(barMsg.getResult().get(1).getPsStart()).append(ENTER)
 					 		.append( "配送单位:").append(barMsg.getResult().get(1).getUnitName()).append(ENTER)
 					 		.append( "用户:").append(barMsg.getResult().get(1).getUserName()).append(ENTER)
-					 		.append( "用户位置:").append(barMsg.getResult().get(1).getUserinfo());
+					 		.append( "用户位置:").append(barMsg.getResult().get(1).getUserinfo()).append(ENTER)
+							.append( "灌装量:").append(barMsg.getResult().get(1).getFillWeight());
 						}
 					} else {
 						sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
