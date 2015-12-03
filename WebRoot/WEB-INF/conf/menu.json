@@ -64,11 +64,6 @@
           "key": "FW_RSQP"
         },
         {
-          "type": "scancode_waitmsg",
-          "name": "用气安全",
-          "key": "FW_YQAQ"
-        },
-        {
           "type": "click",
           "name": "咨询投诉",
           "key": "FW_ZXTS"
