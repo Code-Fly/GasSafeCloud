@@ -210,6 +210,34 @@ public class ScancodeWaitmsgEvent extends Event {
                 sengMsg.append("系统请求socket出现异常:").append(messageObject.getErrorCode());
             }
         }
+        else if (MenuService.QP_AQDW.equals(eventKey)) {
+        	 StringBuffer socketParams = new StringBuffer();
+             socketParams.append("token=").append(GasWebSocketClient.SOCKET_TOKEN)
+                     .append("&pCode=").append(messArray[2])
+                     .append("&pid=").append(messArray[3])
+                     .append("&pDate=").append(messArray[4]);
+             BarcodegetBottlePsafeResMsg messageObject = getGasBarcodegetBottlePsafe(socketParams.toString(), 0);
+             if (0 == messageObject.getErrorCode()) {
+                 sengMsg.append("气瓶制造单位代号:").append(messageObject.getResult().get(0).getpCode()).append(ENTER)
+                         .append("气瓶使用证编号 :").append(messageObject.getResult().get(0).getSyzbh()).append(ENTER)
+                         .append("气瓶注册代码:").append(messageObject.getResult().get(0).getZcdm()).append(ENTER)
+                         .append("气瓶结构:").append(messageObject.getResult().get(0).getQpStructureName()).append(ENTER)
+                         .append("气瓶品种:").append(messageObject.getResult().get(0).getClassName()).append(ENTER)
+                         .append("气瓶型号:").append(messageObject.getResult().get(0).getTypeName()).append(ENTER)
+                         .append("气瓶编号:").append(messageObject.getResult().get(0).getPid()).append(ENTER)
+                         .append("充装介质:").append(messageObject.getResult().get(0).getMediumName()).append(ENTER)
+                         .append("出厂日期:").append(messageObject.getResult().get(0).getpDate()).append(ENTER)
+                         .append("上检日期:").append(messageObject.getResult().get(0).getfDate()).append(ENTER)
+                         .append("下检日期:").append(messageObject.getResult().get(0).getXjrq()).append(ENTER)
+                         .append("报废日期:").append(messageObject.getResult().get(0).getBfrq()).append(ENTER)
+                         .append(" 用户:").append(messageObject.getResult().get(0).getUserName()).append(ENTER)
+                         .append("用户位置:").append(messageObject.getResult().get(0).getUserInfo()).append(ENTER)
+                         .append("用户联系方式:").append(messageObject.getResult().get(0).getPhone());
+                
+             } else {
+                 sengMsg.append("系统请求socket出现异常:").append(messageObject.getErrorCode());
+             }
+        }
 
         logger.info("setContent:" + sengMsg.toString());
         message.setContent(sengMsg.toString());
@@ -319,6 +347,21 @@ public class ScancodeWaitmsgEvent extends Event {
             getGasQPReadingURLResMsg(socketParams, times + 1);
         }
         logger.info("getGasQPReadingURLResMsg messageObject=" + messageObject.getMessage());
+        return messageObject;
+    }
+    
+    
+    private BarcodegetBottlePsafeResMsg getGasBarcodegetBottlePsafe(String socketParams, int times) {
+        logger.info("getGasBarcodegetBottlePsafe times=" + times);
+        GasBarcodegetBottlePsafeConnect.sendMsg(socketParams.toString());
+        BarcodegetBottlePsafeResMsg messageObject = GasBarcodegetBottlePsafeClient.messageObject;
+        if ((times) < 1 && (SocketFailCode.CODE_100001 == messageObject.getErrorCode()
+                || SocketFailCode.CODE_100002 == messageObject.getErrorCode())) {
+            logger.info("Bottle times=" + times);
+            GasWebSocketUtil.accessWSToken();
+            getGasBarcodegetBottlePsafe(socketParams, times + 1);
+        }
+        logger.info("getGasBarcodegetBottlePsafe messageObject=" + messageObject.getMessage());
         return messageObject;
     }
 
