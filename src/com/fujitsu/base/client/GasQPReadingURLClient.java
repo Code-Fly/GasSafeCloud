@@ -4,10 +4,13 @@ import com.fujitsu.base.client.entity.GasQPReadingURLResMsg;
 import com.fujitsu.base.client.entity.GasQPReadingURLResult;
 import com.fujitsu.base.client.entity.WebSocketResFiled;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.websocket.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Barrie on 15/12/3.
@@ -33,7 +36,12 @@ public class GasQPReadingURLClient {
             messageObject.setMessage((String) object.get(WebSocketResFiled.MESSAGE));
             GasQPReadingURLClient.messageObject = messageObject;
         } else {
-            messageObject = (GasQPReadingURLResMsg) JSONObject.toBean(object, GasQPReadingURLResult.class);
+            JsonConfig jsonConfig = new JsonConfig();
+            jsonConfig.setRootClass(GasQPReadingURLResMsg.class);
+            Map<String, Class> classMap = new HashMap<String, Class>();
+            classMap.put("result", GasQPReadingURLResult.class);
+            jsonConfig.setClassMap(classMap);
+            messageObject = (GasQPReadingURLResMsg) JSONObject.toBean(object, jsonConfig);
             GasQPReadingURLClient.messageObject = messageObject;
         }
     }
