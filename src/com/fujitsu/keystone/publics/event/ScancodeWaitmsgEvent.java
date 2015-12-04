@@ -12,6 +12,7 @@ import net.sf.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 public class ScancodeWaitmsgEvent extends Event {
 
@@ -137,19 +138,15 @@ public class ScancodeWaitmsgEvent extends Event {
             BarcodegetBottlePostResMsg barMsg = getBottlePostResMsg(socketParams.toString(), 0);
             if (0 == barMsg.getErrorCode()) {
                 sengMsg.append("气瓶编号 :").append(barMsg.getResult().get(0).getPid()).append(ENTER)
-                        .append("气瓶制造单位:").append(barMsg.getResult().get(0).getpCode()).append(ENTER)
-                        .append("配送日期:").append(barMsg.getResult().get(0).getPsStart()).append(ENTER)
-                        .append("配送单位:").append(barMsg.getResult().get(0).getUnitName()).append(ENTER)
-                        .append("用户:").append(barMsg.getResult().get(0).getUserName()).append(ENTER)
-                        .append("用户位置:").append(barMsg.getResult().get(0).getUserinfo()).append(ENTER)
-                        .append("灌装量:").append(barMsg.getResult().get(0).getFillWeight()).append(ENTER);
-                if (barMsg.getResult().size() > 1) {
-                    sengMsg.append("配送日期:").append(barMsg.getResult().get(1).getPsStart()).append(ENTER)
-                            .append("配送单位:").append(barMsg.getResult().get(1).getUnitName()).append(ENTER)
-                            .append("用户:").append(barMsg.getResult().get(1).getUserName()).append(ENTER)
-                            .append("用户位置:").append(barMsg.getResult().get(1).getUserinfo()).append(ENTER)
-                            .append("灌装量:").append(barMsg.getResult().get(1).getFillWeight());
-                }
+                        .append("气瓶制造单位:").append(barMsg.getResult().get(0).getpCode()).append(ENTER);
+                        List<BarcodegetBottlePostResult> results  = barMsg.getResult();
+	                    for(BarcodegetBottlePostResult result :results ) {
+	                    	 sengMsg.append("配送日期:").append(result.getPsStart()).append(ENTER)
+	                         .append("配送单位:").append(result.getUnitName()).append(ENTER)
+	                         .append("用户:").append(result.getUserName()).append(ENTER)
+	                         .append("用户位置:").append(result.getUserinfo()).append(ENTER)
+	                         .append("灌装量:").append(result.getFillWeight()).append(ENTER);
+	                    }
             } else {
                 sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
             }
