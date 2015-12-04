@@ -202,7 +202,7 @@ public class ScancodeWaitmsgEvent extends Event {
             GasQPReadingURLResMsg messageObject = getGasQPReadingURLResMsg(socketParams.toString(), 0);
             if (0 == messageObject.getErrorCode()) {
                 sengMsg.append("请点击下面的链接进入我们的网站 :").append(ENTER);
-                sengMsg.append(messageObject.getResult().getQpUrl()).append(ENTER);
+                sengMsg.append(messageObject.getResult().getGasUrl()).append(ENTER);
             } else {
                 sengMsg.append("系统请求socket出现异常:").append(messageObject.getErrorCode());
             }
