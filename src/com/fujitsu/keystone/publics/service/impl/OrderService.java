@@ -55,7 +55,7 @@ public class OrderService extends BaseService implements IOrderService {
         if (0 == request.size()) {
             response = HttpClientUtil.doGet(url, "UTF-8");
         } else {
-            response = HttpClientUtil.doGet(url, request.toString(), "UTF-8");
+            response = HttpClientUtil.doGet(url, request, "UTF-8");
         }
 
 
