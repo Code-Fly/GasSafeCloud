@@ -89,12 +89,9 @@ public class CoreService extends BaseService implements ICoreService {
 
         String url = Const.PublicPlatform.URL_GET_ACCESS_TOKEN.replace("APPID", appid).replace("APPSECRET", appsecret);
 
-        JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", null);
+        String response = HttpClientUtil.doPost(url, "UTF-8");
 
-        if (null == response) {
-            throw new ConnectionFailedException();
-        }
-        return response;
+        return JSONObject.fromObject(response);
     }
 
     public JSONObject getJsapiTicket(String accessToken) throws ConnectionFailedException {
@@ -102,12 +99,9 @@ public class CoreService extends BaseService implements ICoreService {
 
         String url = Const.PublicPlatform.URL_JSAPI_TICKET.replace("ACCESS_TOKEN", accessToken);
 
-        JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", null);
+        String response = HttpClientUtil.doPost(url, "UTF-8");
 
-        if (null == response) {
-            throw new ConnectionFailedException();
-        }
-        return response;
+        return JSONObject.fromObject(response);
     }
 
     /**

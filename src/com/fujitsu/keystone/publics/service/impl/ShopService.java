@@ -37,13 +37,9 @@ public class ShopService extends BaseService implements IShopService {
         request.put("begin", begin);
         request.put("limit", limit);
 
-        JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
+        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
 
-        if (null == response) {
-            throw new ConnectionFailedException();
-        }
-
-        return response;
+        return JSONObject.fromObject(response);
     }
 
     public JSONObject getShopList(HttpServletRequest request, String accessToken, String begin, String limit) throws ConnectionFailedException {
@@ -85,12 +81,9 @@ public class ShopService extends BaseService implements IShopService {
         JSONObject request = new JSONObject();
         request.put("poi_id", poi_id);
 
-        JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
+        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
 
-        if (null == response) {
-            throw new ConnectionFailedException();
-        }
-        return response;
+        return JSONObject.fromObject(response);
     }
 
     public JSONObject getShop(HttpServletRequest request, String accessToken, String poi_id) throws ConnectionFailedException {

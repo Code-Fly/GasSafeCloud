@@ -41,12 +41,9 @@ public class MaterialService extends BaseService implements IMaterialService {
         request.put("offset", offset);
         request.put("count", count);
 
-        JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
+        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
 
-        if (null == response) {
-            throw new ConnectionFailedException();
-        }
-        return response;
+        return JSONObject.fromObject(response);
     }
 
     /**
@@ -64,11 +61,8 @@ public class MaterialService extends BaseService implements IMaterialService {
         JSONObject request = new JSONObject();
         request.put("media_id", mediaId);
 
-        JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
+        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
 
-        if (null == response) {
-            throw new ConnectionFailedException();
-        }
-        return response;
+        return JSONObject.fromObject(response);
     }
 }

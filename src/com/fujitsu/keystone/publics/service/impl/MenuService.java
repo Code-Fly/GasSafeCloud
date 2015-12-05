@@ -48,13 +48,10 @@ public class MenuService extends BaseService implements IMenuService {
 
         // 拼装创建菜单的url
         String url = Const.PublicPlatform.URL_MENU_CREATE.replace("ACCESS_TOKEN", accessToken);
-        // 调用接口创建菜单
-        JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", json.toString());
 
-        if (null == response) {
-            throw new ConnectionFailedException();
-        }
-        return response;
+        String response = HttpClientUtil.doPost(url, json.toString(), "UTF-8");
+
+        return JSONObject.fromObject(response);
     }
 
     /**
@@ -64,12 +61,10 @@ public class MenuService extends BaseService implements IMenuService {
      */
     public JSONObject get(String accessToken) throws ConnectionFailedException {
         String url = Const.PublicPlatform.URL_MENU_GET.replace("ACCESS_TOKEN", accessToken);
-        JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", null);
 
-        if (null == response) {
-            throw new ConnectionFailedException();
-        }
-        return response;
+        String response = HttpClientUtil.doGet(url, "UTF-8");
+
+        return JSONObject.fromObject(response);
     }
 
     /**
@@ -79,12 +74,10 @@ public class MenuService extends BaseService implements IMenuService {
      */
     public JSONObject delete(String accessToken) throws ConnectionFailedException {
         String url = Const.PublicPlatform.URL_MENU_DELETE.replace("ACCESS_TOKEN", accessToken);
-        JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", null);
 
-        if (null == response) {
-            throw new ConnectionFailedException();
-        }
-        return response;
+        String response = HttpClientUtil.doGet(url, "UTF-8");
+
+        return JSONObject.fromObject(response);
     }
 
 

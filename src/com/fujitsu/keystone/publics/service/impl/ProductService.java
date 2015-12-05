@@ -50,13 +50,11 @@ public class ProductService extends BaseService implements IProductService {
 
 		JSONObject request = new JSONObject();
 		request.put("status", status);
-		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
 
-		if (null == response) {
-			throw new ConnectionFailedException();
-		}
-		return response;
-	}
+        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
+
+        return JSONObject.fromObject(response);
+    }
 
 	public JSONObject getProduct(String accessToken, String productId) throws ConnectionFailedException {
 		String url = Const.PublicPlatform.URL_PROGUCT_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
@@ -64,40 +62,29 @@ public class ProductService extends BaseService implements IProductService {
 		JSONObject request = new JSONObject();
 		request.put("product_id", productId);
 
-		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
+        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
 
-		if (null == response) {
-			throw new ConnectionFailedException();
-		}
-
-		return response;
-	}
+        return JSONObject.fromObject(response);
+    }
 
 	public JSONObject getProductGroupList(String accessToken) throws ConnectionFailedException {
 		String url = Const.PublicPlatform.URL_PROGUCT_GROUP_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
-		JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", null);
+        String response = HttpClientUtil.doGet(url, "UTF-8");
 
-		if (null == response) {
-			throw new ConnectionFailedException();
-		}
-
-		return response;
-	}
+        return JSONObject.fromObject(response);
+    }
 
 	public JSONObject getProductGroupDetail(String accessToken, String groupId) throws ConnectionFailedException {
 		String url = Const.PublicPlatform.URL_PROGUCT_GROUP_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
 		request.put("group_id", groupId);
-		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
 
-		if (null == response) {
-			throw new ConnectionFailedException();
-		}
+        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
 
-		return response;
-	}
+        return JSONObject.fromObject(response);
+    }
 
 	/**
 	 *

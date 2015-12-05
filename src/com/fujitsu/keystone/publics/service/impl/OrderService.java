@@ -55,13 +55,10 @@ public class OrderService extends BaseService implements IOrderService {
 			request.put("endtime", endTime);
 		}
 
-		JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", request.toString());
+        String response = HttpClientUtil.doGet(url, request.toString(), "UTF-8");
 
-		if (null == response) {
-			throw new ConnectionFailedException();
-		}
-		return response;
-	}
+        return JSONObject.fromObject(response);
+    }
 
 	public JSONObject getOrderList(HttpServletRequest request, String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException {
 		JSONObject resp = getOrderList(accessToken, status, beginTime, endTime);
@@ -90,13 +87,10 @@ public class OrderService extends BaseService implements IOrderService {
 		JSONObject request = new JSONObject();
 		request.put("order_id", orderId);
 
-		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
+        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
 
-		if (null == response) {
-			throw new ConnectionFailedException();
-		}
-		return response;
-	}
+        return JSONObject.fromObject(response);
+    }
 	
 	public JSONObject getOrder(HttpServletRequest request,String accessToken, String orderId) throws ConnectionFailedException{
 		JSONObject resp = getOrder(accessToken, orderId);

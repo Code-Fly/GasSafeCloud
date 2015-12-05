@@ -42,12 +42,9 @@ public class UserService extends BaseService implements IUserService {
 
 		String url = Const.PublicPlatform.URL_SNS_OAUTH2_TOKEN_GET.replace("APPID", appId).replace("SECRET", appSecret).replace("CODE", code);
 		// 获取网页授权凭证
-		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", null);
+		String response = HttpClientUtil.doPost(url, "UTF-8");
 
-		if (null == response) {
-			throw new ConnectionFailedException();
-		}
-		return response;
+		return JSONObject.fromObject(response);
 
 	}
 
@@ -64,12 +61,9 @@ public class UserService extends BaseService implements IUserService {
 
 		String url = Const.PublicPlatform.URL_SNS_OAUTH2_TOKEN_REFRESH.replace("APPID", appId).replace("REFRESH_TOKEN", refreshToken);
 		// 刷新网页授权凭证
-		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", null);
+		String response = HttpClientUtil.doPost(url, "UTF-8");
 
-		if (null == response) {
-			throw new ConnectionFailedException();
-		}
-		return response;
+		return JSONObject.fromObject(response);
 	}
 
 	/**
@@ -88,12 +82,9 @@ public class UserService extends BaseService implements IUserService {
 
 		String url = Const.PublicPlatform.URL_USER_GET_SNS_INFO.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
 		// 通过网页授权获取用户信息
-		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", null);
+		String response = HttpClientUtil.doPost(url, "UTF-8");
 
-		if (null == response) {
-			throw new ConnectionFailedException();
-		}
-		return response;
+		return JSONObject.fromObject(response);
 	}
 
 	/**
@@ -111,12 +102,9 @@ public class UserService extends BaseService implements IUserService {
 
 		String url = Const.PublicPlatform.URL_USER_GET_INFO.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
 		// 获取用户信息
-		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", null);
+		String response = HttpClientUtil.doPost(url, "UTF-8");
 
-		if (null == response) {
-			throw new ConnectionFailedException();
-		}
-		return response;
+		return JSONObject.fromObject(response);
 	}
 
 	public JSONObject getWeChatUserInfo(HttpServletRequest request, String accessToken, String openId) throws ConnectionFailedException {
@@ -147,24 +135,18 @@ public class UserService extends BaseService implements IUserService {
 
 		String url = Const.PublicPlatform.URL_USER_GET_LIST.replace("ACCESS_TOKEN", accessToken).replace("NEXT_OPENID", nextOpenId);
 
-		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", null);
+		String response = HttpClientUtil.doPost(url, "UTF-8");
 
-		if (null == response) {
-			throw new ConnectionFailedException();
-		}
-		return response;
+		return JSONObject.fromObject(response);
 	}
 
 	public JSONObject getWeChatUserGroupList(String accessToken) throws ConnectionFailedException {
 
 		String url = Const.PublicPlatform.URL_USER_GROUP_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
-		JSONObject response = HttpClientUtil.doHttpsRequest(url, "GET", null);
+		String response = HttpClientUtil.doGet(url, "UTF-8");
 
-		if (null == response) {
-			throw new ConnectionFailedException();
-		}
-		return response;
+		return JSONObject.fromObject(response);
 	}
 
 	public JSONObject getWeChatUserGroupByOpenId(String accessToken, String openId) throws ConnectionFailedException {
@@ -172,12 +154,10 @@ public class UserService extends BaseService implements IUserService {
 		String url = Const.PublicPlatform.URL_USER_GROUP_GET_BY_OPENID.replace("ACCESS_TOKEN", accessToken);
 		JSONObject request = new JSONObject();
 		request.put("openid", openId);
-		JSONObject response = HttpClientUtil.doHttpsRequest(url, "POST", request.toString());
 
-		if (null == response) {
-			throw new ConnectionFailedException();
-		}
-		return response;
+		String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
+
+		return JSONObject.fromObject(response);
 	}
 
 }

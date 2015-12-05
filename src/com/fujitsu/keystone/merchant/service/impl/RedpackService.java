@@ -1,6 +1,7 @@
 package com.fujitsu.keystone.merchant.service.impl;
 
 import com.fujitsu.base.constants.Const;
+import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.helper.XmlUtil;
 import com.fujitsu.base.service.BaseService;
@@ -19,10 +20,10 @@ public class RedpackService extends BaseService implements IRedpackService {
     @Resource
     ICoreService coreService;
 
-    public Map<String, String> sendRedpack(Map<String, Object> data) {
+    public Map<String, String> sendRedpack(Map<String, Object> data) throws ConnectionFailedException {
         String url = Const.MerchantPlatform.URL_MERCHANT_REDPACK_SEND;
 
-        String response = HttpClientUtil.doHttpsPost(url, XmlUtil.toXMLWithCDATA(data), "UTF-8");
+        String response = HttpClientUtil.doPost(url, XmlUtil.toXMLWithCDATA(data), "UTF-8");
 
         return XmlUtil.parseXml(response);
     }
