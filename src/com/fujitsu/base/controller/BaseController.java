@@ -25,8 +25,8 @@ public abstract class BaseController extends Const {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public String handleUnexpectedServerException(RuntimeException ex) {
-        logger.error("内部错误", ex);
-        ErrorMsg errMsg = new ErrorMsg("-1", "Internal Error");
+        logger.error("Internal Error", ex);
+        ErrorMsg errMsg = new ErrorMsg("-2", "Internal Error");
         return JSONObject.fromObject(errMsg).toString();
     }
 
@@ -34,8 +34,17 @@ public abstract class BaseController extends Const {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @ResponseBody
     public String handleConnectionFailedException(ConnectionFailedException ex) {
-        logger.error("连接失败", ex);
-        ErrorMsg errMsg = new ErrorMsg("-2", "Connection Failed");
+        logger.error("Connection Failed", ex);
+        ErrorMsg errMsg = new ErrorMsg("-3", "Connection Failed");
+        return JSONObject.fromObject(errMsg).toString();
+    }
+
+    @ExceptionHandler(OAuthException.class)
+    @ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
+    @ResponseBody
+    public String handleWeChatException(OAuthException ex) {
+        logger.error("Not Authorised", ex);
+        ErrorMsg errMsg = new ErrorMsg("-4", "Not Authorised");
         return JSONObject.fromObject(errMsg).toString();
     }
 
@@ -55,13 +64,5 @@ public abstract class BaseController extends Const {
         return ex.getMessage();
     }
 
-    @ExceptionHandler(OAuthException.class)
-    @ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
-    @ResponseBody
-    public String handleWeChatException(OAuthException ex) {
-        logger.error("not authorised", ex);
-        ErrorMsg errMsg = new ErrorMsg("-3", "Not Authorised");
-        return JSONObject.fromObject(errMsg).toString();
-    }
 
 }
