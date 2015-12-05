@@ -39,6 +39,14 @@ public class FileUtil {
             if (force) {
                 file.delete();
             }
+            if (file.exists() && file.isFile()) {
+                long localFileSize = file.length();
+                long remoteFileSize = new URL(url).openConnection().getContentLength();
+                if (localFileSize != remoteFileSize) {
+                    file.delete();
+                }
+            }
+
             if (!file.exists()) {
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpGet getMethod = new HttpGet(url);
