@@ -6,15 +6,16 @@ package com.fujitsu.base.constants;
 import com.fujitsu.base.helper.ConfigUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 
 /**
  * @author Barrie
  */
 public class Const {
 
-    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+    public static final String LINE_SEPARATOR = System.getProperty("line.separator", "\n");
 
-    public static final String PATH_SEPARATOR = System.getProperty("path.separator");
+    public static final String PATH_SEPARATOR = File.separator;
 
     /**
      * config file location
@@ -135,8 +136,8 @@ public class Const {
 
 
     public static String getServerPath() {
-        String path = Thread.currentThread().getContextClassLoader().getResource("/").getPath();
-        path = "/" + path.substring(1, path.indexOf("/classes")) + "/";
+        String path = Thread.currentThread().getContextClassLoader().getResource(Const.PATH_SEPARATOR).getPath();
+        path = Const.PATH_SEPARATOR + path.substring(1, path.indexOf(Const.PATH_SEPARATOR + "classes")) + Const.PATH_SEPARATOR;
         return path;
     }
 

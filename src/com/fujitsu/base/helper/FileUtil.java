@@ -28,13 +28,14 @@ public class FileUtil {
 
     private static String getFile(String url, String subPath, String category, String filename, String extension, boolean force) {
         String localPathStr = Const.getServerPath() + Const.WECHART_CACHE_PATH + subPath + Const.PATH_SEPARATOR + category + Const.PATH_SEPARATOR;
+        System.out.println(localPathStr);
         File localPath = new File(localPathStr);
         if (!localPath.exists() && !localPath.isDirectory()) {
             localPath.mkdirs();
         }
         String savedFileName = filename + "." + extension;
         try {
-            File file = new File(localPathStr + Const.PATH_SEPARATOR + savedFileName);
+            File file = new File(localPathStr + savedFileName);
             if (force) {
                 file.delete();
             }
@@ -48,7 +49,7 @@ public class FileUtil {
 
                 if (statusCode == HttpStatus.SC_OK) {
 
-                    File storeFile = new File(localPathStr + Const.PATH_SEPARATOR + savedFileName + ".tmp"); // 先存为临时文件，等全部下完再改回原来的文件名
+                    File storeFile = new File(localPathStr + savedFileName + ".tmp"); // 先存为临时文件，等全部下完再改回原来的文件名
 
                     FileOutputStream outputStream = new FileOutputStream(storeFile);
                     InputStream inputStream = response.getEntity().getContent();
@@ -63,7 +64,7 @@ public class FileUtil {
                         outputStream.close();
                     }
 
-                    storeFile.renameTo(new File(localPathStr + Const.PATH_SEPARATOR + savedFileName));
+                    storeFile.renameTo(new File(localPathStr + savedFileName));
                     b = null;
                 } else {
 
