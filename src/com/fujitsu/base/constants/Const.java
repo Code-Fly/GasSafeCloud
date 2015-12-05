@@ -28,7 +28,9 @@ public class Const {
      * global config
      */
 
-    public static final String MERCHANT_NAME = ConfigUtil.getProperty(GLOBAL_CONF, "name");
+    public static final String MERCHANT_NAME = ConfigUtil.getProperty(GLOBAL_CONF, "name");	
+    
+    public static final String MERCHANT_URL = ConfigUtil.getProperty(GLOBAL_CONF, "url");
 
     public static final String MERCHANT_DOMAIN = ConfigUtil.getProperty(GLOBAL_CONF, "domain");
 

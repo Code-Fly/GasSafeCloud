@@ -33,7 +33,12 @@ public class SubscribeEvent extends Event {
 		message.setFromUserName(toUserName);
 		message.setCreateTime(new Date().getTime());
 		message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
-		message.setContent("您好，欢迎关注" + Const.MERCHANT_NAME + "！");
+		StringBuffer stringBuffer = new  StringBuffer();
+		stringBuffer.append("您好，欢迎关注")
+					.append(Const.MERCHANT_NAME)
+					.append(ENTER)
+					.append(Const.MERCHANT_URL);
+		message.setContent(stringBuffer.toString());
 
 		// 将消息对象转换成xml
 		respXml = MessageService.messageToXml(message);
