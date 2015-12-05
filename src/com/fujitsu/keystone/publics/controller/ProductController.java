@@ -35,9 +35,14 @@ public class ProductController extends BaseController {
 
     @RequestMapping(value = "/product/list/{status}", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String getProductList(HttpServletRequest request, HttpServletResponse response, @PathVariable int status, @RequestParam(value = "groupId", required = false, defaultValue = "0") String groupId,
-                                 @RequestParam(value = "orderBy", required = false, defaultValue = "price") String orderBy, @RequestParam(value = "sort", required = false, defaultValue = "asc") String sort,
-                                 @RequestParam(value = "minPrice", required = false, defaultValue = "-") String minPrice, @RequestParam(value = "maxPrice", required = false, defaultValue = "-") String maxPrice) throws ConnectionFailedException, AccessTokenException {
+    public String getProductList(HttpServletRequest request, HttpServletResponse response,
+                                 @PathVariable int status,
+                                 @RequestParam(value = "groupId", required = false, defaultValue = "0") String groupId,
+                                 @RequestParam(value = "orderBy", required = false, defaultValue = "price") String orderBy,
+                                 @RequestParam(value = "sort", required = false, defaultValue = "asc") String sort,
+                                 @RequestParam(value = "minPrice", required = false, defaultValue = "-") String minPrice,
+                                 @RequestParam(value = "maxPrice", required = false, defaultValue = "-") String maxPrice
+    ) throws ConnectionFailedException, AccessTokenException {
         Map<String, String> filter = new HashMap<String, String>();
         filter.put("minPrice", minPrice);
         filter.put("maxPrice", maxPrice);
