@@ -53,10 +53,7 @@ public class ProductController extends BaseController {
         String at = KeystoneUtil.getAccessToken();
 
         JSONObject resp = productService.getProductList(request, at, status, filter);
-        if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
-            logger.error(resp.toString());
-            return resp.toString();
-        }
+
         return JSONObject.fromObject(resp).toString();
     }
 
@@ -66,10 +63,7 @@ public class ProductController extends BaseController {
         String at = KeystoneUtil.getAccessToken();
 
         JSONObject resp = productService.getProduct(request, at, productId);
-        if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
-            logger.error(resp.toString());
-            return resp.toString();
-        }
+
         return resp.toString();
     }
 
@@ -79,10 +73,7 @@ public class ProductController extends BaseController {
         String at = KeystoneUtil.getAccessToken();
 
         JSONObject resp = productService.getProductGroupList(at);
-        if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
-            logger.error(resp.toString());
-            return resp.toString();
-        }
+
         return resp.toString();
     }
 
@@ -92,10 +83,7 @@ public class ProductController extends BaseController {
         String at = KeystoneUtil.getAccessToken();
 
         JSONObject resp = productService.getProductGroupDetail(at, groupId);
-        if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
-            logger.error(resp.toString());
-            return resp.toString();
-        }
+
         return resp.toString();
     }
 }

@@ -12,9 +12,17 @@ public class ErrorMsg extends BaseEntity {
 	private String errcode;
 	private String errmsg;
 
-	/**
-	 * @return the errcode
-	 */
+    public ErrorMsg() {
+    }
+
+    public ErrorMsg(String errcode, String errmsg) {
+        this.errcode = errcode;
+        this.errmsg = errmsg;
+    }
+
+    /**
+     * @return the errcode
+     */
 	public String getErrcode() {
 		return errcode;
 	}

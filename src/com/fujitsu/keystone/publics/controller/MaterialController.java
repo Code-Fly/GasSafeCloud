@@ -50,9 +50,7 @@ public class MaterialController extends BaseController {
 		String at = KeystoneUtil.getAccessToken();
 
 		JSONObject resp = materialService.getMaterialList(at, type, offset, count);
-		if (resp.containsKey("errcode")) {
-			logger.error(resp.toString());
-		}
+
 		return resp.toString();
 	}
 
@@ -72,10 +70,7 @@ public class MaterialController extends BaseController {
 		String at = KeystoneUtil.getAccessToken();
 
 		JSONObject resp = materialService.getMaterial(at, mediaId);
-		if (resp.containsKey("errcode")) {
-			logger.error(resp.toString());
-			return resp.toString();
-		}
+
 		return resp.toString();
 
 	}

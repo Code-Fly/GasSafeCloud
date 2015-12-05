@@ -4,6 +4,7 @@ import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.entity.ErrorMsg;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.OAuthException;
 import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -25,9 +26,7 @@ public abstract class BaseController extends Const {
     @ResponseBody
     public String handleUnexpectedServerException(RuntimeException ex) {
         logger.error("内部错误", ex);
-        ErrorMsg errMsg = new ErrorMsg();
-        errMsg.setErrcode("-1");
-        errMsg.setErrmsg("内部错误");
+        ErrorMsg errMsg = new ErrorMsg("-1", "Internal Error");
         return JSONObject.fromObject(errMsg).toString();
     }
 
@@ -36,9 +35,7 @@ public abstract class BaseController extends Const {
     @ResponseBody
     public String handleConnectionFailedException(ConnectionFailedException ex) {
         logger.error("连接失败", ex);
-        ErrorMsg errMsg = new ErrorMsg();
-        errMsg.setErrcode("-2");
-        errMsg.setErrmsg("连接失败");
+        ErrorMsg errMsg = new ErrorMsg("-2", "Connection Failed");
         return JSONObject.fromObject(errMsg).toString();
     }
 
@@ -47,26 +44,24 @@ public abstract class BaseController extends Const {
     @ResponseBody
     public String handleAccessTokenException(AccessTokenException ex) {
         logger.error(ex.getMessage());
-        return ex.getMessage().toString();
+        return ex.getMessage();
     }
 
     @ExceptionHandler(WeChatException.class)
     @ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
     @ResponseBody
     public String handleWeChatException(WeChatException ex) {
-        logger.error("连接失败", ex);
-        ErrorMsg errMsg = new ErrorMsg();
-        errMsg.setErrcode("-2");
-        errMsg.setErrmsg("连接失败");
+        logger.error(ex.getMessage());
+        return ex.getMessage();
+    }
+
+    @ExceptionHandler(OAuthException.class)
+    @ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
+    @ResponseBody
+    public String handleWeChatException(OAuthException ex) {
+        logger.error("not authorised", ex);
+        ErrorMsg errMsg = new ErrorMsg("-3", "Not Authorised");
         return JSONObject.fromObject(errMsg).toString();
     }
 
-    public static boolean isSuccess(String resultStr) throws WeChatException {
-        JSONObject jsonObject = JSONObject.fromObject(resultStr);
-        Integer errCode = jsonObject.getInt("errcode");
-        if (errCode != null && errCode != 0) {
-            throw new WeChatException(resultStr);
-        }
-        return true;
-    }
 }
