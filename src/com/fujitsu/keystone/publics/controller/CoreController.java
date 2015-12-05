@@ -78,7 +78,7 @@ public class CoreController extends BaseController {
     @ResponseBody
     public String queryJsapiTicket(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException {
         JSONObject resp = coreService.getJsapiTicket(KeystoneUtil.getAccessToken());
-        return resp.getString("ticket");
+        return resp.toString();
     }
 
     @RequestMapping(value = "/file/image/product")
