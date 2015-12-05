@@ -29,7 +29,7 @@ public class CouponController extends BaseController {
     public String sendCoupon(HttpServletRequest request, HttpServletResponse response, @PathVariable String couponStockId, @PathVariable String openId) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
-        map.put("appid", Const.APP_ID);
+        map.put("appid", Const.WECHART_APP_ID);
         map.put("coupon_stock_id", couponStockId);
         map.put("mch_id", Const.MerchantPlatform.MCH_ID);
         map.put("nonce_str", KeystoneUtil.getNonceStr());

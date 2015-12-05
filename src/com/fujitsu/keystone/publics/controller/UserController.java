@@ -71,7 +71,7 @@ public class UserController extends BaseController {
         // 用户同意授权
         if (!"authdeny".equals(code) && null != code) {
             // 获取网页授权access_token
-            JSONObject sat = userService.getOauth2AccessToken(Const.APP_ID, Const.APP_SECRET, code);
+            JSONObject sat = userService.getOauth2AccessToken(Const.WECHART_APP_ID, Const.WECHART_APP_SECRET, code);
             if (sat.containsKey("errcode")) {
                 logger.error(sat.toString());
                 return sat.toString();
@@ -89,7 +89,7 @@ public class UserController extends BaseController {
                 return resp.toString();
             } else {
                 // 调用接口获取access_token
-                JSONObject at = coreService.getAccessToken(Const.APP_ID, Const.APP_SECRET);
+                JSONObject at = coreService.getAccessToken(Const.WECHART_APP_ID, Const.WECHART_APP_SECRET);
                 if (at.containsKey("errcode")) {
                     logger.error(at.toString());
                     return at.toString();

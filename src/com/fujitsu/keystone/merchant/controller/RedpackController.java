@@ -32,9 +32,9 @@ public class RedpackController extends BaseController {
         map.put("nonce_str", KeystoneUtil.getNonceStr());// 随机字符串
         map.put("mch_billno", KeystoneUtil.getTradeNo(Const.MerchantPlatform.MCH_ID));// 商户订单
         map.put("mch_id", Const.MerchantPlatform.MCH_ID);// 商户号
-        map.put("wxappid", Const.APP_ID);// 商户appid
-        map.put("nick_name", Const.MERCHANT_NAME);// 提供方名称
-        map.put("send_name", Const.MERCHANT_NAME);// 用户名
+        map.put("wxappid", Const.WECHART_APP_ID);// 商户appid
+        map.put("nick_name", Const.WECHART_NAME);// 提供方名称
+        map.put("send_name", Const.WECHART_NAME);// 用户名
         map.put("re_openid", openId);// 用户openid
         map.put("total_amount", 100);// 付款金额
         map.put("min_value", 100);// 最小红包

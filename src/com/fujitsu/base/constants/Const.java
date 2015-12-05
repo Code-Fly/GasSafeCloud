@@ -28,17 +28,15 @@ public class Const {
      * global config
      */
 
-    public static final String MERCHANT_NAME = ConfigUtil.getProperty(GLOBAL_CONF, "name");	
-    
-    public static final String MERCHANT_URL = ConfigUtil.getProperty(GLOBAL_CONF, "url");
+    public static final String WECHART_NAME = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.name");
 
-    public static final String MERCHANT_DOMAIN = ConfigUtil.getProperty(GLOBAL_CONF, "domain");
+    public static final String WECHART_URL = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.url");
 
-    public static final String APP_ID = ConfigUtil.getProperty(GLOBAL_CONF, "appId");
+    public static final String WECHART_APP_ID = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.appid");
 
-    public static final String APP_SECRET = ConfigUtil.getProperty(GLOBAL_CONF, "appSecret");
+    public static final String WECHART_APP_SECRET = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.appsecret");
 
-    public static final String TOKEN = ConfigUtil.getProperty(GLOBAL_CONF, "token");
+    public static final String WECHART_TOKEN = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.token");
 
     public static class PublicPlatform {
         /**

@@ -35,9 +35,9 @@ public class SubscribeEvent extends Event {
 		message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
 		StringBuffer stringBuffer = new  StringBuffer();
 		stringBuffer.append("您好，欢迎关注")
-					.append(Const.MERCHANT_NAME)
+				.append(Const.WECHART_NAME)
 					.append(ENTER)
-					.append(Const.MERCHANT_URL);
+				.append("www.qpsafe.com");
 		message.setContent(stringBuffer.toString());
 
 		// 将消息对象转换成xml

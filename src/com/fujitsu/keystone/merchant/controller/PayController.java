@@ -29,7 +29,7 @@ public class PayController extends BaseController {
     public String payRefund(HttpServletRequest request, HttpServletResponse response, @PathVariable String tradeId) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
-        map.put("appid", Const.APP_ID);
+        map.put("appid", Const.WECHART_APP_ID);
         map.put("mch_id", Const.MerchantPlatform.MCH_ID);
         map.put("nonce_str", KeystoneUtil.getNonceStr());
         map.put("op_user_id", Const.MerchantPlatform.MCH_ID);

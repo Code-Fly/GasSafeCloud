@@ -181,7 +181,7 @@ public class KeystoneUtil {
     }
 
     public static JSONObject getRemoteAccessToken() throws ConnectionFailedException {
-        String url = Const.MERCHANT_DOMAIN + "/api/keystone/token/query";
+        String url = Const.WECHART_URL + "/api/keystone/token/query";
         String resp = HttpClientUtil.doGet(url, "UTF-8");
         if (null == resp) {
             throw new ConnectionFailedException();
@@ -191,7 +191,7 @@ public class KeystoneUtil {
 
     public static synchronized JSONObject refreshLocalAccessToken() throws ConnectionFailedException {
         CoreService coreService = new CoreService();
-        JSONObject at = coreService.getAccessToken(Const.APP_ID, Const.APP_SECRET);
+        JSONObject at = coreService.getAccessToken(Const.WECHART_APP_ID, Const.WECHART_APP_SECRET);
         if (at.containsKey("access_token")) {
             Map<String, String> map = new HashMap<String, String>();
             map.put("token.api.accessToken", at.getString("access_token"));
@@ -207,7 +207,7 @@ public class KeystoneUtil {
     }
 
     public static JSONObject refreshRemoteAccessToken() throws ConnectionFailedException {
-        String url = Const.MERCHANT_DOMAIN + "/api/keystone/token/refresh";
+        String url = Const.WECHART_URL + "/api/keystone/token/refresh";
         String resp = HttpClientUtil.doGet(url, "UTF-8");
         if (null == resp) {
             throw new ConnectionFailedException();
