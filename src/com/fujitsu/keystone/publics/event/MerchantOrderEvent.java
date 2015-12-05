@@ -9,7 +9,6 @@ import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.helper.KeystoneUtil;
-import com.fujitsu.base.helper.UrlUtil;
 import com.fujitsu.keystone.publics.entity.customer.message.Text;
 import com.fujitsu.keystone.publics.entity.customer.message.TextMessage;
 import com.fujitsu.keystone.publics.entity.product.Product;
@@ -67,7 +66,7 @@ public class MerchantOrderEvent extends Event {
 
         respXml = new CustomerService().sendTextMessage(at, message).toString();
 
-        String url = UrlUtil.getServerUrl(request, "/api/order/orderextend/add");
+        String url = Const.getServerUrl(request) + "api/order/orderextend/add";
         JSONObject params = new JSONObject();
         params.put("buyerOpenid", fromUserName);
         params.put("productId", productId);

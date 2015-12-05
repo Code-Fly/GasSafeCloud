@@ -20,21 +20,21 @@ import java.net.URL;
  * @author xieky.fnst
  */
 public class FileUtil {
-    public static String PATH_IMAGE = "images/";
-    public static String CATEGORY_MATERIAL = "material/";
-    public static String CATEGORY_PRODUCT = "product/";
-    public static String CATEGORY_SHOP = "shop/";
-    public static String CATEGORY_USER = "user/";
+    public static String PATH_IMAGE = "images";
+    public static String CATEGORY_MATERIAL = "material";
+    public static String CATEGORY_PRODUCT = "product";
+    public static String CATEGORY_SHOP = "shop";
+    public static String CATEGORY_USER = "user";
 
     private static String getFile(String url, String subPath, String category, String filename, String extension, boolean force) {
-        String localPathStr = Const.getServerPath() + Const.WECHART_CACHE_PATH + subPath + category;
+        String localPathStr = Const.getServerPath() + Const.WECHART_CACHE_PATH + subPath + Const.PATH_SEPARATOR + category + Const.PATH_SEPARATOR;
         File localPath = new File(localPathStr);
         if (!localPath.exists() && !localPath.isDirectory()) {
             localPath.mkdirs();
         }
         String savedFileName = filename + "." + extension;
         try {
-            File file = new File(localPathStr + "/" + savedFileName);
+            File file = new File(localPathStr + Const.PATH_SEPARATOR + savedFileName);
             if (force) {
                 file.delete();
             }
@@ -48,7 +48,7 @@ public class FileUtil {
 
                 if (statusCode == HttpStatus.SC_OK) {
 
-                    File storeFile = new File(localPathStr + "/" + savedFileName + ".tmp"); // 先存为临时文件，等全部下完再改回原来的文件名
+                    File storeFile = new File(localPathStr + Const.PATH_SEPARATOR + savedFileName + ".tmp"); // 先存为临时文件，等全部下完再改回原来的文件名
 
                     FileOutputStream outputStream = new FileOutputStream(storeFile);
                     InputStream inputStream = response.getEntity().getContent();
@@ -63,7 +63,7 @@ public class FileUtil {
                         outputStream.close();
                     }
 
-                    storeFile.renameTo(new File(localPathStr + "/" + savedFileName));
+                    storeFile.renameTo(new File(localPathStr + Const.PATH_SEPARATOR + savedFileName));
                     b = null;
                 } else {
 
@@ -76,7 +76,7 @@ public class FileUtil {
             return null;
         }
 
-        return ("/static/" + subPath + category + "/" + savedFileName);
+        return ("static/" + subPath + "/" + category + "/" + savedFileName);
     }
 
     public static String getWeChatImage(String url, String category, String filename, boolean force) {

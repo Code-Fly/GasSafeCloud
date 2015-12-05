@@ -141,7 +141,7 @@ public class Const {
     }
 
     public static String getServerUrl(HttpServletRequest request) {
-        String path = request.getContextPath();
+        String path = request.getContextPath() + "/";
         int port = request.getServerPort();
         String basePath = null;
         if (80 == port) {
