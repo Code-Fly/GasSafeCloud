@@ -3,7 +3,6 @@
  */
 package com.fujitsu.keystone.publics.controller;
 
-import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.controller.BaseController;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
