@@ -71,10 +71,12 @@ public class CoreService extends BaseService implements ICoreService {
         // 调用核心业务类接收消息、处理消息
         String respMessage = processRequest(request);
 
-        // 响应消息
-        PrintWriter out = response.getWriter();
-        out.print(respMessage);
-        out.close();
+        if (null != respMessage) {
+            // 响应消息
+            PrintWriter out = response.getWriter();
+            out.print(respMessage);
+            out.close();
+        }
     }
 
     /**
@@ -86,8 +88,6 @@ public class CoreService extends BaseService implements ICoreService {
      * @throws ConnectionFailedException
      */
     public JSONObject getAccessToken(String appid, String appsecret) throws ConnectionFailedException, WeChatException {
-        // WeChatAccessToken accessToken = null;
-
         String url = Const.PublicPlatform.URL_GET_ACCESS_TOKEN.replace("APPID", appid).replace("APPSECRET", appsecret);
 
         String response = WeChatClientUtil.doPost(url, "UTF-8");
@@ -96,8 +96,6 @@ public class CoreService extends BaseService implements ICoreService {
     }
 
     public JSONObject getJsapiTicket(String accessToken) throws ConnectionFailedException, WeChatException {
-        // WeChatAccessToken accessToken = null;
-
         String url = Const.PublicPlatform.URL_JSAPI_TICKET.replace("ACCESS_TOKEN", accessToken);
 
         String response = WeChatClientUtil.doPost(url, "UTF-8");
@@ -162,6 +160,11 @@ public class CoreService extends BaseService implements ICoreService {
                 // 自定义菜单点击事件
                 else if (eventType.equals(Event.EVENT_TYPE_CLICK)) {
                     Event event = new ClickEvent();
+                    respXml = event.execute(request, requestJson);
+                }
+                // 上报地理位置
+                else if (eventType.equals(Event.EVENT_TYPE_LOCATION)) {
+                    Event event = new LocationEvent();
                     respXml = event.execute(request, requestJson);
                 }
             }
