@@ -5,6 +5,7 @@ package com.fujitsu.keystone.publics.event;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 
 import org.slf4j.Logger;
@@ -51,9 +52,9 @@ public abstract class Event {
 	// 事件类型：scancode_waitmsg(扫码推事件且弹出“消息接收中”提示框的事件推送)
 	public static final String EVENT_SCANCODE_WAIT_MSG = "scancode_waitmsg";
 	// 事件类型：scancode_push(扫码推事件的事件推送)
-	public static final String EVENT_SCANCODE_PUSH = "scancode_push";	
+	public static final String EVENT_SCANCODE_PUSH = "scancode_push";
 
-	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException {
 		return null;
 	}
 }

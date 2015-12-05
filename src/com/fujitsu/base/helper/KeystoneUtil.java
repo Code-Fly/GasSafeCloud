@@ -6,6 +6,7 @@ package com.fujitsu.base.helper;
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.keystone.publics.service.impl.CoreService;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
@@ -166,7 +167,7 @@ public class KeystoneUtil {
 
     }
 
-    public static synchronized JSONObject getLocalAccessToken() throws ConnectionFailedException {
+    public static synchronized JSONObject getLocalAccessToken() throws ConnectionFailedException, WeChatException {
         String at = ConfigUtil.getProperty("token.properties", "token.api.accessToken");
         String et = ConfigUtil.getProperty("token.properties", "token.api.expireTime");
         if (null == at || null == et) {
@@ -189,7 +190,7 @@ public class KeystoneUtil {
         return JSONObject.fromObject(resp);
     }
 
-    public static synchronized JSONObject refreshLocalAccessToken() throws ConnectionFailedException {
+    public static synchronized JSONObject refreshLocalAccessToken() throws ConnectionFailedException, WeChatException {
         CoreService coreService = new CoreService();
         JSONObject at = coreService.getAccessToken(Const.WECHART_APP_ID, Const.WECHART_APP_SECRET);
         if (at.containsKey("access_token")) {

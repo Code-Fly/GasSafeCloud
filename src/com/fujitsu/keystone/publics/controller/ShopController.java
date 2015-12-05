@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class ShopController extends BaseController {
 
 	@RequestMapping(value = "/shop/query/{poiId}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String getShop(HttpServletRequest request, HttpServletResponse response, @PathVariable String poiId) throws ConnectionFailedException, AccessTokenException {
+	public String getShop(HttpServletRequest request, HttpServletResponse response, @PathVariable String poiId) throws ConnectionFailedException, AccessTokenException, WeChatException {
 		String at = KeystoneUtil.getAccessToken();
 		
 		JSONObject resp = shopService.getShop(request, at, poiId);
@@ -52,7 +53,7 @@ public class ShopController extends BaseController {
 	@RequestMapping(value = "/shop/list", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getShopList(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "begain", required = false) String begin,
-			@RequestParam(value = "limit", required = false) String limit) throws ConnectionFailedException, AccessTokenException {
+							  @RequestParam(value = "limit", required = false) String limit) throws ConnectionFailedException, AccessTokenException, WeChatException {
 		if (null == begin) {
 			begin = "0";
 		}

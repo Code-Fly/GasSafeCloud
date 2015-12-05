@@ -6,6 +6,7 @@ package com.fujitsu.keystone.publics.controller;
 import com.fujitsu.base.controller.BaseController;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.FileUtil;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.base.helper.UrlUtil;
@@ -56,7 +57,7 @@ public class CoreController extends BaseController {
 
     @RequestMapping(value = "/token/refresh", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String refreshToken(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException {
+    public String refreshToken(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, WeChatException {
 
         greeterService.post("111111");
         greeterService.post("222");
@@ -70,13 +71,13 @@ public class CoreController extends BaseController {
 
     @RequestMapping(value = "/token/query", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String queryToken(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException {
+    public String queryToken(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, WeChatException {
         return KeystoneUtil.getLocalAccessToken().toString();
     }
 
     @RequestMapping(value = "/jsapi/ticket/query", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String queryJsapiTicket(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException {
+    public String queryJsapiTicket(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException, WeChatException {
         JSONObject resp = coreService.getJsapiTicket(KeystoneUtil.getAccessToken());
         return resp.toString();
     }

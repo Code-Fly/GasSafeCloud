@@ -5,6 +5,7 @@ package com.fujitsu.keystone.publics.service.iface;
 
 import com.fujitsu.base.exception.ConnectionFailedException;
 
+import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 
 /**
@@ -12,7 +13,7 @@ import net.sf.json.JSONObject;
  *
  */
 public interface IMaterialService {
-	JSONObject getMaterialList(String accessToken, String type, int offset, int count) throws ConnectionFailedException;
+	JSONObject getMaterialList(String accessToken, String type, int offset, int count) throws ConnectionFailedException, WeChatException;
 
-	JSONObject getMaterial(String accessToken, String mediaId) throws ConnectionFailedException;
+	JSONObject getMaterial(String accessToken, String mediaId) throws ConnectionFailedException, WeChatException;
 }

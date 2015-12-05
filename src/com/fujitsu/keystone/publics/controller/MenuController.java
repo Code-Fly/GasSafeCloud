@@ -6,6 +6,7 @@ package com.fujitsu.keystone.publics.controller;
 import com.fujitsu.base.controller.BaseController;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.ConfigUtil;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
@@ -34,7 +35,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping(value = "/menu/create", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConnectionFailedException, AccessTokenException {
+    public String create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConnectionFailedException, AccessTokenException, WeChatException {
         // 调用接口获取access_token
         String at = KeystoneUtil.getAccessToken();
 
@@ -47,7 +48,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping(value = "/menu/get", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConnectionFailedException, AccessTokenException {
+    public String get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConnectionFailedException, AccessTokenException, WeChatException {
         // 调用接口获取access_token
         String at = KeystoneUtil.getAccessToken();
 
@@ -58,7 +59,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping(value = "/menu/delete", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConnectionFailedException, AccessTokenException {
+    public String delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConnectionFailedException, AccessTokenException, WeChatException {
         // 调用接口获取access_token
         String at = KeystoneUtil.getAccessToken();
 

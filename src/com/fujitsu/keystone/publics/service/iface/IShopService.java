@@ -5,6 +5,7 @@ package com.fujitsu.keystone.publics.service.iface;
 
 import com.fujitsu.base.exception.ConnectionFailedException;
 
+import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 
 /**
@@ -13,7 +14,7 @@ import net.sf.json.JSONObject;
  */
 public interface IShopService {
 
-	JSONObject getShop(String accessToken, String poi_id) throws ConnectionFailedException;
+	JSONObject getShop(String accessToken, String poi_id) throws ConnectionFailedException, WeChatException;
 
-	JSONObject getShopList(String accessToken, String begin, String limit) throws ConnectionFailedException;
+	JSONObject getShopList(String accessToken, String begin, String limit) throws ConnectionFailedException, WeChatException;
 }

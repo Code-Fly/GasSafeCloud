@@ -8,6 +8,7 @@ import com.fujitsu.base.controller.BaseController;
 import com.fujitsu.base.entity.ErrorMsg;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.service.impl.CoreService;
 import com.fujitsu.keystone.publics.service.impl.UserService;
@@ -44,7 +45,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/user/sns/query/{openId}/{accessToken}", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String getSNSUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId, @PathVariable String accessToken) throws ConnectionFailedException {
+    public String getSNSUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId, @PathVariable String accessToken) throws ConnectionFailedException, WeChatException {
 
         JSONObject resp = userService.getSNSUserInfo(accessToken, openId);
         if (resp.containsKey("errcode")) {
@@ -64,7 +65,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/user/sns/oauth", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String SNSUserOAuth(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException {
+    public String SNSUserOAuth(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, WeChatException {
 
         // 用户同意授权后，能获取到code
         String code = request.getParameter("code");
@@ -123,7 +124,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/user/query/{openId}", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String getWeChatUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) throws ConnectionFailedException, AccessTokenException {
+    public String getWeChatUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) throws ConnectionFailedException, AccessTokenException, WeChatException {
         // 调用接口获取access_token
         String at = KeystoneUtil.getAccessToken();
 
@@ -138,7 +139,7 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/user/list/{nextOpenId}", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String getWeChatUserList(HttpServletRequest request, HttpServletResponse response, @PathVariable String nextOpenId) throws ConnectionFailedException, AccessTokenException {
+    public String getWeChatUserList(HttpServletRequest request, HttpServletResponse response, @PathVariable String nextOpenId) throws ConnectionFailedException, AccessTokenException, WeChatException {
         String at = KeystoneUtil.getAccessToken();
 
         if ("0".equals(nextOpenId))
@@ -154,7 +155,7 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/user/group/list", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String getWeChatUserGroupList(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException {
+    public String getWeChatUserGroupList(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException, WeChatException {
         String at = KeystoneUtil.getAccessToken();
 
         JSONObject resp = userService.getWeChatUserGroupList(at);
@@ -167,7 +168,7 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/user/group/query/{openId}", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String getWeChatUserGroupByOpenId(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) throws ConnectionFailedException, AccessTokenException {
+    public String getWeChatUserGroupByOpenId(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) throws ConnectionFailedException, AccessTokenException, WeChatException {
         String at = KeystoneUtil.getAccessToken();
 
         JSONObject resp = userService.getWeChatUserGroupByOpenId(at, openId);

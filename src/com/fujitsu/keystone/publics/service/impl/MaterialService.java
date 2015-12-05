@@ -5,7 +5,9 @@ package com.fujitsu.keystone.publics.service.impl;
 
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.HttpClientUtil;
+import com.fujitsu.base.helper.WeChatClientUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IMaterialService;
@@ -32,7 +34,7 @@ public class MaterialService extends BaseService implements IMaterialService {
      * @throws IllegalAccessException
      * @throws IllegalArgumentException
      */
-    public JSONObject getMaterialList(String accessToken, String type, int offset, int count) throws ConnectionFailedException {
+    public JSONObject getMaterialList(String accessToken, String type, int offset, int count) throws ConnectionFailedException, WeChatException {
 
         String url = Const.PublicPlatform.URL_MATERIAL_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
@@ -41,7 +43,7 @@ public class MaterialService extends BaseService implements IMaterialService {
         request.put("offset", offset);
         request.put("count", count);
 
-        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
+        String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }
@@ -54,14 +56,14 @@ public class MaterialService extends BaseService implements IMaterialService {
      * @throws IllegalAccessException
      * @throws IllegalArgumentException
      */
-    public JSONObject getMaterial(String accessToken, String mediaId) throws ConnectionFailedException {
+    public JSONObject getMaterial(String accessToken, String mediaId) throws ConnectionFailedException, WeChatException {
 
         String url = Const.PublicPlatform.URL_MATERIAL_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
         JSONObject request = new JSONObject();
         request.put("media_id", mediaId);
 
-        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
+        String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }

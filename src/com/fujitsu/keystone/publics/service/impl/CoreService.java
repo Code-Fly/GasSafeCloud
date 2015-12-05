@@ -5,8 +5,9 @@ package com.fujitsu.keystone.publics.service.impl;
 
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.ConnectionFailedException;
-import com.fujitsu.base.helper.HttpClientUtil;
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.KeystoneUtil;
+import com.fujitsu.base.helper.WeChatClientUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.event.*;
 import com.fujitsu.keystone.publics.query.CompanyDetailQuery;
@@ -84,22 +85,22 @@ public class CoreService extends BaseService implements ICoreService {
      * @return
      * @throws ConnectionFailedException
      */
-    public JSONObject getAccessToken(String appid, String appsecret) throws ConnectionFailedException {
+    public JSONObject getAccessToken(String appid, String appsecret) throws ConnectionFailedException, WeChatException {
         // WeChatAccessToken accessToken = null;
 
         String url = Const.PublicPlatform.URL_GET_ACCESS_TOKEN.replace("APPID", appid).replace("APPSECRET", appsecret);
 
-        String response = HttpClientUtil.doPost(url, "UTF-8");
+        String response = WeChatClientUtil.doPost(url, "UTF-8");
 
         return JSONObject.fromObject(response);
     }
 
-    public JSONObject getJsapiTicket(String accessToken) throws ConnectionFailedException {
+    public JSONObject getJsapiTicket(String accessToken) throws ConnectionFailedException, WeChatException {
         // WeChatAccessToken accessToken = null;
 
         String url = Const.PublicPlatform.URL_JSAPI_TICKET.replace("ACCESS_TOKEN", accessToken);
 
-        String response = HttpClientUtil.doPost(url, "UTF-8");
+        String response = WeChatClientUtil.doPost(url, "UTF-8");
 
         return JSONObject.fromObject(response);
     }

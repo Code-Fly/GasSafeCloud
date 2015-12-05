@@ -11,6 +11,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.fujitsu.base.exception.WeChatException;
+import com.fujitsu.base.helper.WeChatClientUtil;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
@@ -45,43 +47,43 @@ public class ProductService extends BaseService implements IProductService {
 	 * @throws ConnectionFailedException 
 	 * 
 	 */
-	public JSONObject getProductList(String accessToken, int status) throws ConnectionFailedException {
+	public JSONObject getProductList(String accessToken, int status) throws ConnectionFailedException, WeChatException {
 		String url = Const.PublicPlatform.URL_PROGUCT_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
 		request.put("status", status);
 
-        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
+		String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }
 
-	public JSONObject getProduct(String accessToken, String productId) throws ConnectionFailedException {
+	public JSONObject getProduct(String accessToken, String productId) throws ConnectionFailedException, WeChatException {
 		String url = Const.PublicPlatform.URL_PROGUCT_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
 		request.put("product_id", productId);
 
-        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
+		String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }
 
-	public JSONObject getProductGroupList(String accessToken) throws ConnectionFailedException {
+	public JSONObject getProductGroupList(String accessToken) throws ConnectionFailedException, WeChatException {
 		String url = Const.PublicPlatform.URL_PROGUCT_GROUP_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
-        String response = HttpClientUtil.doGet(url, "UTF-8");
+		String response = WeChatClientUtil.doGet(url, "UTF-8");
 
         return JSONObject.fromObject(response);
     }
 
-	public JSONObject getProductGroupDetail(String accessToken, String groupId) throws ConnectionFailedException {
+	public JSONObject getProductGroupDetail(String accessToken, String groupId) throws ConnectionFailedException, WeChatException {
 		String url = Const.PublicPlatform.URL_PROGUCT_GROUP_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
 		request.put("group_id", groupId);
 
-        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
+		String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }
@@ -94,7 +96,7 @@ public class ProductService extends BaseService implements IProductService {
 	 * @return
 	 * @throws ConnectionFailedException
      */
-	public JSONObject getProduct(HttpServletRequest request, String accessToken, String productId) throws ConnectionFailedException {
+	public JSONObject getProduct(HttpServletRequest request, String accessToken, String productId) throws ConnectionFailedException, WeChatException {
 		JSONObject oList = orderService.getOrderList(accessToken, "0", "0", "0");
 
 		JSONObject respProduct = getProduct(accessToken, productId);
@@ -124,7 +126,7 @@ public class ProductService extends BaseService implements IProductService {
 	 * @return
 	 * @throws ConnectionFailedException
      */
-	public JSONObject getProductList(HttpServletRequest request, String accessToken, int status, Map<String, String> filter) throws ConnectionFailedException {
+	public JSONObject getProductList(HttpServletRequest request, String accessToken, int status, Map<String, String> filter) throws ConnectionFailedException, WeChatException {
 		ProductList pList = new ProductList();
 		String groupId = filter.get("groupId");
 		if ("0".equals(groupId)) {

@@ -5,8 +5,10 @@ package com.fujitsu.keystone.publics.service.impl;
 
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.FileUtil;
 import com.fujitsu.base.helper.HttpClientUtil;
+import com.fujitsu.base.helper.WeChatClientUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.entity.order.Order;
 import com.fujitsu.keystone.publics.entity.order.OrderBase;
@@ -37,7 +39,7 @@ public class OrderService extends BaseService implements IOrderService {
     public final int STATUS_RETURING = 8;
     public final int STATUS_DONE = 5;
 
-    public JSONObject getOrderList(String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException {
+    public JSONObject getOrderList(String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_ORDER_GET_LIST.replace("ACCESS_TOKEN", accessToken);
         JSONObject request = new JSONObject();
         String response = null;
@@ -53,16 +55,16 @@ public class OrderService extends BaseService implements IOrderService {
             request.put("endtime", endTime);
         }
         if (0 == request.size()) {
-            response = HttpClientUtil.doGet(url, "UTF-8");
+            response = WeChatClientUtil.doGet(url, "UTF-8");
         } else {
-            response = HttpClientUtil.doGet(url, request, "UTF-8");
+            response = WeChatClientUtil.doGet(url, request, "UTF-8");
         }
 
 
         return JSONObject.fromObject(response);
     }
 
-    public JSONObject getOrderList(HttpServletRequest request, String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException {
+    public JSONObject getOrderList(HttpServletRequest request, String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException, WeChatException {
         JSONObject resp = getOrderList(accessToken, status, beginTime, endTime);
         if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
             logger.error(resp.toString());
@@ -83,18 +85,18 @@ public class OrderService extends BaseService implements IOrderService {
         return JSONObject.fromObject(oList);
     }
 
-    public JSONObject getOrder(String accessToken, String orderId) throws ConnectionFailedException {
+    public JSONObject getOrder(String accessToken, String orderId) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_ORDER_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
         JSONObject request = new JSONObject();
         request.put("order_id", orderId);
 
-        String response = HttpClientUtil.doPost(url, request.toString(), "UTF-8");
+        String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }
 
-    public JSONObject getOrder(HttpServletRequest request, String accessToken, String orderId) throws ConnectionFailedException {
+    public JSONObject getOrder(HttpServletRequest request, String accessToken, String orderId) throws ConnectionFailedException, WeChatException {
         JSONObject resp = getOrder(accessToken, orderId);
         if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
             logger.error(resp.toString());

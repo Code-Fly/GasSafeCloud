@@ -5,7 +5,9 @@ package com.fujitsu.keystone.publics.service.impl;
 
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.HttpClientUtil;
+import com.fujitsu.base.helper.WeChatClientUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.service.iface.IMenuService;
 import com.fujitsu.keystone.publics.service.iface.IMessageService;
@@ -44,12 +46,12 @@ public class MenuService extends BaseService implements IMenuService {
      * @return
      * @throws ConnectionFailedException
      */
-    public JSONObject create(String accessToken, JSONObject json) throws ConnectionFailedException {
+    public JSONObject create(String accessToken, JSONObject json) throws ConnectionFailedException, WeChatException {
 
         // 拼装创建菜单的url
         String url = Const.PublicPlatform.URL_MENU_CREATE.replace("ACCESS_TOKEN", accessToken);
 
-        String response = HttpClientUtil.doPost(url, json.toString(), "UTF-8");
+        String response = WeChatClientUtil.doPost(url, json.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }
@@ -59,10 +61,10 @@ public class MenuService extends BaseService implements IMenuService {
      * @return
      * @throws ConnectionFailedException
      */
-    public JSONObject get(String accessToken) throws ConnectionFailedException {
+    public JSONObject get(String accessToken) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_MENU_GET.replace("ACCESS_TOKEN", accessToken);
 
-        String response = HttpClientUtil.doGet(url, "UTF-8");
+        String response = WeChatClientUtil.doGet(url, "UTF-8");
 
         return JSONObject.fromObject(response);
     }
@@ -72,10 +74,10 @@ public class MenuService extends BaseService implements IMenuService {
      * @return
      * @throws ConnectionFailedException
      */
-    public JSONObject delete(String accessToken) throws ConnectionFailedException {
+    public JSONObject delete(String accessToken) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_MENU_DELETE.replace("ACCESS_TOKEN", accessToken);
 
-        String response = HttpClientUtil.doGet(url, "UTF-8");
+        String response = WeChatClientUtil.doGet(url, "UTF-8");
 
         return JSONObject.fromObject(response);
     }

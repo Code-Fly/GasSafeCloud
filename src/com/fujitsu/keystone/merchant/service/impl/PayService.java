@@ -2,7 +2,9 @@ package com.fujitsu.keystone.merchant.service.impl;
 
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.HttpClientUtil;
+import com.fujitsu.base.helper.WeChatClientUtil;
 import com.fujitsu.base.helper.XmlUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.merchant.service.iface.IPayService;
@@ -20,10 +22,10 @@ public class PayService extends BaseService implements IPayService {
     @Resource
     ICoreService coreService;
 
-    public Map<String, String> payRefund(Map<String, Object> data) throws ConnectionFailedException {
+    public Map<String, String> payRefund(Map<String, Object> data) throws ConnectionFailedException, WeChatException {
         String url = Const.MerchantPlatform.URL_MERCHANT_PAY_REFUND;
 
-        String response = HttpClientUtil.doPost(url, XmlUtil.toXML(data), "UTF-8");
+        String response = WeChatClientUtil.doPost(url, XmlUtil.toXML(data), "UTF-8");
 
         return XmlUtil.parseXml(response);
     }

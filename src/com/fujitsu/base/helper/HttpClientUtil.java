@@ -4,7 +4,6 @@
 package com.fujitsu.base.helper;
 
 import com.fujitsu.base.exception.ConnectionFailedException;
-import net.sf.json.JSONObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -103,46 +102,34 @@ public class HttpClientUtil {
         CloseableHttpResponse response = null;
         String respStr = null;
         try {
-            for (int i = 0; i < 2; i++) {
-                // 创建SSLContext对象，并使用我们指定的信任管理器初始化
-                TrustManager[] tm = {new CustomX509TrustManager()};
-                SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
-                sslContext.init(null, tm, new java.security.SecureRandom());
+            // 创建SSLContext对象，并使用我们指定的信任管理器初始化
+            TrustManager[] tm = {new CustomX509TrustManager()};
+            SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+            sslContext.init(null, tm, new java.security.SecureRandom());
 
-                Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
-                        .register("http", PlainConnectionSocketFactory.INSTANCE)
-                        .register("https", new SSLConnectionSocketFactory(sslContext))
-                        .build();
+            Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+                    .register("http", PlainConnectionSocketFactory.INSTANCE)
+                    .register("https", new SSLConnectionSocketFactory(sslContext))
+                    .build();
 
-                connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
-                httpclient = HttpClients.custom().setConnectionManager(connManager).build();
+            connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+            httpclient = HttpClients.custom().setConnectionManager(connManager).build();
 
-                // 从上述SSLContext对象中得到SSLSocketFactory对象
-                HttpPost httpPost = new HttpPost(url); // 设置响应头信息
+            // 从上述SSLContext对象中得到SSLSocketFactory对象
+            HttpPost httpPost = new HttpPost(url); // 设置响应头信息
 
-                if (null != sEntity) {
-                    httpPost.setEntity(sEntity);
-                }
-
-                response = httpclient.execute(httpPost);
-                HttpEntity entity = response.getEntity();
-
-                // 微信返回的报文时GBK，直接使用httpcore解析乱码
-                respStr = EntityUtils.toString(response.getEntity(), charset);
-                EntityUtils.consume(entity);
-                httpPost.abort();
-
-                JSONObject jsonObject = JSONObject.fromObject(respStr.toString());
-                if (jsonObject.containsKey("errcode")) {
-                    if (jsonObject.getString("errcode").equals("40001") || jsonObject.getString("errcode").equals("42001")) {
-                        KeystoneUtil.refreshRemoteAccessToken();
-                    } else {
-                        break;
-                    }
-                } else {
-                    break;
-                }
+            if (null != sEntity) {
+                httpPost.setEntity(sEntity);
             }
+
+            response = httpclient.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+
+            // 微信返回的报文时GBK，直接使用httpcore解析乱码
+            respStr = EntityUtils.toString(response.getEntity(), charset);
+            EntityUtils.consume(entity);
+            httpPost.abort();
+
         } catch (Exception e) {
             throw new ConnectionFailedException(e);
         } finally {
@@ -163,45 +150,32 @@ public class HttpClientUtil {
         CloseableHttpResponse response = null;
         String respStr = null;
         try {
-            for (int i = 0; i < 2; i++) {
-                // 创建SSLContext对象，并使用我们指定的信任管理器初始化
-                TrustManager[] tm = {new CustomX509TrustManager()};
-                SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
-                sslContext.init(null, tm, new java.security.SecureRandom());
+            // 创建SSLContext对象，并使用我们指定的信任管理器初始化
+            TrustManager[] tm = {new CustomX509TrustManager()};
+            SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+            sslContext.init(null, tm, new java.security.SecureRandom());
 
-                Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
-                        .register("http", PlainConnectionSocketFactory.INSTANCE)
-                        .register("https", new SSLConnectionSocketFactory(sslContext))
-                        .build();
+            Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+                    .register("http", PlainConnectionSocketFactory.INSTANCE)
+                    .register("https", new SSLConnectionSocketFactory(sslContext))
+                    .build();
 
-                connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
-                httpclient = HttpClients.custom().setConnectionManager(connManager).build();
+            connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+            httpclient = HttpClients.custom().setConnectionManager(connManager).build();
 
-                HttpGet httpGet = null;
-                if (null != param) {
-                    httpGet = new HttpGet(url + "&" + param);
+            HttpGet httpGet = null;
+            if (null != param) {
+                httpGet = new HttpGet(url + "&" + param);
 
-                } else {
-                    httpGet = new HttpGet(url);
-                }
-
-                response = httpclient.execute(httpGet);
-
-                HttpEntity entity = response.getEntity();
-                respStr = EntityUtils.toString(entity, charset).trim();
-                httpGet.abort();
-
-                JSONObject jsonObject = JSONObject.fromObject(respStr.toString());
-                if (jsonObject.containsKey("errcode")) {
-                    if (jsonObject.getString("errcode").equals("40001") || jsonObject.getString("errcode").equals("42001")) {
-                        KeystoneUtil.refreshRemoteAccessToken();
-                    } else {
-                        break;
-                    }
-                } else {
-                    break;
-                }
+            } else {
+                httpGet = new HttpGet(url);
             }
+
+            response = httpclient.execute(httpGet);
+
+            HttpEntity entity = response.getEntity();
+            respStr = EntityUtils.toString(entity, charset).trim();
+            httpGet.abort();
 
         } catch (Exception e) {
             logger.error(e.getMessage());

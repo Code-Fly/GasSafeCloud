@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class OrderController extends BaseController {
 	@RequestMapping(value = "/order/list/{status}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getOrderList(HttpServletRequest request, HttpServletResponse response, @PathVariable String status, @RequestParam(value = "beginTime", required = false) String beginTime,
-			@RequestParam(value = "endTime", required = false) String endTime) throws ConnectionFailedException, AccessTokenException {
+							   @RequestParam(value = "endTime", required = false) String endTime) throws ConnectionFailedException, AccessTokenException, WeChatException {
 		if (null == beginTime) {
 			beginTime = "0";
 		}
@@ -58,7 +59,7 @@ public class OrderController extends BaseController {
 
 	@RequestMapping(value = "/order/query/{orderId}", produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String getOrder(HttpServletRequest request, HttpServletResponse response, @PathVariable String orderId) throws ConnectionFailedException, AccessTokenException {
+	public String getOrder(HttpServletRequest request, HttpServletResponse response, @PathVariable String orderId) throws ConnectionFailedException, AccessTokenException, WeChatException {
 		String at = KeystoneUtil.getAccessToken();
 
 		JSONObject resp = orderService.getOrder(request, at, orderId);

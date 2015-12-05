@@ -5,6 +5,7 @@ package com.fujitsu.keystone.publics.event;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 
 import com.fujitsu.base.exception.AccessTokenException;
@@ -22,7 +23,7 @@ public class CustomerServiceCloseSessionEvent extends Event {
 	public static String KF_ACCOUNT = "KfAccount";
 	
 	@Override
-	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException {
 		String at = KeystoneUtil.getAccessToken();
 
 		String respXml = null;

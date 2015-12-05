@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.fujitsu.base.exception.ConnectionFailedException;
 
+import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 
 /**
@@ -14,13 +15,13 @@ import net.sf.json.JSONObject;
  *
  */
 public interface IOrderService {
-	JSONObject getOrderList(String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException;
+	JSONObject getOrderList(String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException, WeChatException;
 
-	JSONObject getOrderList(HttpServletRequest request, String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException;
+	JSONObject getOrderList(HttpServletRequest request, String accessToken, String status, String beginTime, String endTime) throws ConnectionFailedException, WeChatException;
 
-	JSONObject getOrder(String accessToken, String orderId) throws ConnectionFailedException;
+	JSONObject getOrder(String accessToken, String orderId) throws ConnectionFailedException, WeChatException;
 
-	JSONObject getOrder(HttpServletRequest request, String accessToken, String orderId) throws ConnectionFailedException;
+	JSONObject getOrder(HttpServletRequest request, String accessToken, String orderId) throws ConnectionFailedException, WeChatException;
 
 	int getOrderCount(JSONObject oList, String productId);
 }
