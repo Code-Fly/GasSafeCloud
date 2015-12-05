@@ -24,7 +24,7 @@ public class ConfigUtil {
 	private static final Logger logger = LoggerFactory.getLogger(ConfigUtil.class);
 
 	public static String getJson(String fileName) throws IOException {
-		String path = Const.getServerPath() + "/conf/" + fileName;
+		String path = Const.getServerPath() + "conf/" + fileName;
 		FileInputStream fileInputStream = new FileInputStream(path);
 		InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
 		BufferedReader reader = new BufferedReader(inputStreamReader);
@@ -40,7 +40,7 @@ public class ConfigUtil {
 		Properties p = new Properties();
 		String result = "";
 		try {
-			String path = Const.getServerPath() + "/conf/" + fileName;
+			String path = Const.getServerPath() + "conf/" + fileName;
 			p.load(new FileInputStream(path));
 			result = p.getProperty(keyname);
 		} catch (Exception e) {
@@ -52,7 +52,7 @@ public class ConfigUtil {
 	public static void setProperty(String fileName, String keyname, String keyvalue) {
 		Properties p = new Properties();
 		try {
-			String path = Const.getServerPath() + "/conf/" + fileName;
+			String path = Const.getServerPath() + "conf/" + fileName;
 			p.load(new FileInputStream(path));
 			OutputStream fos = new FileOutputStream(path);
 			p.setProperty(keyname, keyvalue);
@@ -65,7 +65,7 @@ public class ConfigUtil {
 	public static void setProperty(String fileName, Map<String, String> map) {
 		Properties p = new Properties();
 		try {
-			String path = Const.getServerPath() + "/conf/" + fileName;
+			String path = Const.getServerPath() + "conf/" + fileName;
 			p.load(new FileInputStream(path));
 			OutputStream fos = new FileOutputStream(path);
 			p.putAll(map);

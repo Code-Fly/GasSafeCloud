@@ -81,5 +81,11 @@
         </property>
     </bean>
 
-    <mvc:resources mapping="/static/**" location="/WEB-INF/pages/static/" cache-period="31556926"/>
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>/WEB-INF/conf/api/global.properties</value>
+        </property>
+    </bean>
+
+    <mvc:resources mapping="/static/**" location="/WEB-INF/${wechat.cachepath}" cache-period="31556926"/>
 </beans>

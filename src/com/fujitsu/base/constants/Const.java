@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Barrie
  */
 public class Const {
-	
-	
+
+
     /**
      * config file location
      */
@@ -37,6 +37,8 @@ public class Const {
     public static final String WECHART_APP_SECRET = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.appsecret");
 
     public static final String WECHART_TOKEN = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.token");
+
+    public static final String WECHART_CACHE_PATH = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.cachepath");
 
     public static class PublicPlatform {
         /**
@@ -117,9 +119,9 @@ public class Const {
     }
 
     public static class WebSocket {
-    	
-    	public static final long WEB_SOCKET_SLEEP = 800;
-    	
+
+        public static final long WEB_SOCKET_SLEEP = 800;
+
         public static final String AUTHORIZEID = ConfigUtil.getProperty(WEBSOCKET_CONF, "authorizeID");
 
         public static final String AUTHORIZETYPE = ConfigUtil.getProperty(WEBSOCKET_CONF, "authorizeType");
@@ -129,10 +131,9 @@ public class Const {
     }
 
 
-
     public static String getServerPath() {
         String path = Thread.currentThread().getContextClassLoader().getResource("/").getPath();
-        path = "/" + path.substring(1, path.indexOf("/classes"));
+        path = "/" + path.substring(1, path.indexOf("/classes")) + "/";
         return path;
     }
 
