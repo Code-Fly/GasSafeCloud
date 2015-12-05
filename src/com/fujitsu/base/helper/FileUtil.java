@@ -28,7 +28,7 @@ public class FileUtil {
 
     private static String getFile(String url, String subPath, String category, String filename, String extension, boolean force) {
         String localPathStr = Const.getServerPath() + Const.WECHART_CACHE_PATH + subPath + Const.PATH_SEPARATOR + category + Const.PATH_SEPARATOR;
-        System.out.println(localPathStr);
+
         File localPath = new File(localPathStr);
         if (!localPath.exists() && !localPath.isDirectory()) {
             localPath.mkdirs();
