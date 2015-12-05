@@ -25,17 +25,21 @@ public class UrlUtil {
 		String url = basePath + target;
 		return url;
 	}
-	
-	/**
-	 * URL编码（utf-8）
-	 * 
-	 * @param source
-	 * @return
-	 */
-	public static String toUTF8(String source) {
+
+	public static String encode(String source, String chartset) {
 		String result = source;
 		try {
-			result = java.net.URLEncoder.encode(source, "utf-8");
+			result = java.net.URLEncoder.encode(source, chartset);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public static String decode(String source, String chartset) {
+		String result = source;
+		try {
+			result = java.net.URLDecoder.decode(source, chartset);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

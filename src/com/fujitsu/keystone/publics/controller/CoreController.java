@@ -98,7 +98,7 @@ public class CoreController extends BaseController {
     public String urlEncoder(HttpServletRequest request, HttpServletResponse response) {
         String url = request.getParameter("url");
         if (null != url) {
-            url = UrlUtil.toUTF8(url);
+            url = UrlUtil.encode(url, "UTF-8");
         }
         return url;
 
