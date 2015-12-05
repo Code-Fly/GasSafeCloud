@@ -31,7 +31,7 @@ public abstract class BaseController extends Const {
     }
 
     @ExceptionHandler(ConnectionFailedException.class)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public String handleConnectionFailedException(ConnectionFailedException ex) {
         logger.error("Connection Failed", ex);

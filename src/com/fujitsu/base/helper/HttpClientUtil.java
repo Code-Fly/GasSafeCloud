@@ -129,22 +129,17 @@ public class HttpClientUtil {
             respStr = EntityUtils.toString(response.getEntity(), charset);
             EntityUtils.consume(entity);
             httpPost.abort();
+            response.close();
+            httpclient.close();
 
         } catch (Exception e) {
             throw new ConnectionFailedException(e);
-        } finally {
-            try {
-                response.close();
-                httpclient.close();
-            } catch (IOException e) {
-                logger.error(e.getMessage());
-            }
         }
         return respStr;
 
     }
 
-    private static String get(String url, String param, String charset) {
+    private static String get(String url, String param, String charset) throws ConnectionFailedException {
         PoolingHttpClientConnectionManager connManager = null;
         CloseableHttpClient httpclient = null;
         CloseableHttpResponse response = null;
@@ -176,16 +171,10 @@ public class HttpClientUtil {
             HttpEntity entity = response.getEntity();
             respStr = EntityUtils.toString(entity, charset).trim();
             httpGet.abort();
-
+            response.close();
+            httpclient.close();
         } catch (Exception e) {
-            logger.error(e.getMessage());
-        } finally {
-            try {
-                response.close();
-                httpclient.close();
-            } catch (IOException e) {
-                logger.error(e.getMessage());
-            }
+            throw new ConnectionFailedException(e);
         }
         return respStr;
     }
