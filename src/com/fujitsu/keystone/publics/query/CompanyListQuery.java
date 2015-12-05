@@ -5,6 +5,7 @@ import com.fujitsu.base.client.QueryCompanyListClient;
 import com.fujitsu.base.client.QueryCompanyListConnect;
 import com.fujitsu.base.client.entity.CompanyListResMsg;
 import com.fujitsu.base.client.entity.SocketFailCode;
+import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.helper.GasWebSocketUtil;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.event.Event;
@@ -60,13 +61,13 @@ public class CompanyListQuery extends Query {
             socketParams.append("&qyType=").append(queryType);
             CompanyListResMsg retMsg = getCompanyListResMsg(socketParams.toString(), 0);
             if (0 == retMsg.getErrorCode()) {
-                buffer.append("单位列表:").append(ENTER);
-                buffer.append(ENTER);
+                buffer.append("单位列表:").append(Const.LINE_SEPARATOR);
+                buffer.append(Const.LINE_SEPARATOR);
                 for (int i = 0; i < retMsg.getResult().size(); i++) {
-                    buffer.append(i + 1 + "." + retMsg.getResult().get(i).getUnitName()).append(ENTER);
+                    buffer.append(i + 1 + "." + retMsg.getResult().get(i).getUnitName()).append(Const.LINE_SEPARATOR);
                 }
             } else {
-                buffer.append("系统请求socket出现异常:").append(retMsg.getErrorCode()).append(ENTER);
+                buffer.append("系统请求socket出现异常:").append(retMsg.getErrorCode()).append(Const.LINE_SEPARATOR);
             }
             message.setContent(buffer.toString());
         } else {

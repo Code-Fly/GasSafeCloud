@@ -17,8 +17,6 @@ import java.util.Map;
 public abstract class Query {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    public static final String ENTER = System.getProperty("line.separator");
-
     public static final String FILLING_STORAGE = "A";
 
     public static final String DISTRIBUTION_TRANSPORTATION = "B";

@@ -36,7 +36,7 @@ public class SubscribeEvent extends Event {
 		StringBuffer stringBuffer = new  StringBuffer();
 		stringBuffer.append("您好，欢迎关注")
 				.append(Const.WECHART_NAME)
-					.append(ENTER)
+				.append(Const.LINE_SEPARATOR)
 				.append("www.qpsafe.com");
 		message.setContent(stringBuffer.toString());
 

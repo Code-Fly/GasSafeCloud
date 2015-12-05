@@ -31,8 +31,6 @@ public abstract class Event {
 
 	public static final String EVENT = "Event";
 
-	public static final String ENTER = System.getProperty("line.separator");
-
 	// 事件类型：subscribe(订阅)
 	public static final String EVENT_TYPE_SUBSCRIBE = "subscribe";
 	// 事件类型：unsubscribe(取消订阅)

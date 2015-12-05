@@ -5,6 +5,7 @@ package com.fujitsu.keystone.publics.event;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 
@@ -37,7 +38,7 @@ public class CustomerServiceCloseSessionEvent extends Event {
 		customerMsg.setTouser(fromUserName);
 		Text t = new Text();
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("感谢您使用客服服务.").append(ENTER);
+		buffer.append("感谢您使用客服服务.").append(Const.LINE_SEPARATOR);
 		t.setContent(buffer.toString());
 		customerMsg.setText(t);
 		new CustomerService().sendTextMessage(at, customerMsg);

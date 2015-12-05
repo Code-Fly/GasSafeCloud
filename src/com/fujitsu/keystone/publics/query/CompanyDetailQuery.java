@@ -5,6 +5,7 @@ import com.fujitsu.base.client.QueryCompanyDetailClient;
 import com.fujitsu.base.client.QueryCompanyDetailConnect;
 import com.fujitsu.base.client.entity.CompanyDetailResMsg;
 import com.fujitsu.base.client.entity.SocketFailCode;
+import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.helper.GasWebSocketUtil;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.event.Event;
@@ -62,67 +63,67 @@ public class CompanyDetailQuery extends Query {
             if (0 == retMsg.getErrorCode()) {
                 // 充装存储
                 if (Query.FILLING_STORAGE.equals(queryCmd)) {
-                    buffer.append("单位信息:").append(ENTER);
-                    buffer.append(ENTER);
+                    buffer.append("单位信息:").append(Const.LINE_SEPARATOR);
+                    buffer.append(Const.LINE_SEPARATOR);
                     for (int i = 0; i < retMsg.getResult().size(); i++) {
                         logger.info(retMsg.getResult().get(i).toString());
-                        buffer.append("授权编号:" + retMsg.getResult().get(i).getRnoId()).append(ENTER);
-                        buffer.append("单位名称:" + retMsg.getResult().get(i).getUnitName()).append(ENTER);
-                        buffer.append("企业社会信用:" + retMsg.getResult().get(i).getQybh()).append(ENTER);
-                        buffer.append("充装地址:" + retMsg.getResult().get(i).getFillAddress()).append(ENTER);
-                        buffer.append("行政区编码:" + retMsg.getResult().get(i).getAreaCode()).append(ENTER);
-                        buffer.append("气瓶充装证编号:" + retMsg.getResult().get(i).getQpczLicbh()).append(ENTER);
-                        buffer.append("许可证有效期开始:" + retMsg.getResult().get(i).getLicStart()).append(ENTER);
-                        buffer.append("许可证有效终止:" + retMsg.getResult().get(i).getLicEnd()).append(ENTER);
-                        buffer.append("充装范围代号:" + retMsg.getResult().get(i).getFillType()).append(ENTER);
-                        buffer.append("气瓶结构:" + retMsg.getResult().get(i).getQpStructure()).append(ENTER);
-                        buffer.append("充装气体类别:" + retMsg.getResult().get(i).getFillinggasType()).append(ENTER);
-                        buffer.append("发证机关:" + retMsg.getResult().get(i).getFazhengjigou()).append(ENTER);
-                        buffer.append(ENTER);
+                        buffer.append("授权编号:" + retMsg.getResult().get(i).getRnoId()).append(Const.LINE_SEPARATOR);
+                        buffer.append("单位名称:" + retMsg.getResult().get(i).getUnitName()).append(Const.LINE_SEPARATOR);
+                        buffer.append("企业社会信用:" + retMsg.getResult().get(i).getQybh()).append(Const.LINE_SEPARATOR);
+                        buffer.append("充装地址:" + retMsg.getResult().get(i).getFillAddress()).append(Const.LINE_SEPARATOR);
+                        buffer.append("行政区编码:" + retMsg.getResult().get(i).getAreaCode()).append(Const.LINE_SEPARATOR);
+                        buffer.append("气瓶充装证编号:" + retMsg.getResult().get(i).getQpczLicbh()).append(Const.LINE_SEPARATOR);
+                        buffer.append("许可证有效期开始:" + retMsg.getResult().get(i).getLicStart()).append(Const.LINE_SEPARATOR);
+                        buffer.append("许可证有效终止:" + retMsg.getResult().get(i).getLicEnd()).append(Const.LINE_SEPARATOR);
+                        buffer.append("充装范围代号:" + retMsg.getResult().get(i).getFillType()).append(Const.LINE_SEPARATOR);
+                        buffer.append("气瓶结构:" + retMsg.getResult().get(i).getQpStructure()).append(Const.LINE_SEPARATOR);
+                        buffer.append("充装气体类别:" + retMsg.getResult().get(i).getFillinggasType()).append(Const.LINE_SEPARATOR);
+                        buffer.append("发证机关:" + retMsg.getResult().get(i).getFazhengjigou()).append(Const.LINE_SEPARATOR);
+                        buffer.append(Const.LINE_SEPARATOR);
                     }
                 }
                 // 配送运输
                 else if (Query.DISTRIBUTION_TRANSPORTATION.equals(queryCmd)) {
-                    buffer.append("单位信息:").append(ENTER);
-                    buffer.append(ENTER);
+                    buffer.append("单位信息:").append(Const.LINE_SEPARATOR);
+                    buffer.append(Const.LINE_SEPARATOR);
                     for (int i = 0; i < retMsg.getResult().size(); i++) {
                         logger.info(retMsg.getResult().get(i).toString());
-                        buffer.append("授权编号:" + retMsg.getResult().get(i).getRnoId()).append(ENTER);
-                        buffer.append("单位名称:" + retMsg.getResult().get(i).getUnitName()).append(ENTER);
-                        buffer.append("企业社会信用:" + retMsg.getResult().get(i).getOrganizationCode()).append(ENTER);
-                        buffer.append("单位地址:" + retMsg.getResult().get(i).getUnitAddress()).append(ENTER);
-                        buffer.append("行政区编码:" + retMsg.getResult().get(i).getAreaCode()).append(ENTER);
-                        buffer.append("燃气许可证编号:" + retMsg.getResult().get(i).getLicenceId()).append(ENTER);
-                        buffer.append("许可证有效期开始:" + retMsg.getResult().get(i).getLicStart()).append(ENTER);
-                        buffer.append("许可证有效终止:" + retMsg.getResult().get(i).getLicEnd()).append(ENTER);
-                        buffer.append("配送经营种类:" + retMsg.getResult().get(i).getPszl()).append(ENTER);
-                        buffer.append("发证机关:" + retMsg.getResult().get(i).getFazhengjigou()).append(ENTER);
-                        buffer.append(ENTER);
+                        buffer.append("授权编号:" + retMsg.getResult().get(i).getRnoId()).append(Const.LINE_SEPARATOR);
+                        buffer.append("单位名称:" + retMsg.getResult().get(i).getUnitName()).append(Const.LINE_SEPARATOR);
+                        buffer.append("企业社会信用:" + retMsg.getResult().get(i).getOrganizationCode()).append(Const.LINE_SEPARATOR);
+                        buffer.append("单位地址:" + retMsg.getResult().get(i).getUnitAddress()).append(Const.LINE_SEPARATOR);
+                        buffer.append("行政区编码:" + retMsg.getResult().get(i).getAreaCode()).append(Const.LINE_SEPARATOR);
+                        buffer.append("燃气许可证编号:" + retMsg.getResult().get(i).getLicenceId()).append(Const.LINE_SEPARATOR);
+                        buffer.append("许可证有效期开始:" + retMsg.getResult().get(i).getLicStart()).append(Const.LINE_SEPARATOR);
+                        buffer.append("许可证有效终止:" + retMsg.getResult().get(i).getLicEnd()).append(Const.LINE_SEPARATOR);
+                        buffer.append("配送经营种类:" + retMsg.getResult().get(i).getPszl()).append(Const.LINE_SEPARATOR);
+                        buffer.append("发证机关:" + retMsg.getResult().get(i).getFazhengjigou()).append(Const.LINE_SEPARATOR);
+                        buffer.append(Const.LINE_SEPARATOR);
                     }
                 }
                 // 检验监测
                 else if (Query.INSPECTION_TESTING.equals(queryCmd)) {
-                    buffer.append("单位信息:").append(ENTER);
-                    buffer.append(ENTER);
+                    buffer.append("单位信息:").append(Const.LINE_SEPARATOR);
+                    buffer.append(Const.LINE_SEPARATOR);
                     for (int i = 0; i < retMsg.getResult().size(); i++) {
                         logger.info(retMsg.getResult().get(i).toString());
-                        buffer.append("授权编号:" + retMsg.getResult().get(i).getRnoId()).append(ENTER);
-                        buffer.append("单位名称:" + retMsg.getResult().get(i).getUnitName()).append(ENTER);
-                        buffer.append("企业社会信用:" + retMsg.getResult().get(i).getOrganizationCode()).append(ENTER);
-                        buffer.append("单位地址:" + retMsg.getResult().get(i).getUnitAddress()).append(ENTER);
-                        buffer.append("行政区编码:" + retMsg.getResult().get(i).getAreaCode()).append(ENTER);
-                        buffer.append("检验许可证编号:" + retMsg.getResult().get(i).getBusinessCode()).append(ENTER);
-                        buffer.append("许可证有效期开始:" + retMsg.getResult().get(i).getLicStart()).append(ENTER);
-                        buffer.append("许可证有效终止:" + retMsg.getResult().get(i).getLicEnd()).append(ENTER);
-                        buffer.append("检验项目代码:" + retMsg.getResult().get(i).getClassID()).append(ENTER);
-                        buffer.append("核准项目:" + retMsg.getResult().get(i).getLicProject()).append(ENTER);
-                        buffer.append("发证机关:" + retMsg.getResult().get(i).getFazhengjigou()).append(ENTER);
-                        buffer.append(ENTER);
+                        buffer.append("授权编号:" + retMsg.getResult().get(i).getRnoId()).append(Const.LINE_SEPARATOR);
+                        buffer.append("单位名称:" + retMsg.getResult().get(i).getUnitName()).append(Const.LINE_SEPARATOR);
+                        buffer.append("企业社会信用:" + retMsg.getResult().get(i).getOrganizationCode()).append(Const.LINE_SEPARATOR);
+                        buffer.append("单位地址:" + retMsg.getResult().get(i).getUnitAddress()).append(Const.LINE_SEPARATOR);
+                        buffer.append("行政区编码:" + retMsg.getResult().get(i).getAreaCode()).append(Const.LINE_SEPARATOR);
+                        buffer.append("检验许可证编号:" + retMsg.getResult().get(i).getBusinessCode()).append(Const.LINE_SEPARATOR);
+                        buffer.append("许可证有效期开始:" + retMsg.getResult().get(i).getLicStart()).append(Const.LINE_SEPARATOR);
+                        buffer.append("许可证有效终止:" + retMsg.getResult().get(i).getLicEnd()).append(Const.LINE_SEPARATOR);
+                        buffer.append("检验项目代码:" + retMsg.getResult().get(i).getClassID()).append(Const.LINE_SEPARATOR);
+                        buffer.append("核准项目:" + retMsg.getResult().get(i).getLicProject()).append(Const.LINE_SEPARATOR);
+                        buffer.append("发证机关:" + retMsg.getResult().get(i).getFazhengjigou()).append(Const.LINE_SEPARATOR);
+                        buffer.append(Const.LINE_SEPARATOR);
                     }
                 }
 
             } else {
-                buffer.append("系统请求socket出现异常:").append(retMsg.getErrorCode()).append(ENTER);
+                buffer.append("系统请求socket出现异常:").append(retMsg.getErrorCode()).append(Const.LINE_SEPARATOR);
             }
             message.setContent(buffer.toString());
 

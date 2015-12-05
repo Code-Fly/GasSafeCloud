@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Const {
 
+    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+
+    public static final String PATH_SEPARATOR = System.getProperty("path.separator");
 
     /**
      * config file location

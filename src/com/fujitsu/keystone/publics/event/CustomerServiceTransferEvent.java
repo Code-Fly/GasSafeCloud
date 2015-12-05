@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 
@@ -50,7 +51,7 @@ public class CustomerServiceTransferEvent extends Event {
 		message.setTouser(fromUserName);
 		Text t = new Text();
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("请稍后，我们的客服人员马上会接待您。").append(ENTER);
+		buffer.append("请稍后，我们的客服人员马上会接待您。").append(Const.LINE_SEPARATOR);
 		t.setContent(buffer.toString());
 		message.setText(t);
 		new CustomerService().sendTextMessage(at, message);
