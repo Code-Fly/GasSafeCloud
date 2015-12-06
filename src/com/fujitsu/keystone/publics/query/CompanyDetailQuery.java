@@ -1,10 +1,10 @@
 package com.fujitsu.keystone.publics.query;
 
-import com.fujitsu.base.client.GasWebSocketClient;
-import com.fujitsu.base.client.QueryCompanyDetailClient;
-import com.fujitsu.base.client.QueryCompanyDetailConnect;
-import com.fujitsu.base.client.entity.CompanyDetailResMsg;
-import com.fujitsu.base.client.entity.SocketFailCode;
+import com.fujitsu.client.GasWebSocketClient;
+import com.fujitsu.client.QueryCompanyDetailClient;
+import com.fujitsu.client.QueryCompanyDetailConnect;
+import com.fujitsu.client.entity.CompanyDetailResMsg;
+import com.fujitsu.client.entity.SocketFailCode;
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.helper.GasWebSocketUtil;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;

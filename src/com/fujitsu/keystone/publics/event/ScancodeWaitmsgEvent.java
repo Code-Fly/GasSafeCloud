@@ -1,7 +1,7 @@
 package com.fujitsu.keystone.publics.event;
 
-import com.fujitsu.base.client.*;
-import com.fujitsu.base.client.entity.*;
+import com.fujitsu.client.*;
+import com.fujitsu.client.entity.*;
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;

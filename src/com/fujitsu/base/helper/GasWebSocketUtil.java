@@ -4,7 +4,7 @@
 package com.fujitsu.base.helper;
 
 
-import com.fujitsu.base.client.GasWebSocketConnect;
+import com.fujitsu.client.GasWebSocketConnect;
 import com.fujitsu.base.constants.Const.WebSocket;
 
 /**
