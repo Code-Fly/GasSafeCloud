@@ -8,7 +8,7 @@ import javax.jms.JMSException;
 public interface IQueueService {
     void connect();
 
-    void disconnect() throws JMSException;
+    void close() throws JMSException;
 
     void sendText(String queue, String content) throws JMSException;
 }

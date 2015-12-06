@@ -48,7 +48,7 @@ public class QueueService extends BaseService implements IQueueService {
     }
 
     @Override
-    public void disconnect() throws JMSException {
+    public void close() throws JMSException {
         if (null != connection) {
             connection.close();
         }
