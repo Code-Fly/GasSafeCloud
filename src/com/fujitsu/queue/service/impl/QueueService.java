@@ -7,6 +7,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.stereotype.Service;
 
 import javax.jms.*;
+import java.io.Serializable;
 
 /**
  * Created by Barrie on 15/12/6.
@@ -51,9 +52,31 @@ public class QueueService extends BaseService implements IQueueService {
     @Override
     public void sendText(String queue, String content) throws JMSException {
         TextMessage message = session.createTextMessage(content);
-        // 发送消息到目的地方
-        System.out.println("发送消息：" + content);
         this.send(queue, message);
+    }
+
+    @Override
+    public void sendMap(String queue, String content) throws JMSException {
+
+    }
+
+    @Override
+    public void sendStream(String queue, String content) throws JMSException {
+
+    }
+
+    @Override
+    public void sendBytes(String queue, byte[] bytes) throws JMSException {
+        BytesMessage bytesMessage = session.createBytesMessage();
+        bytesMessage.writeBytes(bytes);
+        this.send(queue, bytesMessage);
+    }
+
+    @Override
+    public void sendObject(String queue, Serializable object) throws JMSException {
+        ObjectMessage objectMessage = session.createObjectMessage();
+        objectMessage.setObject(object);
+        this.send(queue, objectMessage);
     }
 
     private void send(String queue, Message message) throws JMSException {
