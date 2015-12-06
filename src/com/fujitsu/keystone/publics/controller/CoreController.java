@@ -12,12 +12,14 @@ import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.base.helper.UrlUtil;
 import com.fujitsu.keystone.publics.service.impl.CoreService;
 import com.fujitsu.keystone.publics.service.impl.GreeterService;
+import com.fujitsu.queue.service.iface.IQueueService;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,6 +35,9 @@ public class CoreController extends BaseController {
 
     @Resource
     GreeterService greeterService;
+
+    @Resource
+    IQueueService queueService;
 
     @RequestMapping(value = "/core")
     public void connect(HttpServletRequest request, HttpServletResponse response) {
@@ -57,7 +62,7 @@ public class CoreController extends BaseController {
 
     @RequestMapping(value = "/token/refresh", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String refreshToken(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, WeChatException {
+    public String refreshToken(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, WeChatException, JMSException {
 
         greeterService.post("111111");
         greeterService.post("222");
@@ -65,6 +70,10 @@ public class CoreController extends BaseController {
         greeterService.get();
         greeterService.get();
         greeterService.get();
+
+
+        queueService.connect();
+        queueService.sendText("111", "2222");
 
         return KeystoneUtil.refreshLocalAccessToken().toString();
     }

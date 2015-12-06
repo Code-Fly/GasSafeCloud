@@ -28,6 +28,8 @@ public class Const {
 
     private static final String WEBSOCKET_CONF = "api/webSocket.properties";
 
+    private static final String QUEUE_CONF = "api/activemq.properties";
+
     /**
      * global config
      */
@@ -43,6 +45,17 @@ public class Const {
     public static final String WECHART_TOKEN = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.token");
 
     public static final String WECHART_CACHE_PATH = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.cachepath");
+
+    public static class Queue {
+        /**
+         * Message Queue config
+         */
+        public static final String QUEUE_URL = ConfigUtil.getProperty(QUEUE_CONF, "activemq.url");
+
+        public static final String QUEUE_USER_NAME = ConfigUtil.getProperty(QUEUE_CONF, "activemq.username");
+
+        public static final String QUEUE_PASSWORD = ConfigUtil.getProperty(QUEUE_CONF, "activemq.password");
+    }
 
     public static class PublicPlatform {
         /**
