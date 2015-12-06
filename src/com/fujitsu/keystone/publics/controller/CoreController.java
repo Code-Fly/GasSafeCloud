@@ -74,6 +74,7 @@ public class CoreController extends BaseController {
 
         queueService.connect();
         queueService.sendText("111", "2222");
+
         queueService.close();
 
         return KeystoneUtil.refreshLocalAccessToken().toString();

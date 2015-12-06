@@ -19,7 +19,7 @@ public class QueueService extends BaseService implements IQueueService {
     private Session session;
 
     @Override
-    public void connect() {
+    public void connect() throws JMSException {
         // ConnectionFactory ：连接工厂，JMS 用它创建连接
         ConnectionFactory connectionFactory;
 
@@ -29,26 +29,20 @@ public class QueueService extends BaseService implements IQueueService {
                 Const.Queue.QUEUE_PASSWORD,
                 Const.Queue.QUEUE_URL);
 
-        System.out.println(Const.Queue.QUEUE_USER_NAME);
-        System.out.println(Const.Queue.QUEUE_PASSWORD);
-        System.out.println(Const.Queue.QUEUE_URL);
-        try {
-            // 构造从工厂得到连接对象
-            connection = connectionFactory.createConnection();
-            // 启动
-            connection.start();
-            // 获取操作连接
-            session = connection.createSession(Boolean.TRUE,
-                    Session.AUTO_ACKNOWLEDGE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+        // 构造从工厂得到连接对象
+        connection = connectionFactory.createConnection();
+        // 启动
+        connection.start();
+        // 获取操作连接
+        session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
 
-        }
     }
 
     @Override
     public void close() throws JMSException {
+        if (null != session) {
+            session.close();
+        }
         if (null != connection) {
             connection.close();
         }
@@ -63,7 +57,6 @@ public class QueueService extends BaseService implements IQueueService {
     }
 
     private void send(String queue, Message message) throws JMSException {
-
         // Destination ：消息的目的地;消息发送给谁.
         Destination destination;
         // MessageProducer：消息发送者
@@ -78,6 +71,7 @@ public class QueueService extends BaseService implements IQueueService {
         // 构造消息，此处写死，项目就是参数，或者方法获取
         producer.send(message);
         session.commit();
+        producer.close();
     }
 
 }
