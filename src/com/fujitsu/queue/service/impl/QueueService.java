@@ -4,6 +4,7 @@ import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.queue.service.iface.IQueueService;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.command.ActiveMQMessage;
 import org.springframework.stereotype.Service;
 
 import javax.jms.*;

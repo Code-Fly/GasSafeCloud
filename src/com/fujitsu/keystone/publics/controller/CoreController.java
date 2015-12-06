@@ -74,6 +74,7 @@ public class CoreController extends BaseController {
 
         queueService.connect();
         queueService.sendText("111", "2222");
+        queueService.sendText("111", "444");
         queueService.receiveText("111");
         queueService.close();
 
