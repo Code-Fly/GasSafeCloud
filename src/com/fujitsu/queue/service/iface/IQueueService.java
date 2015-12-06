@@ -1,6 +1,6 @@
 package com.fujitsu.queue.service.iface;
 
-import javax.jms.JMSException;
+import javax.jms.*;
 import java.io.Serializable;
 
 /**
@@ -20,4 +20,14 @@ public interface IQueueService {
     void sendBytes(String queue, byte[] bytes) throws JMSException;
 
     void sendObject(String queue, Serializable object) throws JMSException;
+
+    String receiveText(String queue) throws JMSException;
+
+    MapMessage receiveMap(String queue) throws JMSException;
+
+    StreamMessage receiveStream(String queue) throws JMSException;
+
+    BytesMessage receiveBytes(String queue) throws JMSException;
+
+    Serializable receiveObject(String queue) throws JMSException;
 }
