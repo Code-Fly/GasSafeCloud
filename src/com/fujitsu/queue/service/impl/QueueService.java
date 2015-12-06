@@ -17,7 +17,7 @@ public class QueueService extends BaseService implements IQueueService {
     // Connection ：JMS 客户端到JMS Provider 的连接
     private Connection connection = null;
     // Session： 一个发送或接收消息的线程
-    private Session session;
+    private Session session = null;
 
     @Override
     public void connect() throws JMSException {
