@@ -54,10 +54,12 @@ public abstract class Event {
 
     public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, ConnectionFailedException, AccessTokenException, WeChatException {
         if (null != Const.Queue.ACTIVEMQ_HOST) {
-            String fromUserName = requestJson.getString(FROM_USER_NAME);
+            String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
+            String msgType = requestJson.getString(Event.MSG_TYPE);
+
             ActiveMQService mq = new ActiveMQService();
             mq.connect();
-            mq.sendText("queue://" + fromUserName, requestJson.toString());
+            mq.sendText("queue://" + fromUserName, requestJson.toString(), msgType);
             mq.close();
         }
         return null;

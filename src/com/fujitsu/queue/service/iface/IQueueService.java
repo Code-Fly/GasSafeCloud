@@ -15,7 +15,7 @@ public interface IQueueService {
 
     void close() throws JMSException;
 
-    void sendText(String destination, String content) throws JMSException;
+    void sendText(String destination, String content, String type) throws JMSException;
 
     void sendMap(String destination, String content) throws JMSException;
 

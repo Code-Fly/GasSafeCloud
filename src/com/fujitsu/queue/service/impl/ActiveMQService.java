@@ -45,8 +45,9 @@ public class ActiveMQService extends BaseService implements IQueueService {
     }
 
     @Override
-    public void sendText(String destination, String content) throws JMSException {
+    public void sendText(String destination, String content, String type) throws JMSException {
         TextMessage message = session.createTextMessage(content);
+        message.setJMSType(type);
         this.send(destination, message);
     }
 
