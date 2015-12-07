@@ -59,7 +59,7 @@ public abstract class Event {
 
             ActiveMQService mq = new ActiveMQService();
             mq.connect();
-            mq.sendText("queue://" + fromUserName, requestJson.toString(), msgType);
+            mq.send("queue://" + fromUserName, requestJson.toString(), msgType);
             mq.close();
         }
         return null;

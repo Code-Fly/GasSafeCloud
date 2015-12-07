@@ -7,7 +7,6 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.stereotype.Service;
 
 import javax.jms.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -45,60 +44,26 @@ public class ActiveMQService extends BaseService implements IQueueService {
     }
 
     @Override
-    public void sendText(String destination, String content, String type) throws JMSException {
+    public void send(String destination, String content, String type) throws JMSException {
         TextMessage message = session.createTextMessage(content);
         message.setJMSType(type);
-        this.send(destination, message);
+        this.doSend(destination, message);
     }
 
-    @Override
-    public void sendMap(String destination, String content) throws JMSException {
-
-    }
 
     @Override
-    public void sendStream(String destination, String content) throws JMSException {
-
-    }
-
-    @Override
-    public void sendBytes(String destination, byte[] bytes) throws JMSException {
-
-    }
-
-    @Override
-    public void sendObject(String destination, Serializable object) throws JMSException {
-
-    }
-
-    @Override
-    public String receiveText(String destination) throws JMSException {
-        return ((TextMessage) this.receive(destination)).getText();
-    }
-
-    @Override
-    public MapMessage receiveMap(String destination) throws JMSException {
+    public String receive(String destination, String filter) throws JMSException {
+        Message msg = this.doReceive(destination, filter);
+        if (null != msg) {
+            return ((TextMessage) msg).getText();
+        }
         return null;
     }
 
-    @Override
-    public StreamMessage receiveStream(String destination) throws JMSException {
-        return null;
-    }
 
     @Override
-    public BytesMessage receiveBytes(String destination) throws JMSException {
-        return null;
-    }
-
-    @Override
-    public Serializable receiveObject(String destination) throws JMSException {
-        return null;
-    }
-
-    @Override
-    public List<String> browseTextQueue(String destination) throws JMSException {
-        Enumeration msgs = this.browse(destination);
+    public List<String> browse(String destination) throws JMSException {
+        Enumeration msgs = this.doBrowse(destination);
 
         List<String> msgList = new ArrayList<>();
         if (!msgs.hasMoreElements()) {
@@ -106,14 +71,13 @@ public class ActiveMQService extends BaseService implements IQueueService {
         } else {
             while (msgs.hasMoreElements()) {
                 TextMessage tempMsg = (TextMessage) msgs.nextElement();
-                logger.info("Message: " + tempMsg.getText());
                 msgList.add(tempMsg.getText());
             }
         }
         return msgList;
     }
 
-    private void send(String destination, Message message) throws JMSException {
+    private void doSend(String destination, Message message) throws JMSException {
         Destination dest;
         MessageProducer producer;
         if (destination.startsWith("topic://")) {
@@ -129,7 +93,7 @@ public class ActiveMQService extends BaseService implements IQueueService {
         producer.close();
     }
 
-    private Message receive(String destination) throws JMSException {
+    private Message doReceive(String destination, String filter) throws JMSException {
         Destination dest;
         MessageConsumer consumer;
 
@@ -139,12 +103,12 @@ public class ActiveMQService extends BaseService implements IQueueService {
         } else {
             dest = session.createQueue(destination.replace("queue://", ""));
         }
-        consumer = session.createConsumer(dest);
+        consumer = session.createConsumer(dest, filter);
 
-        return consumer.receive();
+        return consumer.receiveNoWait();
     }
 
-    private Enumeration browse(String destination) throws JMSException {
+    private Enumeration doBrowse(String destination) throws JMSException {
         Queue queue = null;
         if (destination.startsWith("queue://")) {
             queue = session.createQueue(destination.replace("queue://", ""));
