@@ -84,9 +84,10 @@ public class CoreController extends BaseController {
         activeMQService.close();
 
         apolloService.connect();
-        apolloService.sendText("queue://testQueue", "test");
-        apolloService.sendText("queue://testQueue", "test2");
-        //System.out.println(apolloService.receiveText("queue://testQueue"));
+        apolloService.sendText("queue://testQueue", "111");
+        apolloService.sendText("queue://testQueue", "222");
+        System.out.println(apolloService.browseTextQueue("queue://testQueue"));
+
         apolloService.close();
 
 

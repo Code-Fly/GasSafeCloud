@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import javax.jms.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 /**
  * Created by Barrie on 15/12/6.
@@ -92,6 +95,23 @@ public class ActiveMQService extends BaseService implements IQueueService {
         return null;
     }
 
+    @Override
+    public List<String> browseTextQueue(String destination) throws JMSException {
+        Enumeration msgs = this.browse(destination);
+
+        List<String> msgList = new ArrayList<>();
+        if (!msgs.hasMoreElements()) {
+            logger.info("No messages in queue");
+        } else {
+            while (msgs.hasMoreElements()) {
+                TextMessage tempMsg = (TextMessage) msgs.nextElement();
+                logger.info("Message: " + tempMsg.getText());
+                msgList.add(tempMsg.getText());
+            }
+        }
+        return msgList;
+    }
+
     private void send(String destination, Message message) throws JMSException {
         Destination dest;
         MessageProducer producer;
@@ -121,6 +141,20 @@ public class ActiveMQService extends BaseService implements IQueueService {
         consumer = session.createConsumer(dest);
 
         return consumer.receive();
+    }
+
+    private Enumeration browse(String destination) throws JMSException {
+        Queue queue = null;
+        if (destination.startsWith("queue://")) {
+            queue = session.createQueue(destination);
+        } else {
+            throw new JMSException("Not support");
+        }
+
+
+        QueueBrowser browser = session.createBrowser(queue);
+        return browser.getEnumeration();
+
     }
 
 }

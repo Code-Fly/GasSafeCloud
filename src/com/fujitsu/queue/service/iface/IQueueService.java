@@ -1,7 +1,11 @@
 package com.fujitsu.queue.service.iface;
 
-import javax.jms.*;
+import javax.jms.BytesMessage;
+import javax.jms.JMSException;
+import javax.jms.MapMessage;
+import javax.jms.StreamMessage;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Barrie on 15/12/6.
@@ -30,4 +34,6 @@ public interface IQueueService {
     BytesMessage receiveBytes(String destination) throws JMSException;
 
     Serializable receiveObject(String destination) throws JMSException;
+
+    List<String> browseTextQueue(String destination) throws JMSException;
 }
