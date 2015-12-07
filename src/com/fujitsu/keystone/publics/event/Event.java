@@ -8,7 +8,7 @@ import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.queue.service.iface.IQueueService;
-import com.fujitsu.queue.service.impl.ActiveMQService;
+import com.fujitsu.queue.service.impl.QueueService;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,10 +58,10 @@ public abstract class Event {
             String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
             String msgType = requestJson.getString(Event.MSG_TYPE);
 
-            IQueueService mq = new ActiveMQService();
-            mq.connect();
-            mq.send("queue://" + fromUserName, requestJson.toString(), msgType);
-            mq.close();
+            IQueueService queueService = new QueueService();
+            queueService.connect();
+            queueService.send("queue://" + fromUserName, requestJson.toString(), msgType);
+            queueService.close();
         }
         return null;
     }

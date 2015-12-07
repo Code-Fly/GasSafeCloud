@@ -30,7 +30,6 @@ public class Const {
 
     private static final String ACTIVEMQ_CONF = "api/activemq.properties";
 
-    private static final String APOLLO_CONF = "api/apollo.properties";
 
     /**
      * global config
@@ -60,13 +59,6 @@ public class Const {
 
         public static final String ACTIVEMQ_PASSWORD = ConfigUtil.getProperty(ACTIVEMQ_CONF, "activemq.password");
 
-        public static final String APOLLO_HOST = ConfigUtil.getProperty(APOLLO_CONF, "apollo.host");
-
-        public static final String APOLLO_PORT = ConfigUtil.getProperty(APOLLO_CONF, "apollo.port");
-
-        public static final String APOLLO_USER_NAME = ConfigUtil.getProperty(APOLLO_CONF, "apollo.username");
-
-        public static final String APOLLO_PASSWORD = ConfigUtil.getProperty(APOLLO_CONF, "apollo.password");
     }
 
     public static class PublicPlatform {
@@ -108,13 +100,13 @@ public class Const {
 
         public static final String URL_SHOP_GET_DETAIL = ConfigUtil.getProperty(PUBLICS_CONF, "url.shop.get.detail");
 
-        public static final String URL_PROGUCT_GET_LIST = ConfigUtil.getProperty(PUBLICS_CONF, "url.product.get.list");
+        public static final String URL_PRODUCT_GET_LIST = ConfigUtil.getProperty(PUBLICS_CONF, "url.product.get.list");
 
-        public static final String URL_PROGUCT_GET_DETAIL = ConfigUtil.getProperty(PUBLICS_CONF, "url.product.get.detail");
+        public static final String URL_PRODUCT_GET_DETAIL = ConfigUtil.getProperty(PUBLICS_CONF, "url.product.get.detail");
 
-        public static final String URL_PROGUCT_GROUP_GET_LIST = ConfigUtil.getProperty(PUBLICS_CONF, "url.product.group.get.list");
+        public static final String URL_PRODUCT_GROUP_GET_LIST = ConfigUtil.getProperty(PUBLICS_CONF, "url.product.group.get.list");
 
-        public static final String URL_PROGUCT_GROUP_GET_DETAIL = ConfigUtil.getProperty(PUBLICS_CONF, "url.product.group.get.detail");
+        public static final String URL_PRODUCT_GROUP_GET_DETAIL = ConfigUtil.getProperty(PUBLICS_CONF, "url.product.group.get.detail");
 
         public static final String URL_ORDER_GET_LIST = ConfigUtil.getProperty(PUBLICS_CONF, "url.order.get.list");
 

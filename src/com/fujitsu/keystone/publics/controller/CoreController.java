@@ -12,8 +12,7 @@ import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.base.helper.UrlUtil;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.impl.GreeterService;
-import com.fujitsu.keystone.publics.service.impl.MessageService;
-import com.fujitsu.queue.service.impl.ActiveMQService;
+import com.fujitsu.queue.service.impl.QueueService;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +37,7 @@ public class CoreController extends BaseController {
     GreeterService greeterService;
 
     @Resource
-    ActiveMQService mq;
+    QueueService mq;
 
     @RequestMapping(value = "/core")
     public void connect(HttpServletRequest request, HttpServletResponse response) {

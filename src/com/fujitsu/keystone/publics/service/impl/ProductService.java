@@ -48,7 +48,7 @@ public class ProductService extends BaseService implements IProductService {
 	 * 
 	 */
 	public JSONObject getProductList(String accessToken, int status) throws ConnectionFailedException, WeChatException {
-		String url = Const.PublicPlatform.URL_PROGUCT_GET_LIST.replace("ACCESS_TOKEN", accessToken);
+		String url = Const.PublicPlatform.URL_PRODUCT_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
 		request.put("status", status);
@@ -59,7 +59,7 @@ public class ProductService extends BaseService implements IProductService {
     }
 
 	public JSONObject getProduct(String accessToken, String productId) throws ConnectionFailedException, WeChatException {
-		String url = Const.PublicPlatform.URL_PROGUCT_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
+		String url = Const.PublicPlatform.URL_PRODUCT_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
 		request.put("product_id", productId);
@@ -70,7 +70,7 @@ public class ProductService extends BaseService implements IProductService {
     }
 
 	public JSONObject getProductGroupList(String accessToken) throws ConnectionFailedException, WeChatException {
-		String url = Const.PublicPlatform.URL_PROGUCT_GROUP_GET_LIST.replace("ACCESS_TOKEN", accessToken);
+		String url = Const.PublicPlatform.URL_PRODUCT_GROUP_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
 		String response = WeChatClientUtil.doGet(url, "UTF-8");
 
@@ -78,7 +78,7 @@ public class ProductService extends BaseService implements IProductService {
     }
 
 	public JSONObject getProductGroupDetail(String accessToken, String groupId) throws ConnectionFailedException, WeChatException {
-		String url = Const.PublicPlatform.URL_PROGUCT_GROUP_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
+		String url = Const.PublicPlatform.URL_PRODUCT_GROUP_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
 		JSONObject request = new JSONObject();
 		request.put("group_id", groupId);

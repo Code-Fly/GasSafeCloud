@@ -15,18 +15,18 @@ import java.util.List;
  * Created by Barrie on 15/12/6.
  */
 @Service
-public class ActiveMQService extends BaseService implements IQueueService {
+public class QueueService extends BaseService implements IQueueService {
     private Connection connection = null;
     private Session session = null;
 
     @Override
     public void connect() throws JMSException {
-        ConnectionFactory connectionFactory;
-
         String user = Const.Queue.ACTIVEMQ_USER_NAME;
         String password = Const.Queue.ACTIVEMQ_PASSWORD;
         String host = Const.Queue.ACTIVEMQ_HOST;
         int port = Integer.parseInt(Const.Queue.ACTIVEMQ_PORT);
+
+        ConnectionFactory connectionFactory;
 
         String connectionURI = "tcp://" + host + ":" + port;
 
