@@ -64,20 +64,23 @@ public class CoreController extends BaseController {
     @RequestMapping(value = "/token/refresh", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String refreshToken(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, WeChatException, JMSException {
-
-        greeterService.post("111111");
-        greeterService.post("222");
-        greeterService.post("333");
-        greeterService.get();
-        greeterService.get();
-        greeterService.get();
-
-        mq.connect();
-        //mq.clear("queue://omiuxs4TDeYabfsAXdUh6GFfIloU");
-        mq.clear("queue://omiuxs4TDeYabfsAXdUh6GFfIloU", "JMSType <> '" + MessageService.REQ_MESSAGE_TYPE_TEXT + "'");
-        //System.out.println(mq.receive("queue://omiuxs4TDeYabfsAXdUh6GFfIloU", null));
-        //System.out.println(mq.receive("queue://omiuxs4TDeYabfsAXdUh6GFfIloU", "JMSType = '" + MessageService.REQ_MESSAGE_TYPE_TEXT + "'"));
-        mq.close();
+//
+//        greeterService.post("111111");
+//        greeterService.post("222");
+//        greeterService.post("333");
+//        greeterService.get();
+//        greeterService.get();
+//        greeterService.get();
+//
+//        String queue = "queue://omiuxs4TDeYabfsAXdUh6GFfIloU";
+//        mq.connect();
+//        System.out.println(mq.browse(queue));
+//        mq.clear(queue);
+//        mq.clear(queue, "JMSType <> '" + MessageService.REQ_MESSAGE_TYPE_TEXT + "'");
+//        System.out.println(mq.receive(queue, null));
+//        System.out.println(mq.receive(queue, "JMSType = '" + MessageService.REQ_MESSAGE_TYPE_TEXT + "'"));
+//        System.out.println(mq.browse(queue));
+//        mq.close();
 
         return KeystoneUtil.refreshLocalAccessToken().toString();
     }
