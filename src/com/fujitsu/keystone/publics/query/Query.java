@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * @author Barrie
  */
-public abstract class Query {
+public abstract class Query extends Event {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     public static final String FILLING_STORAGE = "A";
@@ -43,16 +43,4 @@ public abstract class Query {
 
     public static final String SEPARATOR = "#";
 
-    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException {
-        if (null != Const.Queue.ACTIVEMQ_HOST) {
-            String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
-            String msgType = requestJson.getString(Event.MSG_TYPE);
-
-            ActiveMQService mq = new ActiveMQService();
-            mq.connect();
-            mq.sendText("queue://" + fromUserName, requestJson.toString(), msgType);
-            mq.close();
-        }
-        return null;
-    }
 }

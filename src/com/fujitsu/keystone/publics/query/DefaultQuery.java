@@ -1,5 +1,8 @@
 package com.fujitsu.keystone.publics.query;
 
+import com.fujitsu.base.exception.AccessTokenException;
+import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.event.Event;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
@@ -15,7 +18,7 @@ import java.util.Date;
 public class DefaultQuery extends Query {
 
     @Override
-    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, WeChatException, ConnectionFailedException, AccessTokenException {
         String respXml = null;
         // 发送方帐号
         String fromUserName = requestJson.getString(Event.FROM_USER_NAME);

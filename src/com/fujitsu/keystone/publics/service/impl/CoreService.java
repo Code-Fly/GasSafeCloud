@@ -200,7 +200,11 @@ public class CoreService extends BaseService implements ICoreService {
                     Query query = new DefaultQuery();
                     respXml = query.execute(request, requestJson);
                 }
-
+            }
+            // 默认事件响应
+            else {
+                Event event = new DefaultEvent();
+                respXml = event.execute(request, requestJson);
             }
         } catch (Exception e) {
             e.printStackTrace();
