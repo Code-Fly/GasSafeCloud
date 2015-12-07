@@ -37,7 +37,7 @@ public class ActiveMQService extends BaseService implements IQueueService {
 
         connection = connectionFactory.createConnection();
         connection.start();
-        session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
+        session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
     }
 
     @Override
@@ -57,18 +57,17 @@ public class ActiveMQService extends BaseService implements IQueueService {
         while (null != this.doReceive(consumer)) {
             count++;
         }
-        logger.info(count + " messages have been received");
+        logger.info(count + " messages have been deleted from the queue");
     }
 
     @Override
     public void clear(String destination, String filter) throws JMSException {
         MessageConsumer consumer = this.preReceive(destination, filter);
-
         int count = 0;
         while (null != this.doReceive(consumer)) {
             count++;
         }
-        logger.info(count + " messages have been received");
+        logger.info(count + " messages have been deleted from the queue");
     }
 
     @Override
@@ -109,6 +108,7 @@ public class ActiveMQService extends BaseService implements IQueueService {
     private void doSend(String destination, Message message) throws JMSException {
         Destination dest;
         MessageProducer producer;
+
         if (destination.startsWith("topic://")) {
             dest = session.createTopic(destination.replace("topic://", ""));
         } else {
@@ -126,7 +126,6 @@ public class ActiveMQService extends BaseService implements IQueueService {
         Destination dest;
         MessageConsumer consumer;
 
-        session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
         if (destination.startsWith("topic://")) {
             dest = session.createTopic(destination.replace("topic://", ""));
         } else {
