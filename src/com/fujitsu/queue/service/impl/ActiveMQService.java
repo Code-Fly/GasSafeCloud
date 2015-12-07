@@ -37,7 +37,6 @@ public class ActiveMQService extends BaseService implements IQueueService {
 
         connection = connectionFactory.createConnection();
         connection.start();
-        session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
     }
 
     @Override
@@ -72,11 +71,11 @@ public class ActiveMQService extends BaseService implements IQueueService {
 
     @Override
     public void send(String destination, String content, String type) throws JMSException {
+        MessageProducer producer = this.preSend(destination);
         TextMessage message = session.createTextMessage(content);
         message.setJMSType(type);
-        this.doSend(destination, message);
+        this.doSend(producer, message);
     }
-
 
     @Override
     public String receive(String destination, String filter) throws JMSException {
@@ -105,9 +104,11 @@ public class ActiveMQService extends BaseService implements IQueueService {
         return msgList;
     }
 
-    private void doSend(String destination, Message message) throws JMSException {
+    private MessageProducer preSend(String destination) throws JMSException {
         Destination dest;
         MessageProducer producer;
+
+        session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
 
         if (destination.startsWith("topic://")) {
             dest = session.createTopic(destination.replace("topic://", ""));
@@ -117,6 +118,11 @@ public class ActiveMQService extends BaseService implements IQueueService {
 
         producer = session.createProducer(dest);
         producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+
+        return producer;
+    }
+
+    private void doSend(MessageProducer producer, Message message) throws JMSException {
         producer.send(message);
         session.commit();
         producer.close();
@@ -125,6 +131,8 @@ public class ActiveMQService extends BaseService implements IQueueService {
     private MessageConsumer preReceive(String destination, String filter) throws JMSException {
         Destination dest;
         MessageConsumer consumer;
+
+        session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
 
         if (destination.startsWith("topic://")) {
             dest = session.createTopic(destination.replace("topic://", ""));
@@ -151,7 +159,6 @@ public class ActiveMQService extends BaseService implements IQueueService {
         } else {
             throw new JMSException("Not support");
         }
-
 
         QueueBrowser browser = session.createBrowser(queue);
         return browser.getEnumeration();
