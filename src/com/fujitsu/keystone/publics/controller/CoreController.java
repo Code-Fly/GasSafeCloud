@@ -38,12 +38,6 @@ public class CoreController extends BaseController {
     @Resource
     GreeterService greeterService;
 
-    @Resource
-    ActiveMQService activeMQService;
-
-    @Resource
-    ApolloService apolloService;
-
     @RequestMapping(value = "/core")
     public void connect(HttpServletRequest request, HttpServletResponse response) {
         String method = request.getMethod();
@@ -75,22 +69,6 @@ public class CoreController extends BaseController {
         greeterService.get();
         greeterService.get();
         greeterService.get();
-
-
-        activeMQService.connect();
-        activeMQService.sendText("111", "2222");
-        activeMQService.sendText("111", "111");
-        System.out.println(activeMQService.receiveText("111"));
-        activeMQService.close();
-
-        apolloService.connect();
-        apolloService.sendText("queue://testQueue", "111");
-        apolloService.sendText("queue://testQueue", "222");
-        System.out.println(apolloService.browseTextQueue("queue://testQueue"));
-
-        apolloService.close();
-
-
 
         return KeystoneUtil.refreshLocalAccessToken().toString();
     }

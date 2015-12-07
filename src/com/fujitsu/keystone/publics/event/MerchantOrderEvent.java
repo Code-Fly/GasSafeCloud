@@ -16,6 +16,7 @@ import com.fujitsu.keystone.publics.service.impl.CustomerService;
 import com.fujitsu.keystone.publics.service.impl.ProductService;
 import net.sf.json.JSONObject;
 
+import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 
@@ -29,7 +30,7 @@ public class MerchantOrderEvent extends Event {
     public static String ORDER_ID = "OrderId";
 
     @Override
-    public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException {
         String at = KeystoneUtil.getAccessToken();
 
         String respXml = null;
@@ -77,6 +78,7 @@ public class MerchantOrderEvent extends Event {
         }
         logger.info(resp);
 
+        super.execute(request, requestJson);
         return respXml;
     }
 

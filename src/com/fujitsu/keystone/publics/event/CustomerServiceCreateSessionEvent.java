@@ -3,6 +3,7 @@
  */
 package com.fujitsu.keystone.publics.event;
 
+import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.fujitsu.base.constants.Const;
@@ -24,7 +25,7 @@ public class CustomerServiceCreateSessionEvent extends Event {
 	public static String KF_ACCOUNT = "KfAccount";
 
 	@Override
-	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException {
 		String at = KeystoneUtil.getAccessToken();
 
 		String respXml = null;
@@ -43,6 +44,7 @@ public class CustomerServiceCreateSessionEvent extends Event {
 		customerMsg.setText(t);
 		new CustomerService().sendTextMessage(at, customerMsg);
 
+		super.execute(request, requestJson);
 		return respXml;
 	}
 }

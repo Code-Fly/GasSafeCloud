@@ -146,7 +146,7 @@ public class ActiveMQService extends BaseService implements IQueueService {
     private Enumeration browse(String destination) throws JMSException {
         Queue queue = null;
         if (destination.startsWith("queue://")) {
-            queue = session.createQueue(destination);
+            queue = session.createQueue(destination.replace("queue://", ""));
         } else {
             throw new JMSException("Not support");
         }

@@ -3,10 +3,14 @@
  */
 package com.fujitsu.keystone.publics.query;
 
+import com.fujitsu.base.constants.Const;
+import com.fujitsu.keystone.publics.event.Event;
+import com.fujitsu.queue.service.impl.ActiveMQService;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +43,14 @@ public abstract class Query {
 
     public static final String SEPARATOR = "#";
 
-    public String execute(HttpServletRequest request, JSONObject requestJson) {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException {
+        if (null != Const.Queue.ACTIVEMQ_HOST) {
+            String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
+            ActiveMQService mq = new ActiveMQService();
+            mq.connect();
+            mq.sendText("queue://" + fromUserName, requestJson.toString());
+            mq.close();
+        }
         return null;
     }
 }

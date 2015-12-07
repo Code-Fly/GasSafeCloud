@@ -5,6 +5,7 @@ package com.fujitsu.keystone.publics.event;
 
 import java.util.Date;
 
+import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.fujitsu.base.constants.Const;
@@ -27,7 +28,7 @@ import com.fujitsu.keystone.publics.service.impl.MessageService;
 public class CustomerServiceTransferEvent extends Event {
 
 	@Override
-	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException {
 		String at = KeystoneUtil.getAccessToken();
 		
 		String respXml = null;
@@ -56,6 +57,7 @@ public class CustomerServiceTransferEvent extends Event {
 		message.setText(t);
 		new CustomerService().sendTextMessage(at, message);
 
+		super.execute(request, requestJson);
 		return respXml;
 	}
 

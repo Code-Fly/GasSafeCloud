@@ -5,8 +5,12 @@ package com.fujitsu.keystone.publics.event;
 
 import java.util.Date;
 
+import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 
+import com.fujitsu.base.exception.AccessTokenException;
+import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 
 import com.fujitsu.base.constants.Const;
@@ -20,7 +24,7 @@ import com.fujitsu.keystone.publics.service.impl.MessageService;
 public class SubscribeEvent extends Event {
 
 	@Override
-	public String execute(HttpServletRequest request, JSONObject requestJson) {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws AccessTokenException, WeChatException, ConnectionFailedException, JMSException {
 		String respXml = null;
 		// 发送方帐号
 		String fromUserName = requestJson.getString(FROM_USER_NAME);
@@ -42,6 +46,8 @@ public class SubscribeEvent extends Event {
 
 		// 将消息对象转换成xml
 		respXml = MessageService.messageToXml(message);
+
+		super.execute(request, requestJson);
 		return respXml;
 	}
 

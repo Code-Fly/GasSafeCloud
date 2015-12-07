@@ -3,21 +3,19 @@
  */
 package com.fujitsu.keystone.publics.event;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.fujitsu.base.constants.Const;
-import com.fujitsu.keystone.publics.query.Query;
-import net.sf.json.JSONObject;
-
-import com.fujitsu.keystone.publics.entity.push.response.Article;
-import com.fujitsu.keystone.publics.entity.push.response.NewsMessage;
+import com.fujitsu.base.exception.AccessTokenException;
+import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
+import com.fujitsu.keystone.publics.query.Query;
 import com.fujitsu.keystone.publics.service.impl.MenuService;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
+import net.sf.json.JSONObject;
+
+import javax.jms.JMSException;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * @author Barrie
@@ -26,7 +24,7 @@ public class ClickEvent extends Event {
     public static final String EVENT_KEY = "EventKey";
 
     @Override
-    public String execute(HttpServletRequest request, JSONObject requestJson) {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, WeChatException, ConnectionFailedException, AccessTokenException {
         String respXml = null;
         // 发送方帐号
         String fromUserName = requestJson.getString(FROM_USER_NAME);
@@ -117,6 +115,7 @@ public class ClickEvent extends Event {
             textMessage.setContent("功能尚未开放，敬请期待！" + eventKey);
             respXml = MessageService.messageToXml(textMessage);
         }
+        super.execute(request, requestJson);
         return respXml;
     }
 

@@ -12,6 +12,7 @@ import com.fujitsu.keystone.publics.event.Event;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
 import net.sf.json.JSONObject;
 
+import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -22,7 +23,7 @@ import java.util.regex.Pattern;
  */
 public class CompanyDetailQuery extends Query {
     @Override
-    public String execute(HttpServletRequest request, JSONObject requestJson) {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException {
         String respXml = null;
         // 发送方帐号
         String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
@@ -133,6 +134,8 @@ public class CompanyDetailQuery extends Query {
 
         // 将消息对象转换成xml
         respXml = MessageService.messageToXml(message);
+
+        super.execute(request, requestJson);
         return respXml;
     }
 

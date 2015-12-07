@@ -1,5 +1,6 @@
 package com.fujitsu.keystone.publics.event;
 
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.client.*;
 import com.fujitsu.client.entity.*;
 import com.fujitsu.base.constants.Const;
@@ -11,6 +12,7 @@ import com.fujitsu.keystone.publics.service.impl.MenuService;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
 import net.sf.json.JSONObject;
 
+import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +29,7 @@ public class ScancodeWaitmsgEvent extends Event {
      * @throws AccessTokenException
      * @throws ConnectionFailedException
      */
-    public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException {
         String respXml = null;
 
         String fromUserName = requestJson.getString(FROM_USER_NAME);
@@ -241,6 +243,7 @@ public class ScancodeWaitmsgEvent extends Event {
         // 将消息对象转换成xml
         respXml = MessageService.messageToXml(message);
 
+        super.execute(request, requestJson);
         return respXml;
     }
 
