@@ -28,7 +28,9 @@ public class Const {
 
     private static final String WEBSOCKET_CONF = "api/webSocket.properties";
 
-    private static final String QUEUE_CONF = "api/activemq.properties";
+    private static final String ACTIVEMQ_CONF = "api/activemq.properties";
+
+    private static final String APOLLO_CONF = "api/apollo.properties";
 
     /**
      * global config
@@ -50,11 +52,19 @@ public class Const {
         /**
          * Message Queue config
          */
-        public static final String QUEUE_URL = ConfigUtil.getProperty(QUEUE_CONF, "activemq.url");
+        public static final String ACTIVEMQ_HOST = ConfigUtil.getProperty(ACTIVEMQ_CONF, "activemq.host");
 
-        public static final String QUEUE_USER_NAME = ConfigUtil.getProperty(QUEUE_CONF, "activemq.username");
+        public static final String ACTIVEMQ_USER_NAME = ConfigUtil.getProperty(ACTIVEMQ_CONF, "activemq.username");
 
-        public static final String QUEUE_PASSWORD = ConfigUtil.getProperty(QUEUE_CONF, "activemq.password");
+        public static final String ACTIVEMQ_PASSWORD = ConfigUtil.getProperty(ACTIVEMQ_CONF, "activemq.password");
+
+        public static final String APOLLO_HOST = ConfigUtil.getProperty(APOLLO_CONF, "apollo.host");
+
+        public static final String APOLLO_PORT = ConfigUtil.getProperty(APOLLO_CONF, "apollo.port");
+
+        public static final String APOLLO_USER_NAME = ConfigUtil.getProperty(APOLLO_CONF, "apollo.username");
+
+        public static final String APOLLO_PASSWORD = ConfigUtil.getProperty(APOLLO_CONF, "apollo.password");
     }
 
     public static class PublicPlatform {

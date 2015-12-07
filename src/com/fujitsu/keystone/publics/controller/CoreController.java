@@ -10,9 +10,11 @@ import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.FileUtil;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.base.helper.UrlUtil;
-import com.fujitsu.keystone.publics.service.impl.CoreService;
+import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.impl.GreeterService;
 import com.fujitsu.queue.service.iface.IQueueService;
+import com.fujitsu.queue.service.impl.ActiveMQService;
+import com.fujitsu.queue.service.impl.ApolloService;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,13 +33,16 @@ import javax.servlet.http.HttpServletResponse;
 public class CoreController extends BaseController {
 
     @Resource
-    CoreService coreService;
+    ICoreService coreService;
 
     @Resource
     GreeterService greeterService;
 
     @Resource
-    IQueueService queueService;
+    ActiveMQService activeMQService;
+
+    @Resource
+    ApolloService apolloService;
 
     @RequestMapping(value = "/core")
     public void connect(HttpServletRequest request, HttpServletResponse response) {
@@ -72,11 +77,19 @@ public class CoreController extends BaseController {
         greeterService.get();
 
 
-        queueService.connect();
-        queueService.sendText("111", "2222");
-        queueService.sendText("111", "444");
-        queueService.receiveText("111");
-        queueService.close();
+        activeMQService.connect();
+        activeMQService.sendText("111", "2222");
+        activeMQService.sendText("111", "111");
+        System.out.println(activeMQService.receiveText("111"));
+        activeMQService.close();
+
+        apolloService.connect();
+        apolloService.sendText("queue://testQueue", "test");
+        apolloService.sendText("queue://testQueue", "test2");
+        //System.out.println(apolloService.receiveText("queue://testQueue"));
+        apolloService.close();
+
+
 
         return KeystoneUtil.refreshLocalAccessToken().toString();
     }

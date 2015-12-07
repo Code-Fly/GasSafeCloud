@@ -11,23 +11,23 @@ public interface IQueueService {
 
     void close() throws JMSException;
 
-    void sendText(String queue, String content) throws JMSException;
+    void sendText(String destination, String content) throws JMSException;
 
-    void sendMap(String queue, String content) throws JMSException;
+    void sendMap(String destination, String content) throws JMSException;
 
-    void sendStream(String queue, String content) throws JMSException;
+    void sendStream(String destination, String content) throws JMSException;
 
-    void sendBytes(String queue, byte[] bytes) throws JMSException;
+    void sendBytes(String destination, byte[] bytes) throws JMSException;
 
-    void sendObject(String queue, Serializable object) throws JMSException;
+    void sendObject(String destination, Serializable object) throws JMSException;
 
-    String receiveText(String queue) throws JMSException;
+    String receiveText(String destination) throws JMSException;
 
-    MapMessage receiveMap(String queue) throws JMSException;
+    MapMessage receiveMap(String destination) throws JMSException;
 
-    StreamMessage receiveStream(String queue) throws JMSException;
+    StreamMessage receiveStream(String destination) throws JMSException;
 
-    BytesMessage receiveBytes(String queue) throws JMSException;
+    BytesMessage receiveBytes(String destination) throws JMSException;
 
-    Serializable receiveObject(String queue) throws JMSException;
+    Serializable receiveObject(String destination) throws JMSException;
 }
