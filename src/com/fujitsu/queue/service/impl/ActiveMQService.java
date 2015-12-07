@@ -44,6 +44,24 @@ public class ActiveMQService extends BaseService implements IQueueService {
     }
 
     @Override
+    public void clear(String destination) throws JMSException {
+        int count = 0;
+        while (null != this.doReceive(destination, null)) {
+            count++;
+        }
+        logger.info(count + " messages have been received");
+    }
+
+    @Override
+    public void clear(String destination, String filter) throws JMSException {
+        int count = 0;
+        while (null != this.doReceive(destination, filter)) {
+            count++;
+        }
+        logger.info(count + " messages have been received");
+    }
+
+    @Override
     public void send(String destination, String content, String type) throws JMSException {
         TextMessage message = session.createTextMessage(content);
         message.setJMSType(type);

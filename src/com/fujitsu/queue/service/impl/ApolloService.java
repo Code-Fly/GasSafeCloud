@@ -45,6 +45,16 @@ public class ApolloService extends BaseService implements IQueueService {
     }
 
     @Override
+    public void clear(String destination) {
+
+    }
+
+    @Override
+    public void clear(String destination, String filter) {
+
+    }
+
+    @Override
     public void send(String destination, String content, String type) throws JMSException {
         TextMessage message = session.createTextMessage(content);
         this.doSend(destination, message);

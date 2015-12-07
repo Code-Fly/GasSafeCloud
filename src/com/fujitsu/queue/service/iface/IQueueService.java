@@ -11,6 +11,10 @@ public interface IQueueService {
 
     void close() throws JMSException;
 
+    void clear(String destination) throws JMSException;
+
+    void clear(String destination, String filter) throws JMSException;
+
     void send(String destination, String content, String type) throws JMSException;
 
     String receive(String destination, String filter) throws JMSException;
