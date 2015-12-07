@@ -39,7 +39,7 @@ public class CoreController extends BaseController {
     GreeterService greeterService;
 
     @Resource
-    ApolloService mq;
+    ActiveMQService mq;
 
     @RequestMapping(value = "/core")
     public void connect(HttpServletRequest request, HttpServletResponse response) {

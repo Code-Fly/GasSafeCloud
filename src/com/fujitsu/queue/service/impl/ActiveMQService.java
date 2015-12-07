@@ -45,8 +45,9 @@ public class ActiveMQService extends BaseService implements IQueueService {
 
     @Override
     public void clear(String destination) throws JMSException {
+        MessageConsumer consumer = this.preReceive(destination, null);
         int count = 0;
-        while (null != this.doReceive(destination, null)) {
+        while (null != this.doReceive(consumer)) {
             count++;
         }
         logger.info(count + " messages have been received");
@@ -54,8 +55,10 @@ public class ActiveMQService extends BaseService implements IQueueService {
 
     @Override
     public void clear(String destination, String filter) throws JMSException {
+        MessageConsumer consumer = this.preReceive(destination, filter);
+
         int count = 0;
-        while (null != this.doReceive(destination, filter)) {
+        while (null != this.doReceive(consumer)) {
             count++;
         }
         logger.info(count + " messages have been received");
@@ -71,11 +74,11 @@ public class ActiveMQService extends BaseService implements IQueueService {
 
     @Override
     public String receive(String destination, String filter) throws JMSException {
-        Message msg = this.doReceive(destination, filter);
+        MessageConsumer consumer = this.preReceive(destination, filter);
+        Message msg = this.doReceive(consumer);
         if (null != msg) {
             return ((TextMessage) msg).getText();
         }
-        System.out.println(msg);
         return null;
     }
 
@@ -112,7 +115,7 @@ public class ActiveMQService extends BaseService implements IQueueService {
         producer.close();
     }
 
-    private Message doReceive(String destination, String filter) throws JMSException {
+    private MessageConsumer preReceive(String destination, String filter) throws JMSException {
         Destination dest;
         MessageConsumer consumer;
 
@@ -128,7 +131,11 @@ public class ActiveMQService extends BaseService implements IQueueService {
             consumer = session.createConsumer(dest);
         }
 
-        return consumer.receiveNoWait();
+        return consumer;
+    }
+
+    private Message doReceive(MessageConsumer consumer) throws JMSException {
+        return consumer.receive(1000);
     }
 
     private Enumeration doBrowse(String destination) throws JMSException {
