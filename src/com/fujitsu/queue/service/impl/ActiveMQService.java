@@ -23,14 +23,21 @@ public class ActiveMQService extends BaseService implements IQueueService {
     public void connect() throws JMSException {
         ConnectionFactory connectionFactory;
 
+        String user = Const.Queue.ACTIVEMQ_USER_NAME;
+        String password = Const.Queue.ACTIVEMQ_PASSWORD;
+        String host = Const.Queue.ACTIVEMQ_HOST;
+        int port = Integer.parseInt(Const.Queue.ACTIVEMQ_PORT);
+
+        String connectionURI = "tcp://" + host + ":" + port;
+
         connectionFactory = new ActiveMQConnectionFactory(
-                Const.Queue.ACTIVEMQ_USER_NAME,
-                Const.Queue.ACTIVEMQ_PASSWORD,
-                Const.Queue.ACTIVEMQ_HOST);
+                user,
+                password,
+                connectionURI);
 
         connection = connectionFactory.createConnection();
         connection.start();
-        session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
+        session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
     }
 
     @Override

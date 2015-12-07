@@ -54,6 +54,8 @@ public class Const {
          */
         public static final String ACTIVEMQ_HOST = ConfigUtil.getProperty(ACTIVEMQ_CONF, "activemq.host");
 
+        public static final String ACTIVEMQ_PORT = ConfigUtil.getProperty(ACTIVEMQ_CONF, "activemq.port");
+
         public static final String ACTIVEMQ_USER_NAME = ConfigUtil.getProperty(ACTIVEMQ_CONF, "activemq.username");
 
         public static final String ACTIVEMQ_PASSWORD = ConfigUtil.getProperty(ACTIVEMQ_CONF, "activemq.password");
