@@ -53,7 +53,7 @@ public abstract class Event {
     public static final String EVENT_SCANCODE_PUSH = "scancode_push";
 
     public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, ConnectionFailedException, AccessTokenException, WeChatException {
-        if (null != Const.Queue.ACTIVEMQ_HOST) {
+        if (null != Const.Queue.ACTIVEMQ_HOST && !Const.Queue.ACTIVEMQ_HOST.isEmpty()) {
             String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
             String msgType = requestJson.getString(Event.MSG_TYPE);
 
