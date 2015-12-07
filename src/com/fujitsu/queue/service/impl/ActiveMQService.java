@@ -75,6 +75,7 @@ public class ActiveMQService extends BaseService implements IQueueService {
         if (null != msg) {
             return ((TextMessage) msg).getText();
         }
+        System.out.println(msg);
         return null;
     }
 
@@ -121,7 +122,11 @@ public class ActiveMQService extends BaseService implements IQueueService {
         } else {
             dest = session.createQueue(destination.replace("queue://", ""));
         }
-        consumer = session.createConsumer(dest, filter);
+        if (null != filter) {
+            consumer = session.createConsumer(dest, filter);
+        } else {
+            consumer = session.createConsumer(dest);
+        }
 
         return consumer.receiveNoWait();
     }

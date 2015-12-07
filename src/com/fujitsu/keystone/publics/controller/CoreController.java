@@ -14,6 +14,7 @@ import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.impl.GreeterService;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
 import com.fujitsu.queue.service.impl.ActiveMQService;
+import com.fujitsu.queue.service.impl.ApolloService;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class CoreController extends BaseController {
     GreeterService greeterService;
 
     @Resource
-    ActiveMQService activeMQService;
+    ApolloService mq;
 
     @RequestMapping(value = "/core")
     public void connect(HttpServletRequest request, HttpServletResponse response) {
@@ -72,10 +73,10 @@ public class CoreController extends BaseController {
         greeterService.get();
         greeterService.get();
 
-        activeMQService.connect();
-
-        System.out.println(activeMQService.receive("queue://omiuxs4TDeYabfsAXdUh6GFfIloU", "JMSType = '" + MessageService.REQ_MESSAGE_TYPE_EVENT + "'"));
-        activeMQService.close();
+        mq.connect();
+        mq.clear("queue://omiuxs4TDeYabfsAXdUh6GFfIloU");
+        //System.out.println(mq.receive("queue://omiuxs4TDeYabfsAXdUh6GFfIloU",null));
+        mq.close();
 
         return KeystoneUtil.refreshLocalAccessToken().toString();
     }

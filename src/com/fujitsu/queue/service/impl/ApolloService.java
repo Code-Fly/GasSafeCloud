@@ -45,24 +45,37 @@ public class ApolloService extends BaseService implements IQueueService {
     }
 
     @Override
-    public void clear(String destination) {
-
+    public void clear(String destination) throws JMSException {
+        MessageConsumer consumer = this.preReceive(destination, null);
+        int count = 0;
+        while (null != this.doReceive(consumer)) {
+            count++;
+        }
+        logger.info(count + " messages have been received");
     }
 
     @Override
-    public void clear(String destination, String filter) {
+    public void clear(String destination, String filter) throws JMSException {
+        MessageConsumer consumer = this.preReceive(destination, filter);
 
+        int count = 0;
+        while (null != this.doReceive(consumer)) {
+            count++;
+        }
+        logger.info(count + " messages have been received");
     }
 
     @Override
     public void send(String destination, String content, String type) throws JMSException {
+        MessageProducer producer = this.preSend(destination);
         TextMessage message = session.createTextMessage(content);
-        this.doSend(destination, message);
+        this.doSend(producer, message);
     }
 
     @Override
     public String receive(String destination, String filter) throws JMSException {
-        Message msg = this.doReceive(destination, filter);
+        MessageConsumer consumer = this.preReceive(destination, filter);
+        Message msg = this.doReceive(consumer);
         if (null != msg) {
             return ((TextMessage) msg).getText();
         }
@@ -86,7 +99,7 @@ public class ApolloService extends BaseService implements IQueueService {
         return msgList;
     }
 
-    private void doSend(String destination, Message message) throws JMSException {
+    private MessageProducer preSend(String destination) throws JMSException {
         Destination dest = null;
         if (destination.startsWith("topic://")) {
             dest = new TopicImpl(destination);
@@ -96,19 +109,35 @@ public class ApolloService extends BaseService implements IQueueService {
 
         MessageProducer producer = session.createProducer(dest);
         producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+
+        return producer;
+    }
+
+    private void doSend(MessageProducer producer, Message message) throws JMSException {
         producer.send(message);
     }
 
-    private Message doReceive(String destination, String filter) throws JMSException {
+    private MessageConsumer preReceive(String destination, String filter) throws JMSException {
         Destination dest = null;
+        MessageConsumer consumer;
+
         if (destination.startsWith("topic://")) {
             dest = new TopicImpl(destination);
         } else {
             dest = new QueueImpl(destination);
         }
-        MessageConsumer consumer = session.createConsumer(dest, filter);
 
-        return consumer.receiveNoWait();
+        if (null != filter) {
+            consumer = session.createConsumer(dest, filter);
+        } else {
+            consumer = session.createConsumer(dest);
+        }
+
+        return consumer;
+    }
+
+    private Message doReceive(MessageConsumer consumer) throws JMSException {
+        return consumer.receive(1000);
     }
 
     private Enumeration doBrowse(String destination) throws JMSException {
