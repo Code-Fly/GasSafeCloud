@@ -57,7 +57,7 @@ public class SubscribeEvent extends Event {
         params.put("sendLat", "null");
         params.put("cityName", "null");
 
-        String gasResp = HttpClientUtil.post(Const.gasApi.URL + "ccstWeChatUpFansInfo.htm", params, CharEncoding.UTF_8, "application/x-www-form-urlencoded");
+        String gasResp = GasHttpClientUtil.doPost(Const.gasApi.URL + "ccstWeChatUpFansInfo.htm", params, CharEncoding.UTF_8);
 
         if (!GasHttpClientUtil.isValid(gasResp)) {
             throw new GasSafeException(gasResp);

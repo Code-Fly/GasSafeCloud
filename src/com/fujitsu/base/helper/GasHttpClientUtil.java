@@ -12,6 +12,8 @@ import com.fujitsu.client.entity.WebSocketResponseMessage;
 import net.sf.json.JSONObject;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +70,25 @@ public class GasHttpClientUtil extends HttpClientUtil {
         }
         return doPost(Const.gasApi.URL + url, formEntity, charset);
     }
+
+    public static String doPost(String url, Map<String, String> params, String charset) throws ConnectionFailedException {
+        StringEntity stringEntity = null;
+
+        if (null != params && !params.isEmpty()) {
+            List<NameValuePair> valuePairs = new ArrayList<NameValuePair>(params.size());
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                NameValuePair nameValuePair = new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue()));
+                valuePairs.add(nameValuePair);
+            }
+            String queryStr = URLEncodedUtils.format(valuePairs, charset);
+            queryStr = "data=" + UrlUtil.encode(queryStr, charset);
+            stringEntity = new StringEntity(queryStr, charset);
+            stringEntity.setContentType("application/x-www-form-urlencoded");
+        }
+
+        return doPost(url, stringEntity, charset);
+    }
+
 
     public static boolean isValid(String respStr) throws ConnectionFailedException, WeChatException, GasSafeException {
         JSONObject jsonObject = JSONObject.fromObject(respStr);
