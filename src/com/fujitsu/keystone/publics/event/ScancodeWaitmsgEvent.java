@@ -6,6 +6,7 @@ import com.fujitsu.client.entity.*;
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.helper.GasHttpClientUtil;
 import com.fujitsu.base.helper.GasWebSocketUtil;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.service.impl.MenuService;
@@ -14,6 +15,8 @@ import net.sf.json.JSONObject;
 
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -55,8 +58,15 @@ public class ScancodeWaitmsgEvent extends Event {
         // [QP02001,132020000001,AG,323232,2015年09月,2045年09月]
         String[] messArray = tmp.split(",");
         Map<String, String> params = new HashMap<String,String>();
-        params.put(key, value);
+        params.put("syzbh", messArray[0]);
+        params.put("zcdm", messArray[1]);
+        params.put("pcode", messArray[2]);
+        params.put("pid", messArray[3]);
+        params.put("pDate", messArray[4]);
+        params.put("bfrq", messArray[5]);
+       
         StringBuffer sengMsg = new StringBuffer();
+        try {
         // 身份查询
         if (MenuService.QP_SFCX.equals(eventKey)) {
             StringBuffer socketParams = new StringBuffer();
@@ -67,6 +77,8 @@ public class ScancodeWaitmsgEvent extends Event {
                     .append("&pid=").append(messArray[3])
                     .append("&pDate=").append(messArray[4])
                     .append("&bfrq=").append(messArray[5]);
+				GasHttpClientUtil.post("ccstWeChatBarcodegetBottle.htm", params, "UTF-8", fromUserName);
+			
             BarcodegetBottleResMsg barMsg = getBarResMsg(socketParams.toString(), 0);
             if (0 == barMsg.getErrorCode()) {
                 sengMsg.append("气瓶使用证编号:").append(barMsg.getResult().get(0).getSyzbh()).append(Const.LINE_SEPARATOR)
@@ -241,7 +253,10 @@ public class ScancodeWaitmsgEvent extends Event {
                 sengMsg.append("系统请求socket出现异常:").append(messageObject.getErrorCode());
             }
         }
-
+        } catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         logger.info("setContent:" + sengMsg.toString());
         message.setContent(sengMsg.toString());
         // 将消息对象转换成xml

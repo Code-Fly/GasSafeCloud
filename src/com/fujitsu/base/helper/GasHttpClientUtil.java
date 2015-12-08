@@ -43,7 +43,7 @@ public class GasHttpClientUtil extends HttpClientUtil {
 		 List<NameValuePair> tokenPair = new ArrayList<NameValuePair>();
 		 tokenPair.add(new BasicNameValuePair("authorizeType",gasApi.AUTHORIZETYPE));
 		 tokenPair.add(new BasicNameValuePair("authorizeID",openID));
-		 String tokenResp = doPost(Const.gasApi.URL+"/service/ccstWeChatgetToken.htm", new UrlEncodedFormEntity(tokenPair, charset),charset);
+		 String tokenResp = doPost(Const.gasApi.URL+"ccstWeChatgetToken.htm", new UrlEncodedFormEntity(tokenPair, charset),charset);
 		 logger.info("ccstWeChatgetToken: " + tokenResp);
 	     // 防止重复获得token 
         WebSocketResponseMessage messageObject = new WebSocketResponseMessage();
@@ -66,7 +66,7 @@ public class GasHttpClientUtil extends HttpClientUtil {
         } catch (UnsupportedEncodingException e) {
             logger.error("参数转码有误",e);
         }
-	    return doPost(url, formEntity, charset);
+	    return doPost(Const.gasApi.URL+url, formEntity, charset);
 	  }
 	 
 }
