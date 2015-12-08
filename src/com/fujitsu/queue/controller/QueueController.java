@@ -1,5 +1,6 @@
 package com.fujitsu.queue.controller;
 
+import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.controller.BaseController;
 import com.fujitsu.base.entity.ErrorMsg;
 import com.fujitsu.keystone.publics.event.Event;
@@ -36,7 +37,7 @@ public class QueueController extends BaseController {
         List<String> list;
         List<String> result = new ArrayList<>();
         queueService.connect();
-        list = queueService.browse("queue://" + queue);
+        list = queueService.browse(Queue.ACTIVEMQ_PROTOCAL_QUEUE + Const.Queue.ACTIVEMQ_QUEUE_USER_PREFIX + queue);
         queueService.close();
         for (int i = 0; i < list.size(); i++) {
             if (null == filter || filter.isEmpty()) {
@@ -60,9 +61,9 @@ public class QueueController extends BaseController {
 
         queueService.connect();
         if (null == filter || filter.isEmpty()) {
-            queueService.clear("queue://" + queue);
+            queueService.clear(Queue.ACTIVEMQ_PROTOCAL_QUEUE + Const.Queue.ACTIVEMQ_QUEUE_USER_PREFIX + queue);
         } else {
-            queueService.clear("queue://" + queue, filter);
+            queueService.clear(Queue.ACTIVEMQ_PROTOCAL_QUEUE + Const.Queue.ACTIVEMQ_QUEUE_USER_PREFIX + queue, filter);
         }
 
         queueService.close();

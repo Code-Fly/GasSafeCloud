@@ -60,7 +60,7 @@ public abstract class Event {
 
             IQueueService queueService = new QueueService();
             queueService.connect();
-            queueService.send("queue://" + fromUserName, requestJson.toString(), msgType);
+            queueService.send(Const.Queue.ACTIVEMQ_QUEUE_USER_PREFIX + fromUserName, requestJson.toString(), msgType);
             queueService.close();
         }
         return null;

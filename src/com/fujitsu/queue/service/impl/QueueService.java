@@ -110,10 +110,10 @@ public class QueueService extends BaseService implements IQueueService {
 
         session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
 
-        if (destination.startsWith("topic://")) {
-            dest = session.createTopic(destination.replace("topic://", ""));
+        if (destination.startsWith(Const.Queue.ACTIVEMQ_PROTOCAL_TOPIC)) {
+            dest = session.createTopic(destination.replace(Const.Queue.ACTIVEMQ_PROTOCAL_TOPIC, ""));
         } else {
-            dest = session.createQueue(destination.replace("queue://", ""));
+            dest = session.createQueue(destination.replace(Const.Queue.ACTIVEMQ_PROTOCAL_QUEUE, ""));
         }
 
         producer = session.createProducer(dest);
@@ -134,11 +134,12 @@ public class QueueService extends BaseService implements IQueueService {
 
         session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
 
-        if (destination.startsWith("topic://")) {
-            dest = session.createTopic(destination.replace("topic://", ""));
+        if (destination.startsWith(Const.Queue.ACTIVEMQ_PROTOCAL_TOPIC)) {
+            dest = session.createTopic(destination.replace(Const.Queue.ACTIVEMQ_PROTOCAL_TOPIC, ""));
         } else {
-            dest = session.createQueue(destination.replace("queue://", ""));
+            dest = session.createQueue(destination.replace(Const.Queue.ACTIVEMQ_PROTOCAL_QUEUE, ""));
         }
+
         if (null != filter) {
             consumer = session.createConsumer(dest, filter);
         } else {
@@ -157,10 +158,10 @@ public class QueueService extends BaseService implements IQueueService {
         
         session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
 
-        if (destination.startsWith("queue://")) {
-            queue = session.createQueue(destination.replace("queue://", ""));
+        if (destination.startsWith(Const.Queue.ACTIVEMQ_PROTOCAL_QUEUE)) {
+            queue = session.createQueue(destination.replace(Const.Queue.ACTIVEMQ_PROTOCAL_QUEUE, ""));
         } else {
-            throw new JMSException("Not support");
+            throw new JMSException("can not browse non-queue messages");
         }
 
         QueueBrowser browser = session.createBrowser(queue);

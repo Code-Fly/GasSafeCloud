@@ -59,6 +59,14 @@ public class Const {
 
         public static final String ACTIVEMQ_PASSWORD = ConfigUtil.getProperty(ACTIVEMQ_CONF, "activemq.password");
 
+        public static final String ACTIVEMQ_PROTOCAL_QUEUE = "queue://";
+
+        public static final String ACTIVEMQ_PROTOCAL_TOPIC = "topic://";
+
+        public static final String ACTIVEMQ_QUEUE_USER_PREFIX = "USER.";
+
+        public static final String ACTIVEMQ_QUEUE_SYSTEM_PREFIX = "SYS.";
+
     }
 
     public static class PublicPlatform {
