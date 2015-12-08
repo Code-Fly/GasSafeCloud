@@ -37,14 +37,14 @@
 				<ref bean="simpleJobDetail" />
 				 <ref bean="complexJobDetail" /> 
 			</list>
-		</property>-->
+		</property>
 
 		<property name="triggers">
 			<list>
 				<ref bean="cronTrigger" />
 				<ref bean="getWSTokenTrigger" /> 
 			</list>
-		</property>
+		</property>-->
 	</bean>
 
 </beans>
