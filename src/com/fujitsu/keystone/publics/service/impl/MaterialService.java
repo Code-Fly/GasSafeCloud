@@ -43,7 +43,7 @@ public class MaterialService extends BaseService implements IMaterialService {
         request.put("offset", offset);
         request.put("count", count);
 
-        String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }
@@ -63,7 +63,7 @@ public class MaterialService extends BaseService implements IMaterialService {
         JSONObject request = new JSONObject();
         request.put("media_id", mediaId);
 
-        String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }

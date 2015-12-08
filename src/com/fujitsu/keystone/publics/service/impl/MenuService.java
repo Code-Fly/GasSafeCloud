@@ -51,7 +51,7 @@ public class MenuService extends BaseService implements IMenuService {
         // 拼装创建菜单的url
         String url = Const.PublicPlatform.URL_MENU_CREATE.replace("ACCESS_TOKEN", accessToken);
 
-        String response = WeChatClientUtil.doPost(url, json.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, json.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }
@@ -64,7 +64,7 @@ public class MenuService extends BaseService implements IMenuService {
     public JSONObject get(String accessToken) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_MENU_GET.replace("ACCESS_TOKEN", accessToken);
 
-        String response = WeChatClientUtil.doGet(url, "UTF-8");
+        String response = WeChatClientUtil.get(url, "UTF-8");
 
         return JSONObject.fromObject(response);
     }
@@ -77,7 +77,7 @@ public class MenuService extends BaseService implements IMenuService {
     public JSONObject delete(String accessToken) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_MENU_DELETE.replace("ACCESS_TOKEN", accessToken);
 
-        String response = WeChatClientUtil.doGet(url, "UTF-8");
+        String response = WeChatClientUtil.get(url, "UTF-8");
 
         return JSONObject.fromObject(response);
     }

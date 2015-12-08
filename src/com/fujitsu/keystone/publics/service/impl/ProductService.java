@@ -53,7 +53,7 @@ public class ProductService extends BaseService implements IProductService {
 		JSONObject request = new JSONObject();
 		request.put("status", status);
 
-		String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
+		String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }
@@ -64,7 +64,7 @@ public class ProductService extends BaseService implements IProductService {
 		JSONObject request = new JSONObject();
 		request.put("product_id", productId);
 
-		String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
+		String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }
@@ -72,7 +72,7 @@ public class ProductService extends BaseService implements IProductService {
 	public JSONObject getProductGroupList(String accessToken) throws ConnectionFailedException, WeChatException {
 		String url = Const.PublicPlatform.URL_PRODUCT_GROUP_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
-		String response = WeChatClientUtil.doGet(url, "UTF-8");
+		String response = WeChatClientUtil.get(url, "UTF-8");
 
         return JSONObject.fromObject(response);
     }
@@ -83,7 +83,7 @@ public class ProductService extends BaseService implements IProductService {
 		JSONObject request = new JSONObject();
 		request.put("group_id", groupId);
 
-		String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
+		String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }

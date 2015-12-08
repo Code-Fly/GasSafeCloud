@@ -183,7 +183,7 @@ public class KeystoneUtil {
 
     public static JSONObject getRemoteAccessToken() throws ConnectionFailedException {
         String url = Const.WECHART_URL + "/api/keystone/token/query";
-        String resp = HttpClientUtil.doGet(url, "UTF-8");
+        String resp = HttpClientUtil.get(url, "UTF-8");
         if (null == resp) {
             throw new ConnectionFailedException();
         }
@@ -209,7 +209,7 @@ public class KeystoneUtil {
 
     public static JSONObject refreshRemoteAccessToken() throws ConnectionFailedException {
         String url = Const.WECHART_URL + "/api/keystone/token/refresh";
-        String resp = HttpClientUtil.doGet(url, "UTF-8");
+        String resp = HttpClientUtil.get(url, "UTF-8");
         if (null == resp) {
             throw new ConnectionFailedException();
         }

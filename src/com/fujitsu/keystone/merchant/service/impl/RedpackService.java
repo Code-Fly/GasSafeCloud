@@ -25,7 +25,7 @@ public class RedpackService extends BaseService implements IRedpackService {
     public Map<String, String> sendRedpack(Map<String, Object> data) throws ConnectionFailedException, WeChatException {
         String url = Const.MerchantPlatform.URL_MERCHANT_REDPACK_SEND;
 
-        String response = WeChatClientUtil.doPost(url, XmlUtil.toXMLWithCDATA(data), "UTF-8");
+        String response = WeChatClientUtil.post(url, XmlUtil.toXMLWithCDATA(data), "UTF-8");
 
         return XmlUtil.parseXml(response);
     }

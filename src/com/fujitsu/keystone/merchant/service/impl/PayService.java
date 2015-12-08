@@ -25,7 +25,7 @@ public class PayService extends BaseService implements IPayService {
     public Map<String, String> payRefund(Map<String, Object> data) throws ConnectionFailedException, WeChatException {
         String url = Const.MerchantPlatform.URL_MERCHANT_PAY_REFUND;
 
-        String response = WeChatClientUtil.doPost(url, XmlUtil.toXML(data), "UTF-8");
+        String response = WeChatClientUtil.post(url, XmlUtil.toXML(data), "UTF-8");
 
         return XmlUtil.parseXml(response);
     }

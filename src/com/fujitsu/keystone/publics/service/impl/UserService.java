@@ -44,7 +44,7 @@ public class UserService extends BaseService implements IUserService {
 
 		String url = Const.PublicPlatform.URL_SNS_OAUTH2_TOKEN_GET.replace("APPID", appId).replace("SECRET", appSecret).replace("CODE", code);
 		// 获取网页授权凭证
-		String response = WeChatClientUtil.doPost(url, "UTF-8");
+		String response = WeChatClientUtil.post(url, "UTF-8");
 
 		return JSONObject.fromObject(response);
 
@@ -63,7 +63,7 @@ public class UserService extends BaseService implements IUserService {
 
 		String url = Const.PublicPlatform.URL_SNS_OAUTH2_TOKEN_REFRESH.replace("APPID", appId).replace("REFRESH_TOKEN", refreshToken);
 		// 刷新网页授权凭证
-		String response = WeChatClientUtil.doPost(url, "UTF-8");
+		String response = WeChatClientUtil.post(url, "UTF-8");
 
 		return JSONObject.fromObject(response);
 	}
@@ -84,7 +84,7 @@ public class UserService extends BaseService implements IUserService {
 
 		String url = Const.PublicPlatform.URL_USER_GET_SNS_INFO.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
 		// 通过网页授权获取用户信息
-		String response = WeChatClientUtil.doPost(url, "UTF-8");
+		String response = WeChatClientUtil.post(url, "UTF-8");
 
 		return JSONObject.fromObject(response);
 	}
@@ -104,7 +104,7 @@ public class UserService extends BaseService implements IUserService {
 
 		String url = Const.PublicPlatform.URL_USER_GET_INFO.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
 		// 获取用户信息
-		String response = WeChatClientUtil.doPost(url, "UTF-8");
+		String response = WeChatClientUtil.post(url, "UTF-8");
 
 		return JSONObject.fromObject(response);
 	}
@@ -137,7 +137,7 @@ public class UserService extends BaseService implements IUserService {
 
 		String url = Const.PublicPlatform.URL_USER_GET_LIST.replace("ACCESS_TOKEN", accessToken).replace("NEXT_OPENID", nextOpenId);
 
-		String response = WeChatClientUtil.doPost(url, "UTF-8");
+		String response = WeChatClientUtil.post(url, "UTF-8");
 
 		return JSONObject.fromObject(response);
 	}
@@ -146,7 +146,7 @@ public class UserService extends BaseService implements IUserService {
 
 		String url = Const.PublicPlatform.URL_USER_GROUP_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
-		String response = WeChatClientUtil.doGet(url, "UTF-8");
+		String response = WeChatClientUtil.get(url, "UTF-8");
 
 		return JSONObject.fromObject(response);
 	}
@@ -157,7 +157,7 @@ public class UserService extends BaseService implements IUserService {
 		JSONObject request = new JSONObject();
 		request.put("openid", openId);
 
-		String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
+		String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
 
 		return JSONObject.fromObject(response);
 	}

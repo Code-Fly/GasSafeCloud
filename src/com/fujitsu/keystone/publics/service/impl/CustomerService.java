@@ -47,7 +47,7 @@ public class CustomerService extends BaseService implements ICustomerService {
     private JSONObject sendMessage(String accessToken, JSONObject message) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_CUSTOMER_SERVICE_MESSAGE_SEND.replace("ACCESS_TOKEN", accessToken);
 
-        String response = WeChatClientUtil.doPost(url, message.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, message.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }

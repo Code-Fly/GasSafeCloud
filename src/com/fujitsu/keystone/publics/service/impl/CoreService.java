@@ -90,7 +90,7 @@ public class CoreService extends BaseService implements ICoreService {
     public JSONObject getAccessToken(String appid, String appsecret) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_GET_ACCESS_TOKEN.replace("APPID", appid).replace("APPSECRET", appsecret);
 
-        String response = WeChatClientUtil.doPost(url, "UTF-8");
+        String response = WeChatClientUtil.post(url, "UTF-8");
 
         return JSONObject.fromObject(response);
     }
@@ -98,7 +98,7 @@ public class CoreService extends BaseService implements ICoreService {
     public JSONObject getJsapiTicket(String accessToken) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_JSAPI_TICKET.replace("ACCESS_TOKEN", accessToken);
 
-        String response = WeChatClientUtil.doPost(url, "UTF-8");
+        String response = WeChatClientUtil.post(url, "UTF-8");
 
         return JSONObject.fromObject(response);
     }

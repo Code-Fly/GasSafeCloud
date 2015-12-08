@@ -42,11 +42,11 @@ import java.util.Map;
 public class HttpClientUtil {
     private static final Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
 
-    public static String doGet(String url, String charset) throws ConnectionFailedException {
-        return get(url, null, charset);
+    public static String get(String url, String charset) throws ConnectionFailedException {
+        return doGet(url, null, charset);
     }
 
-    public static String doGet(String url, Map<String, String> params, String charset) throws ConnectionFailedException {
+    public static String get(String url, Map<String, String> params, String charset) throws ConnectionFailedException {
 
         List<NameValuePair> valuePairs = new ArrayList<NameValuePair>(params.size());
         for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -55,21 +55,21 @@ public class HttpClientUtil {
         }
         String param = URLEncodedUtils.format(valuePairs, charset);
 
-        return get(url, param, charset);
+        return doGet(url, param, charset);
     }
 
-    public static String doGet(String url, String params, String charset) throws ConnectionFailedException {
+    public static String get(String url, String params, String charset) throws ConnectionFailedException {
 
-        return get(url, params, charset);
+        return doGet(url, params, charset);
 
     }
 
 
-    public static String doPost(String url, String charset) throws ConnectionFailedException {
-        return post(url, null, charset);
+    public static String post(String url, String charset) throws ConnectionFailedException {
+        return doPost(url, null, charset);
     }
 
-    public static String doPost(String url, Map<String, String> params, String charset) throws ConnectionFailedException {
+    public static String post(String url, Map<String, String> params, String charset) throws ConnectionFailedException {
         UrlEncodedFormEntity formEntity = null;
         try {
             if (null != params) {
@@ -84,19 +84,19 @@ public class HttpClientUtil {
         } catch (UnsupportedEncodingException e) {
             logger.error(e.getMessage());
         }
-        return post(url, formEntity, charset);
+        return doPost(url, formEntity, charset);
     }
 
-    public static String doPost(String url, String params, String charset) throws ConnectionFailedException {
+    public static String post(String url, String params, String charset) throws ConnectionFailedException {
         StringEntity stringEntity = null;
         if (null != params) {
             stringEntity = new StringEntity(params, "UTF-8");
         }
-        return post(url, stringEntity, charset);
+        return doPost(url, stringEntity, charset);
 
     }
 
-    private static String post(String url, StringEntity sEntity, String charset) throws ConnectionFailedException {
+    private static String doPost(String url, StringEntity sEntity, String charset) throws ConnectionFailedException {
         PoolingHttpClientConnectionManager connManager = null;
         CloseableHttpClient httpclient = null;
         CloseableHttpResponse response = null;
@@ -139,7 +139,7 @@ public class HttpClientUtil {
 
     }
 
-    private static String get(String url, String param, String charset) throws ConnectionFailedException {
+    private static String doGet(String url, String param, String charset) throws ConnectionFailedException {
         PoolingHttpClientConnectionManager connManager = null;
         CloseableHttpClient httpclient = null;
         CloseableHttpResponse response = null;

@@ -30,7 +30,7 @@ public class CouponService extends BaseService implements ICouponService {
     public String sendCoupon(Map<String, Object> data) throws ConnectionFailedException, WeChatException {
         String url = Const.MerchantPlatform.URL_MERCHANT_COUPON_SEND;
 
-        String response = WeChatClientUtil.doPost(url, XmlUtil.toXML(data), "UTF-8");
+        String response = WeChatClientUtil.post(url, XmlUtil.toXML(data), "UTF-8");
 
         return response;
     }

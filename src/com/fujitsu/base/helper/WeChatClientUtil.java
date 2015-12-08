@@ -16,10 +16,10 @@ public class WeChatClientUtil {
 
     private static int RETRY = 3;
 
-    public static String doGet(String url, String charset) throws ConnectionFailedException, WeChatException {
+    public static String get(String url, String charset) throws ConnectionFailedException, WeChatException {
         String resp = null;
         for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.doGet(url, charset);
+            resp = HttpClientUtil.get(url, charset);
             if (isValid(resp)) {
                 break;
             }
@@ -28,10 +28,10 @@ public class WeChatClientUtil {
 
     }
 
-    public static String doGet(String url, Map<String, String> params, String charset) throws ConnectionFailedException, WeChatException {
+    public static String get(String url, Map<String, String> params, String charset) throws ConnectionFailedException, WeChatException {
         String resp = null;
         for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.doGet(url, params, charset);
+            resp = HttpClientUtil.get(url, params, charset);
             if (isValid(resp)) {
                 break;
             }
@@ -39,22 +39,10 @@ public class WeChatClientUtil {
         return resp;
     }
 
-    public static String doGet(String url, String params, String charset) throws ConnectionFailedException, WeChatException {
+    public static String get(String url, String params, String charset) throws ConnectionFailedException, WeChatException {
         String resp = null;
         for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.doGet(url, params, charset);
-            if (isValid(resp)) {
-                break;
-            }
-        }
-        return resp;
-
-    }
-
-    public static String doPost(String url, String charset) throws ConnectionFailedException, WeChatException {
-        String resp = null;
-        for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.doPost(url, charset);
+            resp = HttpClientUtil.get(url, params, charset);
             if (isValid(resp)) {
                 break;
             }
@@ -63,10 +51,22 @@ public class WeChatClientUtil {
 
     }
 
-    public static String doPost(String url, Map<String, String> params, String charset) throws ConnectionFailedException, WeChatException {
+    public static String post(String url, String charset) throws ConnectionFailedException, WeChatException {
         String resp = null;
         for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.doPost(url, params, charset);
+            resp = HttpClientUtil.post(url, charset);
+            if (isValid(resp)) {
+                break;
+            }
+        }
+        return resp;
+
+    }
+
+    public static String post(String url, Map<String, String> params, String charset) throws ConnectionFailedException, WeChatException {
+        String resp = null;
+        for (int i = 0; i < (RETRY - 1); i++) {
+            resp = HttpClientUtil.post(url, params, charset);
             if (isValid(resp)) {
                 break;
             }
@@ -74,10 +74,10 @@ public class WeChatClientUtil {
         return resp;
     }
 
-    public static String doPost(String url, String params, String charset) throws ConnectionFailedException, WeChatException {
+    public static String post(String url, String params, String charset) throws ConnectionFailedException, WeChatException {
         String resp = null;
         for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.doPost(url, params, charset);
+            resp = HttpClientUtil.post(url, params, charset);
             if (isValid(resp)) {
                 break;
             }

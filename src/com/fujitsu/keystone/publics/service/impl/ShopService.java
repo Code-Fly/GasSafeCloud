@@ -7,7 +7,6 @@ import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.FileUtil;
-import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.helper.WeChatClientUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.entity.shop.*;
@@ -39,7 +38,7 @@ public class ShopService extends BaseService implements IShopService {
         request.put("begin", begin);
         request.put("limit", limit);
 
-        String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }
@@ -83,7 +82,7 @@ public class ShopService extends BaseService implements IShopService {
         JSONObject request = new JSONObject();
         request.put("poi_id", poi_id);
 
-        String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }

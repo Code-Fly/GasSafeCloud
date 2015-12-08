@@ -7,7 +7,6 @@ import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.FileUtil;
-import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.helper.WeChatClientUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.entity.order.Order;
@@ -55,9 +54,9 @@ public class OrderService extends BaseService implements IOrderService {
             request.put("endtime", endTime);
         }
         if (0 == request.size()) {
-            response = WeChatClientUtil.doGet(url, "UTF-8");
+            response = WeChatClientUtil.get(url, "UTF-8");
         } else {
-            response = WeChatClientUtil.doGet(url, request, "UTF-8");
+            response = WeChatClientUtil.get(url, request, "UTF-8");
         }
 
 
@@ -91,7 +90,7 @@ public class OrderService extends BaseService implements IOrderService {
         JSONObject request = new JSONObject();
         request.put("order_id", orderId);
 
-        String response = WeChatClientUtil.doPost(url, request.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
 
         return JSONObject.fromObject(response);
     }
