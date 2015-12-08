@@ -260,35 +260,51 @@ public class ScancodeWaitmsgEvent extends Event {
 				}
 			}
 		} else if (MenuService.QP_AQDW.equals(eventKey)) {
-			StringBuffer socketParams = new StringBuffer();
-			socketParams.append("token=").append(GasWebSocketClient.SOCKET_TOKEN).append("&pCode=").append(messArray[2])
-					.append("&pid=").append(messArray[3]).append("&pDate=").append(messArray[4]);
-			BarcodegetBottlePsafeResMsg messageObject = getGasBarcodegetBottlePsafe(socketParams.toString(), 0);
-			if (0 == messageObject.getErrorCode()) {
-				sengMsg.append("气瓶制造单位代号:").append(messageObject.getResult().get(0).getpCode())
-						.append(Const.LINE_SEPARATOR).append("气瓶使用证编号 :")
-						.append(messageObject.getResult().get(0).getSyzbh()).append(Const.LINE_SEPARATOR)
-						.append("气瓶注册代码:").append(messageObject.getResult().get(0).getZcdm())
-						.append(Const.LINE_SEPARATOR).append("气瓶结构:")
-						.append(messageObject.getResult().get(0).getQpStructureName()).append(Const.LINE_SEPARATOR)
-						.append("气瓶品种:").append(messageObject.getResult().get(0).getClassName())
-						.append(Const.LINE_SEPARATOR).append("气瓶型号:")
-						.append(messageObject.getResult().get(0).getTypeName()).append(Const.LINE_SEPARATOR)
-						.append("气瓶编号:").append(messageObject.getResult().get(0).getPid()).append(Const.LINE_SEPARATOR)
-						.append("充装介质:").append(messageObject.getResult().get(0).getMediumName())
-						.append(Const.LINE_SEPARATOR).append("出厂日期:")
-						.append(messageObject.getResult().get(0).getpDate()).append(Const.LINE_SEPARATOR)
-						.append("上检日期:").append(messageObject.getResult().get(0).getfDate())
-						.append(Const.LINE_SEPARATOR).append("下检日期:").append(messageObject.getResult().get(0).getXjrq())
-						.append(Const.LINE_SEPARATOR).append("报废日期:").append(messageObject.getResult().get(0).getBfrq())
-						.append(Const.LINE_SEPARATOR).append(" 用户:")
-						.append(messageObject.getResult().get(0).getUserName()).append(Const.LINE_SEPARATOR)
-						.append("用户位置:").append(messageObject.getResult().get(0).getUserInfo())
-						.append(Const.LINE_SEPARATOR).append("用户联系方式:")
-						.append(messageObject.getResult().get(0).getPhone());
-
+			
+			Map<String, String> params_AQDW = new HashMap<String, String>();
+			params_AQDW.put("pCode", messArray[2]);
+			params_AQDW.put("pid", messArray[3]);
+			params_AQDW.put("pDate", messArray[4]);
+			
+			
+			String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottlePost.htm", params_AQDW,
+					CharEncoding.UTF_8, fromUserName);
+			BarcodegetBottlePsafeResMsg messageObject = new BarcodegetBottlePsafeResMsg();
+			JSONObject object = JSONObject.fromObject(response);
+			if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
+				sengMsg.append("系统请求socket出现异常:").append(response);
 			} else {
-				sengMsg.append("系统请求socket出现异常:").append(messageObject.getErrorCode());
+				if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
+					sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
+				} else {
+					JsonConfig jsonConfig = new JsonConfig();
+					jsonConfig.setRootClass(BarcodegetBottlePsafeResMsg.class);
+					Map<String, Class> classMap = new HashMap<String, Class>();
+					classMap.put("result", BarcodegetBottlePsafeResult.class);
+					jsonConfig.setClassMap(classMap);
+					messageObject = (BarcodegetBottlePsafeResMsg) JSONObject.toBean(object, jsonConfig);
+					sengMsg.append("气瓶制造单位代号:").append(messageObject.getResult().get(0).getpCode())
+					.append(Const.LINE_SEPARATOR).append("气瓶使用证编号 :")
+					.append(messageObject.getResult().get(0).getSyzbh()).append(Const.LINE_SEPARATOR)
+					.append("气瓶注册代码:").append(messageObject.getResult().get(0).getZcdm())
+					.append(Const.LINE_SEPARATOR).append("气瓶结构:")
+					.append(messageObject.getResult().get(0).getQpStructureName()).append(Const.LINE_SEPARATOR)
+					.append("气瓶品种:").append(messageObject.getResult().get(0).getClassName())
+					.append(Const.LINE_SEPARATOR).append("气瓶型号:")
+					.append(messageObject.getResult().get(0).getTypeName()).append(Const.LINE_SEPARATOR)
+					.append("气瓶编号:").append(messageObject.getResult().get(0).getPid()).append(Const.LINE_SEPARATOR)
+					.append("充装介质:").append(messageObject.getResult().get(0).getMediumName())
+					.append(Const.LINE_SEPARATOR).append("出厂日期:")
+					.append(messageObject.getResult().get(0).getpDate()).append(Const.LINE_SEPARATOR)
+					.append("上检日期:").append(messageObject.getResult().get(0).getfDate())
+					.append(Const.LINE_SEPARATOR).append("下检日期:").append(messageObject.getResult().get(0).getXjrq())
+					.append(Const.LINE_SEPARATOR).append("报废日期:").append(messageObject.getResult().get(0).getBfrq())
+					.append(Const.LINE_SEPARATOR).append(" 用户:")
+					.append(messageObject.getResult().get(0).getUserName()).append(Const.LINE_SEPARATOR)
+					.append("用户位置:").append(messageObject.getResult().get(0).getUserInfo())
+					.append(Const.LINE_SEPARATOR).append("用户联系方式:")
+					.append(messageObject.getResult().get(0).getPhone());
+				}
 			}
 		}
 
