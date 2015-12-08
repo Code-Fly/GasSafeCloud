@@ -59,10 +59,10 @@ public class ScancodeWaitmsgEvent extends Event {
 
         StringBuffer sengMsg = new StringBuffer();
 
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("authorizeType", Const.gasApi.AUTHORIZETYPE);
-        params.put("openId", fromUserName);
-        String tokenResp = GasHttpClientUtil.doPost(Const.gasApi.URL + "ccstWeChatgetToken.htm", params, org.apache.commons.codec.CharEncoding.UTF_8);
+        Map<String, String> tokenMap = new HashMap<String, String>();
+        tokenMap.put("authorizeType", Const.gasApi.AUTHORIZETYPE);
+        tokenMap.put("authorizeID", fromUserName);
+        String tokenResp = GasHttpClientUtil.doPost(Const.gasApi.URL + "ccstWeChatgetToken.htm", tokenMap, org.apache.commons.codec.CharEncoding.UTF_8);
         if (!GasHttpClientUtil.isValid(tokenResp)) {
             sengMsg.append("系统请求socket出现异常:").append(JSONObject.fromObject(tokenResp).get(WebSocketResFiled.ERROR_CODE));
             logger.info("setContent:" + sengMsg.toString());
@@ -82,8 +82,7 @@ public class ScancodeWaitmsgEvent extends Event {
 		String tmp = scanResult.substring(1, lastIndex);
 		// [QP02001,132020000001,AG,323232,2015年09月,2045年09月]
 		String[] messArray = tmp.split(",");
-        params.put("authorizeType", Const.gasApi.AUTHORIZETYPE);
-        params.put("openId", fromUserName);
+        Map<String, String> params = new HashMap<String, String>();
         params.put("token", JSONObject.fromObject(tokenResp).getString("result"));
         params.put("syzbh", messArray[0]);
 		params.put("zcdm", messArray[1]);
