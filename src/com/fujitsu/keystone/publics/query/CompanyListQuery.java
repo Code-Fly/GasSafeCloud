@@ -1,26 +1,26 @@
 package com.fujitsu.keystone.publics.query;
 
+import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.GasSafeException;
 import com.fujitsu.base.exception.WeChatException;
-import com.fujitsu.client.GasWebSocketClient;
-import com.fujitsu.client.QueryCompanyListClient;
-import com.fujitsu.client.QueryCompanyListConnect;
+import com.fujitsu.base.helper.GasHttpClientUtil;
 import com.fujitsu.client.entity.CompanyListResMsg;
 import com.fujitsu.client.entity.SocketFailCode;
-import com.fujitsu.base.constants.Const;
-import com.fujitsu.base.helper.GasWebSocketUtil;
+import com.fujitsu.client.entity.WebSocketResFiled;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.event.Event;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang3.CharEncoding;
 
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,19 +62,25 @@ public class CompanyListQuery extends Query {
             // 将搜索字符及后面的+、空格、-等特殊符号去掉
             String keyWord = content.replaceAll("^" + Query.SEPARATOR + queryCmd + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "[\\+ ~!@#%^-_=]?", "");
 
-            StringBuffer socketParams = new StringBuffer();
-            socketParams.append("uName=").append(keyWord);
-            socketParams.append("&token=").append(GasWebSocketClient.SOCKET_TOKEN);
-            socketParams.append("&qyType=").append(queryType);
-            CompanyListResMsg retMsg = getCompanyListResMsg(socketParams.toString(), 0);
-            if (0 == retMsg.getErrorCode()) {
-                buffer.append("单位列表:").append(Const.LINE_SEPARATOR);
-                buffer.append(Const.LINE_SEPARATOR);
-                for (int i = 0; i < retMsg.getResult().size(); i++) {
-                    buffer.append(i + 1 + "." + retMsg.getResult().get(i).getUnitName()).append(Const.LINE_SEPARATOR);
-                }
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("uName", keyWord);
+            params.put("qyType", queryType);
+
+            String response = GasHttpClientUtil.gasPost("ccstWeChatGetDWList.htm", params, CharEncoding.UTF_8, fromUserName);
+            if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
+                buffer.append("系统请求socket出现异常:").append(response);
             } else {
-                buffer.append("系统请求socket出现异常:").append(retMsg.getErrorCode()).append(Const.LINE_SEPARATOR);
+                CompanyListResMsg retMsg = new CompanyListResMsg();
+                JSONObject object = JSONObject.fromObject(response);
+                if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
+                    buffer.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
+                } else {
+                    buffer.append("单位列表:").append(Const.LINE_SEPARATOR);
+                    buffer.append(Const.LINE_SEPARATOR);
+                    for (int i = 0; i < retMsg.getResult().size(); i++) {
+                        buffer.append(i + 1 + "." + retMsg.getResult().get(i).getUnitName()).append(Const.LINE_SEPARATOR);
+                    }
+                }
             }
             message.setContent(buffer.toString());
         } else {
@@ -86,26 +92,6 @@ public class CompanyListQuery extends Query {
 
         super.execute(request, requestJson);
         return respXml;
-    }
-
-    /**
-     *
-     * @param socketParams
-     * @param times
-     * @return
-     */
-    private CompanyListResMsg getCompanyListResMsg(String socketParams, int times) {
-        logger.info("getCompanyListResMsg times=" + times);
-        QueryCompanyListConnect.sendMsg(socketParams.toString());
-        CompanyListResMsg messageObject = QueryCompanyListClient.messageObject;
-        if ((times) < 1 && (SocketFailCode.CODE_100001 == messageObject.getErrorCode()
-                || SocketFailCode.CODE_100002 == messageObject.getErrorCode())) {
-            logger.info("Bottle times=" + times);
-            GasWebSocketUtil.accessWSToken();
-            getCompanyListResMsg(socketParams, times + 1);
-        }
-        logger.info("getCompanyListResMsg messageObject=" + messageObject.getMessage());
-        return messageObject;
     }
 }
 
