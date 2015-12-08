@@ -5,6 +5,8 @@ import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DefaultEvent extends Event {
     @Override
-    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, ConnectionFailedException, AccessTokenException, WeChatException {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, ConnectionFailedException, AccessTokenException, WeChatException,UnsupportedEncodingException {
         String respXml = null;
 
         super.execute(request, requestJson);

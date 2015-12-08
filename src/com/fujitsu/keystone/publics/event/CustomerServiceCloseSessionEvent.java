@@ -3,6 +3,8 @@
  */
 package com.fujitsu.keystone.publics.event;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,7 +27,7 @@ public class CustomerServiceCloseSessionEvent extends Event {
 	public static String KF_ACCOUNT = "KfAccount";
 	
 	@Override
-	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException,UnsupportedEncodingException {
 		String at = KeystoneUtil.getAccessToken();
 
 		String respXml = null;

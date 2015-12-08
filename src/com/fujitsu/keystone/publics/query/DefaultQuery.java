@@ -10,6 +10,8 @@ import net.sf.json.JSONObject;
 
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 /**
@@ -18,7 +20,7 @@ import java.util.Date;
 public class DefaultQuery extends Query {
 
     @Override
-    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, WeChatException, ConnectionFailedException, AccessTokenException {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, WeChatException, ConnectionFailedException, AccessTokenException, UnsupportedEncodingException {
         String respXml = null;
         // 发送方帐号
         String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
