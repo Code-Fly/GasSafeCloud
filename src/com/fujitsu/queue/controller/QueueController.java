@@ -1,6 +1,5 @@
 package com.fujitsu.queue.controller;
 
-import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.controller.BaseController;
 import com.fujitsu.base.entity.ErrorMsg;
 import com.fujitsu.keystone.publics.event.Event;
@@ -29,15 +28,22 @@ public class QueueController extends BaseController {
     @Resource
     IQueueService queueService;
 
-    @RequestMapping(value = "/queue/browse/{queue}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/queue/browse/{prefix}/{queue}", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String browse(HttpServletRequest request, HttpServletResponse response,
                          @PathVariable String queue,
+                         @PathVariable String prefix,
                          @RequestParam(value = "filter", required = false) String filter) throws JMSException {
         List<String> list;
         List<String> result = new ArrayList<>();
+        if ("null".equals(prefix.trim().toLowerCase())) {
+            prefix = "";
+        } else {
+            prefix += ".";
+        }
+
         queueService.connect();
-        list = queueService.browse(Queue.ACTIVEMQ_PROTOCAL_QUEUE + Const.Queue.ACTIVEMQ_QUEUE_USER_PREFIX + queue);
+        list = queueService.browse(Queue.ACTIVEMQ_PROTOCAL_QUEUE + prefix + queue);
         queueService.close();
         for (int i = 0; i < list.size(); i++) {
             if (null == filter || filter.isEmpty()) {
@@ -53,17 +59,23 @@ public class QueueController extends BaseController {
         return JSONArray.fromObject(result).toString();
     }
 
-    @RequestMapping(value = "/queue/clear/{queue}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/queue/clear/{prefix}/{queue}", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String clear(HttpServletRequest request, HttpServletResponse response,
                         @PathVariable String queue,
+                        @PathVariable String prefix,
                         @RequestParam(value = "filter", required = false) String filter) throws JMSException {
+        if ("null".equals(prefix.trim().toLowerCase())) {
+            prefix = "";
+        } else {
+            prefix += ".";
+        }
 
         queueService.connect();
         if (null == filter || filter.isEmpty()) {
-            queueService.clear(Queue.ACTIVEMQ_PROTOCAL_QUEUE + Const.Queue.ACTIVEMQ_QUEUE_USER_PREFIX + queue);
+            queueService.clear(Queue.ACTIVEMQ_PROTOCAL_QUEUE + prefix + queue);
         } else {
-            queueService.clear(Queue.ACTIVEMQ_PROTOCAL_QUEUE + Const.Queue.ACTIVEMQ_QUEUE_USER_PREFIX + queue, filter);
+            queueService.clear(Queue.ACTIVEMQ_PROTOCAL_QUEUE + prefix + queue, filter);
         }
 
         queueService.close();
