@@ -54,17 +54,28 @@ public class ScancodeWaitmsgEvent extends Event {
 		message.setFromUserName(toUserName);
 		message.setCreateTime(new Date().getTime());
 		message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
-		/**
-		 * 处理message 推送给用户的message
-		 * [QP02001,132020000001,AG,323232,2015年09月,2045年09月]气瓶安全云www.qpsafe.cn
-		 */
-		int lastIndex = scanResult.lastIndexOf("]");
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("authorizeType", Const.gasApi.AUTHORIZETYPE);
+        params.put("openId", fromUserName);
+        String tokenResp = GasHttpClientUtil.doPost(Const.gasApi.URL + "ccstWeChatgetToken.htm", params, org.apache.commons.codec.CharEncoding.UTF_8);
+        if (!GasHttpClientUtil.isValid(tokenResp)) {
+            throw new GasSafeException(tokenResp);
+        }
+
+        /**
+         * 处理message 推送给用户的message
+         * [QP02001,132020000001,AG,323232,2015年09月,2045年09月]气瓶安全云www.qpsafe.cn
+         */
+        int lastIndex = scanResult.lastIndexOf("]");
 		// QP02001,132020000001,AG,323232,2015年09月,2045年09月
 		String tmp = scanResult.substring(1, lastIndex);
 		// [QP02001,132020000001,AG,323232,2015年09月,2045年09月]
 		String[] messArray = tmp.split(",");
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("syzbh", messArray[0]);
+        params.put("authorizeType", Const.gasApi.AUTHORIZETYPE);
+        params.put("openId", fromUserName);
+        params.put("token", JSONObject.fromObject(tokenResp).getString("result"));
+        params.put("syzbh", messArray[0]);
 		params.put("zcdm", messArray[1]);
 		params.put("pcode", messArray[2]);
 		params.put("pid", messArray[3]);
@@ -75,8 +86,13 @@ public class ScancodeWaitmsgEvent extends Event {
 		// 身份查询
 		if (MenuService.QP_SFCX.equals(eventKey)) {
 
-			String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottle.htm", params, CharEncoding.UTF_8,
-					fromUserName);
+
+            String response = GasHttpClientUtil.doPost(Const.gasApi.URL + "ccstWeChatBarcodegetBottle.htm", params, org.apache.commons.codec.CharEncoding.UTF_8);
+
+            if (!GasHttpClientUtil.isValid(response)) {
+                throw new GasSafeException(response);
+            }
+
 			if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
 				sengMsg.append("系统请求socket出现异常:").append(response);
 			} else {
