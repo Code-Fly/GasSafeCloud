@@ -36,10 +36,10 @@ public class ScancodeWaitmsgEvent extends Event {
 	/**
 	 * @throws AccessTokenException
 	 * @throws ConnectionFailedException
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException
 	 */
-	public String execute(HttpServletRequest request, JSONObject requestJson)
-			throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException, UnsupportedEncodingException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException,
+			AccessTokenException, WeChatException, JMSException, UnsupportedEncodingException {
 		String respXml = null;
 
 		String fromUserName = requestJson.getString(FROM_USER_NAME);
@@ -74,12 +74,13 @@ public class ScancodeWaitmsgEvent extends Event {
 		// 身份查询
 		if (MenuService.QP_SFCX.equals(eventKey)) {
 
-			String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottle.htm", params, CharEncoding.UTF_8, fromUserName);
+			String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottle.htm", params, CharEncoding.UTF_8,
+					fromUserName);
 			if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
 				sengMsg.append("系统请求socket出现异常:").append(response);
 			} else {
 				BarcodegetBottleResMsg barMsg = new BarcodegetBottleResMsg();
-				JSONObject object = JSONObject.fromObject(message);
+				JSONObject object = JSONObject.fromObject(response);
 				if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
 					sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
 				} else {
@@ -121,19 +122,20 @@ public class ScancodeWaitmsgEvent extends Event {
 			}
 
 		} else if (MenuService.QP_GZJL.equals(eventKey)) {
-			String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottle.htm", params, CharEncoding.UTF_8, fromUserName);
+			String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottleFill.htm", params,
+					CharEncoding.UTF_8, fromUserName);
 			if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
 				sengMsg.append("系统请求socket出现异常:").append(response);
 			} else {
 				BarcodegetBottleFillResMsg barMsg = new BarcodegetBottleFillResMsg();
-				JSONObject object = JSONObject.fromObject(message);
+				JSONObject object = JSONObject.fromObject(response);
 				if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
 					sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
 				} else {
 					JsonConfig jsonConfig = new JsonConfig();
-					jsonConfig.setRootClass(BarcodegetBottleResMsg.class);
+					jsonConfig.setRootClass(BarcodegetBottleFillResMsg.class);
 					Map<String, Class> classMap = new HashMap<String, Class>();
-					classMap.put("result", BarcodegetBottleResult.class);
+					classMap.put("result", BarcodegetBottleFillResult.class);
 					jsonConfig.setClassMap(classMap);
 					barMsg = (BarcodegetBottleFillResMsg) JSONObject.toBean(object, jsonConfig);
 					sengMsg.append("气瓶编号 :").append(barMsg.getResult().get(0).getPid()).append(Const.LINE_SEPARATOR)
@@ -163,67 +165,99 @@ public class ScancodeWaitmsgEvent extends Event {
 			}
 
 		} else if (MenuService.QP_LZGZ.equals(eventKey)) {
-			StringBuffer socketParams = new StringBuffer();
-			socketParams.append("syzbh=").append(messArray[0]).append("&zcdm=").append(messArray[1]).append("&token=")
-					.append(GasWebSocketClient.SOCKET_TOKEN).append("&pcode=").append(messArray[2]).append("&pid=")
-					.append(messArray[3]).append("&pDate=").append(messArray[4]).append("&bfrq=").append(messArray[5]);
-			BarcodegetBottlePostResMsg barMsg = getBottlePostResMsg(socketParams.toString(), 0);
-			if (0 == barMsg.getErrorCode()) {
-				sengMsg.append("气瓶编号 :").append(barMsg.getResult().get(0).getPid()).append(Const.LINE_SEPARATOR)
-						.append("气瓶制造单位:").append(barMsg.getResult().get(0).getpCode()).append(Const.LINE_SEPARATOR);
-				List<BarcodegetBottlePostResult> results = barMsg.getResult();
-				for (BarcodegetBottlePostResult result : results) {
-					sengMsg.append("配送日期:").append(result.getPsStart()).append(Const.LINE_SEPARATOR).append("配送单位:")
-							.append(result.getUnitName()).append(Const.LINE_SEPARATOR).append("用户:")
-							.append(result.getUserName()).append(Const.LINE_SEPARATOR).append("用户位置:")
-							.append(result.getUserinfo()).append(Const.LINE_SEPARATOR).append("灌装量:")
-							.append(result.getFillWeight()).append(Const.LINE_SEPARATOR);
-				}
+
+			String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottlePost.htm", params,
+					CharEncoding.UTF_8, fromUserName);
+			if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
+				sengMsg.append("系统请求socket出现异常:").append(response);
 			} else {
-				sengMsg.append("系统请求socket出现异常:").append(barMsg.getErrorCode());
+				BarcodegetBottlePostResMsg barMsg = new BarcodegetBottlePostResMsg();
+				JSONObject object = JSONObject.fromObject(response);
+				if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
+					sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
+				} else {
+					JsonConfig jsonConfig = new JsonConfig();
+					jsonConfig.setRootClass(BarcodegetBottlePostResMsg.class);
+					Map<String, Class> classMap = new HashMap<String, Class>();
+					classMap.put("result", BarcodegetBottlePostResult.class);
+					jsonConfig.setClassMap(classMap);
+					barMsg = (BarcodegetBottlePostResMsg) JSONObject.toBean(object, jsonConfig);
+					sengMsg.append("气瓶编号 :").append(barMsg.getResult().get(0).getPid()).append(Const.LINE_SEPARATOR)
+							.append("气瓶制造单位:").append(barMsg.getResult().get(0).getpCode())
+							.append(Const.LINE_SEPARATOR);
+					List<BarcodegetBottlePostResult> results = barMsg.getResult();
+					for (BarcodegetBottlePostResult result : results) {
+						sengMsg.append("配送日期:").append(result.getPsStart()).append(Const.LINE_SEPARATOR).append("配送单位:")
+								.append(result.getUnitName()).append(Const.LINE_SEPARATOR).append("用户:")
+								.append(result.getUserName()).append(Const.LINE_SEPARATOR).append("用户位置:")
+								.append(result.getUserinfo()).append(Const.LINE_SEPARATOR).append("灌装量:")
+								.append(result.getFillWeight()).append(Const.LINE_SEPARATOR);
+					}
+				}
 			}
 		} else if (MenuService.QP_SMSY.equals(eventKey)) {
-			StringBuffer socketParams = new StringBuffer();
-			socketParams.append("syzbh=").append(messArray[0]).append("&zcdm=").append(messArray[1]).append("&token=")
-					.append(GasWebSocketClient.SOCKET_TOKEN).append("&pcode=").append(messArray[2]).append("&pid=")
-					.append(messArray[3]).append("&pDate=").append(messArray[4]).append("&bfrq=").append(messArray[5])
-					.append("&openId=").append(fromUserName);
-			WebSocketResponseMessage messageObject = getBarcodeUPBottleInfoResMsg(socketParams.toString(), 0);
-			if (0 == messageObject.getErrorCode()) {
-				sengMsg.append("气瓶编号 :").append(messArray[3]).append(Const.LINE_SEPARATOR).append("气瓶制造单位代号 :")
+			
+			Map<String, String> params_SMSY = new HashMap<String, String>();
+			params_SMSY.put("syzbh", messArray[0]);
+			params_SMSY.put("zcdm", messArray[1]);
+			params_SMSY.put("pcode", messArray[2]);
+			params_SMSY.put("pid", messArray[3]);
+			params_SMSY.put("pDate", messArray[4]);
+			params_SMSY.put("bfrq", messArray[5]);
+			params_SMSY.put("openId", fromUserName);
+			
+			String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodeUPBottleInfo.htm", params_SMSY,
+					CharEncoding.UTF_8, fromUserName);
+			if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
+				sengMsg.append("系统请求socket出现异常:").append(response);
+			} else {
+				JSONObject object = JSONObject.fromObject(response);
+				if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
+					sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
+				} else {
+					sengMsg.append("气瓶编号 :").append(messArray[3]).append(Const.LINE_SEPARATOR).append("气瓶制造单位代号 :")
 						.append(messArray[2]).append(Const.LINE_SEPARATOR).append("气瓶使用登记证编号:").append(messArray[0])
 						.append(Const.LINE_SEPARATOR).append("气瓶使用登记代码 :").append(messArray[1])
 						.append(Const.LINE_SEPARATOR).append("出厂日期:").append(messArray[3]).append(Const.LINE_SEPARATOR)
 						.append("报废日期:").append(messArray[4]).append(Const.LINE_SEPARATOR).append("操作日期时间:")
 						.append(messArray[5]).append(Const.LINE_SEPARATOR).append("用户的唯一标识openid:")
 						.append(fromUserName);
-			} else {
-				sengMsg.append("系统请求socket出现异常:").append(messageObject.getErrorCode());
+				}
 			}
 		} else if (MenuService.FW_RSQP.equals(eventKey)) {
-			StringBuffer socketParams = new StringBuffer();
-			socketParams.append("syzbh=").append(messArray[0]).append("&zcdm=").append(messArray[1]).append("&token=")
-					.append(GasWebSocketClient.SOCKET_TOKEN).append("&pcode=").append(messArray[2]).append("&pid=")
-					.append(messArray[3]).append("&pDate=").append(messArray[4]).append("&bfrq=").append(messArray[5]);
-			GasQPReadingURLResMsg messageObject = getGasQPReadingURLResMsg(socketParams.toString(), 0);
-			if (0 == messageObject.getErrorCode()) {
-				sengMsg.append("请点击下面的链接进入我们的网站 :").append(Const.LINE_SEPARATOR);
-				sengMsg.append(messageObject.getResult().getQpUrl()).append(Const.LINE_SEPARATOR);
+			String response = GasHttpClientUtil.gasPost("ccstWeChatGetGasQPReadingURL.htm", params,
+					CharEncoding.UTF_8, fromUserName);
+			if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
+				sengMsg.append("系统请求socket出现异常:").append(response);
 			} else {
-				sengMsg.append("系统请求socket出现异常:").append(messageObject.getErrorCode());
+				GasQPReadingURLResMsg barMsg = new GasQPReadingURLResMsg();
+				JSONObject object = JSONObject.fromObject(response);
+				if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
+					sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
+				} else {
+					GasQPReadingURLResMsg messageObject = new GasQPReadingURLResMsg();
+					messageObject = (GasQPReadingURLResMsg)JSONObject.toBean(JSONObject.fromObject(message),GasQPReadingURLResMsg.class);
+					sengMsg.append("请点击下面的链接进入我们的网站 :").append(Const.LINE_SEPARATOR);
+					sengMsg.append(messageObject.getResult().getQpUrl()).append(Const.LINE_SEPARATOR);
+				}
 			}
 
 		} else if (MenuService.FW_YQAQ.equals(eventKey)) {
-			StringBuffer socketParams = new StringBuffer();
-			socketParams.append("syzbh=").append(messArray[0]).append("&zcdm=").append(messArray[1]).append("&token=")
-					.append(GasWebSocketClient.SOCKET_TOKEN).append("&pcode=").append(messArray[2]).append("&pid=")
-					.append(messArray[3]).append("&pDate=").append(messArray[4]).append("&bfrq=").append(messArray[5]);
-			GasQPReadingURLResMsg messageObject = getGasQPReadingURLResMsg(socketParams.toString(), 0);
-			if (0 == messageObject.getErrorCode()) {
-				sengMsg.append("请点击下面的链接进入我们的网站 :").append(Const.LINE_SEPARATOR);
-				sengMsg.append(messageObject.getResult().getGasUrl()).append(Const.LINE_SEPARATOR);
+			String response = GasHttpClientUtil.gasPost("ccstWeChatGetGasQPReadingURL.htm", params,
+					CharEncoding.UTF_8, fromUserName);
+			if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
+				sengMsg.append("系统请求socket出现异常:").append(response);
 			} else {
-				sengMsg.append("系统请求socket出现异常:").append(messageObject.getErrorCode());
+				GasQPReadingURLResMsg barMsg = new GasQPReadingURLResMsg();
+				JSONObject object = JSONObject.fromObject(response);
+				if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
+					sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
+				} else {
+					GasQPReadingURLResMsg messageObject = new GasQPReadingURLResMsg();
+					messageObject = (GasQPReadingURLResMsg)JSONObject.toBean(JSONObject.fromObject(message),GasQPReadingURLResMsg.class);
+					sengMsg.append("请点击下面的链接进入我们的网站 :").append(Const.LINE_SEPARATOR);
+					sengMsg.append(messageObject.getResult().getGasUrl()).append(Const.LINE_SEPARATOR);
+				}
 			}
 		} else if (MenuService.QP_AQDW.equals(eventKey)) {
 			StringBuffer socketParams = new StringBuffer();
