@@ -13,6 +13,7 @@ import com.fujitsu.keystone.publics.entity.shop.*;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IShopService;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -38,7 +39,7 @@ public class ShopService extends BaseService implements IShopService {
         request.put("begin", begin);
         request.put("limit", limit);
 
-        String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, request.toString(), CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }
@@ -82,7 +83,7 @@ public class ShopService extends BaseService implements IShopService {
         JSONObject request = new JSONObject();
         request.put("poi_id", poi_id);
 
-        String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, request.toString(), CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }

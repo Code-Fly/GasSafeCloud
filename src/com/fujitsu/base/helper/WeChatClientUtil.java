@@ -60,7 +60,6 @@ public class WeChatClientUtil {
             }
         }
         return resp;
-
     }
 
     public static String post(String url, Map<String, String> params, String charset) throws ConnectionFailedException, WeChatException {
@@ -74,10 +73,33 @@ public class WeChatClientUtil {
         return resp;
     }
 
+    public static String post(String url, Map<String, String> params, String charset, String ContentType) throws ConnectionFailedException, WeChatException {
+        String resp = null;
+        for (int i = 0; i < (RETRY - 1); i++) {
+            resp = HttpClientUtil.post(url, params, charset, ContentType);
+            if (isValid(resp)) {
+                break;
+            }
+        }
+        return resp;
+    }
+
     public static String post(String url, String params, String charset) throws ConnectionFailedException, WeChatException {
         String resp = null;
         for (int i = 0; i < (RETRY - 1); i++) {
             resp = HttpClientUtil.post(url, params, charset);
+            if (isValid(resp)) {
+                break;
+            }
+        }
+        return resp;
+
+    }
+
+    public static String post(String url, String params, String charset, String ContentType) throws ConnectionFailedException, WeChatException {
+        String resp = null;
+        for (int i = 0; i < (RETRY - 1); i++) {
+            resp = HttpClientUtil.post(url, params, charset, ContentType);
             if (isValid(resp)) {
                 break;
             }

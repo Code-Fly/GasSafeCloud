@@ -17,6 +17,7 @@ import com.fujitsu.keystone.publics.query.Query;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IMenuService;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,8 +40,8 @@ public class CoreService extends BaseService implements ICoreService {
      * 确认请求来自微信服务器
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding(CharEncoding.UTF_8);
+        response.setCharacterEncoding(CharEncoding.UTF_8);
 
         // 微信加密签名
         String signature = request.getParameter("signature");
@@ -65,8 +66,8 @@ public class CoreService extends BaseService implements ICoreService {
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding(CharEncoding.UTF_8);
+        response.setCharacterEncoding(CharEncoding.UTF_8);
 
         // 调用核心业务类接收消息、处理消息
         String respMessage = processRequest(request);
@@ -90,7 +91,7 @@ public class CoreService extends BaseService implements ICoreService {
     public JSONObject getAccessToken(String appid, String appsecret) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_GET_ACCESS_TOKEN.replace("APPID", appid).replace("APPSECRET", appsecret);
 
-        String response = WeChatClientUtil.post(url, "UTF-8");
+        String response = WeChatClientUtil.post(url, CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }
@@ -98,7 +99,7 @@ public class CoreService extends BaseService implements ICoreService {
     public JSONObject getJsapiTicket(String accessToken) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_JSAPI_TICKET.replace("ACCESS_TOKEN", accessToken);
 
-        String response = WeChatClientUtil.post(url, "UTF-8");
+        String response = WeChatClientUtil.post(url, CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }

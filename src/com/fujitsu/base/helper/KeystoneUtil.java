@@ -9,6 +9,7 @@ import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.keystone.publics.service.impl.CoreService;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,7 +153,7 @@ public class KeystoneUtil {
         }
         sb.append("key=" + mchKey);
 
-        String sign = MD5Util.MD5Encode(sb.toString(), "UTF-8").toUpperCase();
+        String sign = MD5Util.MD5Encode(sb.toString(), CharEncoding.UTF_8).toUpperCase();
         return sign;
     }
 
@@ -183,7 +184,7 @@ public class KeystoneUtil {
 
     public static JSONObject getRemoteAccessToken() throws ConnectionFailedException {
         String url = Const.WECHART_URL + "/api/keystone/token/query";
-        String resp = HttpClientUtil.get(url, "UTF-8");
+        String resp = HttpClientUtil.get(url, CharEncoding.UTF_8);
         if (null == resp) {
             throw new ConnectionFailedException();
         }
@@ -209,7 +210,7 @@ public class KeystoneUtil {
 
     public static JSONObject refreshRemoteAccessToken() throws ConnectionFailedException {
         String url = Const.WECHART_URL + "/api/keystone/token/refresh";
-        String resp = HttpClientUtil.get(url, "UTF-8");
+        String resp = HttpClientUtil.get(url, CharEncoding.UTF_8);
         if (null == resp) {
             throw new ConnectionFailedException();
         }

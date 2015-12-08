@@ -10,6 +10,7 @@ import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.merchant.service.iface.ICouponService;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,7 +31,7 @@ public class CouponService extends BaseService implements ICouponService {
     public String sendCoupon(Map<String, Object> data) throws ConnectionFailedException, WeChatException {
         String url = Const.MerchantPlatform.URL_MERCHANT_COUPON_SEND;
 
-        String response = WeChatClientUtil.post(url, XmlUtil.toXML(data), "UTF-8");
+        String response = WeChatClientUtil.post(url, XmlUtil.toXML(data), CharEncoding.UTF_8);
 
         return response;
     }

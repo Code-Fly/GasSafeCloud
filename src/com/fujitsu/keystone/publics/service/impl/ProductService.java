@@ -15,6 +15,7 @@ import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.WeChatClientUtil;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.stereotype.Service;
 
 import com.fujitsu.base.exception.ConnectionFailedException;
@@ -53,7 +54,7 @@ public class ProductService extends BaseService implements IProductService {
 		JSONObject request = new JSONObject();
 		request.put("status", status);
 
-		String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
+		String response = WeChatClientUtil.post(url, request.toString(), CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }
@@ -64,7 +65,7 @@ public class ProductService extends BaseService implements IProductService {
 		JSONObject request = new JSONObject();
 		request.put("product_id", productId);
 
-		String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
+		String response = WeChatClientUtil.post(url, request.toString(), CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }
@@ -72,7 +73,7 @@ public class ProductService extends BaseService implements IProductService {
 	public JSONObject getProductGroupList(String accessToken) throws ConnectionFailedException, WeChatException {
 		String url = Const.PublicPlatform.URL_PRODUCT_GROUP_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
-		String response = WeChatClientUtil.get(url, "UTF-8");
+		String response = WeChatClientUtil.get(url, CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }
@@ -83,7 +84,7 @@ public class ProductService extends BaseService implements IProductService {
 		JSONObject request = new JSONObject();
 		request.put("group_id", groupId);
 
-		String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
+		String response = WeChatClientUtil.post(url, request.toString(), CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }

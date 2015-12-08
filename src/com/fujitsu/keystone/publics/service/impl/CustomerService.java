@@ -13,6 +13,7 @@ import com.fujitsu.keystone.publics.entity.customer.message.CouponMessage;
 import com.fujitsu.keystone.publics.entity.customer.message.TextMessage;
 import com.fujitsu.keystone.publics.service.iface.ICustomerService;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.stereotype.Service;
 
 /**
@@ -47,7 +48,7 @@ public class CustomerService extends BaseService implements ICustomerService {
     private JSONObject sendMessage(String accessToken, JSONObject message) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_CUSTOMER_SERVICE_MESSAGE_SEND.replace("ACCESS_TOKEN", accessToken);
 
-        String response = WeChatClientUtil.post(url, message.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, message.toString(), CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }

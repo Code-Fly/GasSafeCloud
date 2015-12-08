@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.fujitsu.base.constants.Const;
+import org.apache.commons.codec.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ public class ConfigUtil {
 	public static String getJson(String fileName) throws IOException {
 		String path = Const.getServerPath() + "conf/" + fileName;
 		FileInputStream fileInputStream = new FileInputStream(path);
-		InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
+		InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, CharEncoding.UTF_8);
 		BufferedReader reader = new BufferedReader(inputStreamReader);
 		String tempString = null;
 		String laststr = "";

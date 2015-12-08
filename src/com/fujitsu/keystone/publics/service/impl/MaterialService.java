@@ -12,6 +12,7 @@ import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IMaterialService;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -43,7 +44,7 @@ public class MaterialService extends BaseService implements IMaterialService {
         request.put("offset", offset);
         request.put("count", count);
 
-        String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, request.toString(), CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }
@@ -63,7 +64,7 @@ public class MaterialService extends BaseService implements IMaterialService {
         JSONObject request = new JSONObject();
         request.put("media_id", mediaId);
 
-        String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, request.toString(), CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }

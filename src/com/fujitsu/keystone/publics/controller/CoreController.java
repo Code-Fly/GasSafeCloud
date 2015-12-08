@@ -14,6 +14,7 @@ import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.impl.GreeterService;
 import com.fujitsu.queue.service.impl.QueueService;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -114,7 +115,7 @@ public class CoreController extends BaseController {
     public String urlEncoder(HttpServletRequest request, HttpServletResponse response) {
         String url = request.getParameter("url");
         if (null != url) {
-            url = UrlUtil.encode(url, "UTF-8");
+            url = UrlUtil.encode(url, CharEncoding.UTF_8);
         }
         return url;
 

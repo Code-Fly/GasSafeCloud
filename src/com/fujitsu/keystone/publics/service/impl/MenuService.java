@@ -12,6 +12,7 @@ import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.service.iface.IMenuService;
 import com.fujitsu.keystone.publics.service.iface.IMessageService;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -51,7 +52,7 @@ public class MenuService extends BaseService implements IMenuService {
         // 拼装创建菜单的url
         String url = Const.PublicPlatform.URL_MENU_CREATE.replace("ACCESS_TOKEN", accessToken);
 
-        String response = WeChatClientUtil.post(url, json.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, json.toString(), CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }
@@ -64,7 +65,7 @@ public class MenuService extends BaseService implements IMenuService {
     public JSONObject get(String accessToken) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_MENU_GET.replace("ACCESS_TOKEN", accessToken);
 
-        String response = WeChatClientUtil.get(url, "UTF-8");
+        String response = WeChatClientUtil.get(url, CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }
@@ -77,7 +78,7 @@ public class MenuService extends BaseService implements IMenuService {
     public JSONObject delete(String accessToken) throws ConnectionFailedException, WeChatException {
         String url = Const.PublicPlatform.URL_MENU_DELETE.replace("ACCESS_TOKEN", accessToken);
 
-        String response = WeChatClientUtil.get(url, "UTF-8");
+        String response = WeChatClientUtil.get(url, CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }

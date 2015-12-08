@@ -3,6 +3,8 @@
  */
 package com.fujitsu.base.helper;
 
+import org.apache.commons.codec.CharEncoding;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -47,7 +49,7 @@ public class MapUtil {
                 value = valueObj.toString();
             }
             if (isDecode) {
-                returnMap.put(name, UrlUtil.decode(value, "UTF-8"));
+                returnMap.put(name, UrlUtil.decode(value, CharEncoding.UTF_8));
             } else {
                 returnMap.put(name, value);
             }

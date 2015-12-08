@@ -16,6 +16,7 @@ import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IOrderService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -54,9 +55,9 @@ public class OrderService extends BaseService implements IOrderService {
             request.put("endtime", endTime);
         }
         if (0 == request.size()) {
-            response = WeChatClientUtil.get(url, "UTF-8");
+            response = WeChatClientUtil.get(url, CharEncoding.UTF_8);
         } else {
-            response = WeChatClientUtil.get(url, request, "UTF-8");
+            response = WeChatClientUtil.get(url, request, CharEncoding.UTF_8);
         }
 
 
@@ -90,7 +91,7 @@ public class OrderService extends BaseService implements IOrderService {
         JSONObject request = new JSONObject();
         request.put("order_id", orderId);
 
-        String response = WeChatClientUtil.post(url, request.toString(), "UTF-8");
+        String response = WeChatClientUtil.post(url, request.toString(), CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }

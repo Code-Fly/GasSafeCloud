@@ -7,14 +7,15 @@ import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
-import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.helper.KeystoneUtil;
+import com.fujitsu.base.helper.WeChatClientUtil;
 import com.fujitsu.keystone.publics.entity.customer.message.Text;
 import com.fujitsu.keystone.publics.entity.customer.message.TextMessage;
 import com.fujitsu.keystone.publics.entity.product.Product;
 import com.fujitsu.keystone.publics.service.impl.CustomerService;
 import com.fujitsu.keystone.publics.service.impl.ProductService;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.CharEncoding;
 
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
@@ -72,7 +73,8 @@ public class MerchantOrderEvent extends Event {
         params.put("buyerOpenid", fromUserName);
         params.put("productId", productId);
         params.put("orderId", orderId);
-        String resp = HttpClientUtil.doPostJson(url, params.toString(), "UTF-8");
+        String resp = WeChatClientUtil.post(url, params.toString(), CharEncoding.UTF_8, "application/json");
+
         if (null == resp) {
             throw new ConnectionFailedException();
         }

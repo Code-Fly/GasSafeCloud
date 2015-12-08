@@ -9,6 +9,7 @@ import com.fujitsu.base.helper.XmlUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.merchant.service.iface.IPayService;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,7 +26,7 @@ public class PayService extends BaseService implements IPayService {
     public Map<String, String> payRefund(Map<String, Object> data) throws ConnectionFailedException, WeChatException {
         String url = Const.MerchantPlatform.URL_MERCHANT_PAY_REFUND;
 
-        String response = WeChatClientUtil.post(url, XmlUtil.toXML(data), "UTF-8");
+        String response = WeChatClientUtil.post(url, XmlUtil.toXML(data), CharEncoding.UTF_8);
 
         return XmlUtil.parseXml(response);
     }

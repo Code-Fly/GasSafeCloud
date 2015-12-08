@@ -14,6 +14,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.codec.CharEncoding;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -81,7 +82,7 @@ public class XmlUtil {
 
 		try {
 			// 从request中取得输入流
-			InputStream inputStream = new ByteArrayInputStream(str.getBytes("UTF-8"));
+			InputStream inputStream = new ByteArrayInputStream(str.getBytes(CharEncoding.UTF_8));
 			// 读取输入流
 			SAXReader reader = new SAXReader();
 			Document document = reader.read(inputStream);

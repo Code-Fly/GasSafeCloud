@@ -5,9 +5,7 @@ package com.fujitsu.base.helper;
 
 import com.fujitsu.base.exception.ConnectionFailedException;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -20,7 +18,6 @@ import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
@@ -30,7 +27,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +68,7 @@ public class HttpClientUtil {
     public static String post(String url, Map<String, String> params, String charset) throws ConnectionFailedException {
         UrlEncodedFormEntity formEntity = null;
         try {
-            if (null != params) {
+            if (null != params && !params.isEmpty()) {
                 List<NameValuePair> valuePairs = new ArrayList<NameValuePair>(params.size());
                 for (Map.Entry<String, String> entry : params.entrySet()) {
                     NameValuePair nameValuePair = new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue()));
@@ -82,23 +78,54 @@ public class HttpClientUtil {
                 formEntity = new UrlEncodedFormEntity(valuePairs, charset);
             }
         } catch (UnsupportedEncodingException e) {
-            logger.error(e.getMessage());
+            throw new ConnectionFailedException(e);
         }
         return doPost(url, formEntity, charset);
     }
-    
-   
+
+    public static String post(String url, Map<String, String> params, String charset, String ContentType) throws ConnectionFailedException {
+        UrlEncodedFormEntity formEntity = null;
+        try {
+            if (null != params && !params.isEmpty()) {
+                List<NameValuePair> valuePairs = new ArrayList<NameValuePair>(params.size());
+                for (Map.Entry<String, String> entry : params.entrySet()) {
+                    NameValuePair nameValuePair = new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue()));
+                    valuePairs.add(nameValuePair);
+                }
+
+                formEntity = new UrlEncodedFormEntity(valuePairs, charset);
+                if (null != ContentType && !ContentType.isEmpty()) {
+                    formEntity.setContentType(ContentType);
+                }
+            }
+        } catch (UnsupportedEncodingException e) {
+            throw new ConnectionFailedException(e);
+        }
+        return doPost(url, formEntity, charset);
+    }
 
     public static String post(String url, String params, String charset) throws ConnectionFailedException {
         StringEntity stringEntity = null;
-        if (null != params) {
-            stringEntity = new StringEntity(params, "UTF-8");
+        if (null != params && !params.isEmpty()) {
+            stringEntity = new StringEntity(params, charset);
         }
         return doPost(url, stringEntity, charset);
 
     }
 
-    protected static String doPost(String url, StringEntity sEntity, String charset) throws ConnectionFailedException {
+    public static String post(String url, String params, String charset, String ContentType) throws ConnectionFailedException {
+        StringEntity stringEntity = null;
+        if (null != params && !params.isEmpty()) {
+            stringEntity = new StringEntity(params, charset);
+            if (null != ContentType && !ContentType.isEmpty()) {
+                stringEntity.setContentType(ContentType);
+            }
+        }
+        return doPost(url, stringEntity, charset);
+
+    }
+
+    private static String doPost(String url, StringEntity sEntity, String charset) throws ConnectionFailedException {
         PoolingHttpClientConnectionManager connManager = null;
         CloseableHttpClient httpclient = null;
         CloseableHttpResponse response = null;
@@ -127,7 +154,6 @@ public class HttpClientUtil {
             response = httpclient.execute(httpPost);
             HttpEntity entity = response.getEntity();
 
-            // 微信返回的报文时GBK，直接使用httpcore解析乱码
             respStr = EntityUtils.toString(response.getEntity(), charset);
             EntityUtils.consume(entity);
             httpPost.abort();
@@ -180,29 +206,6 @@ public class HttpClientUtil {
         }
         return respStr;
     }
-
-    public static String doPostJson(String url, String jsonStr, String charset) {
-        try {
-            HttpPost httpPost = new HttpPost(url);
-            HttpClient client = new DefaultHttpClient();
-            StringEntity reqEntity = new StringEntity(jsonStr);
-            reqEntity.setContentType("application/json; charset=utf-8");
-            httpPost.setEntity(reqEntity);
-            HttpResponse resp = client.execute(httpPost);
-
-            HttpEntity entity = resp.getEntity();
-            String respContent = EntityUtils.toString(entity, charset).trim();
-            httpPost.abort();
-            client.getConnectionManager().shutdown();
-
-            return respContent;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
 
     public static void main(String[] args) {
 
