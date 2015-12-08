@@ -28,6 +28,8 @@ public class ClickEvent extends Event {
 
     @Override
     public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, WeChatException, ConnectionFailedException, AccessTokenException, UnsupportedEncodingException, GasSafeException {
+        super.execute(request, requestJson);
+
         String respXml = null;
         // 发送方帐号
         String fromUserName = requestJson.getString(FROM_USER_NAME);
@@ -118,7 +120,7 @@ public class ClickEvent extends Event {
             textMessage.setContent("功能尚未开放，敬请期待！" + eventKey);
             respXml = MessageService.messageToXml(textMessage);
         }
-        super.execute(request, requestJson);
+
         return respXml;
     }
 

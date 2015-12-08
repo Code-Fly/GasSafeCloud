@@ -29,6 +29,8 @@ public class CustomerServiceCloseSessionEvent extends Event {
 	
 	@Override
 	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException, UnsupportedEncodingException, GasSafeException {
+		super.execute(request, requestJson);
+
 		String at = KeystoneUtil.getAccessToken();
 
 		String respXml = null;
@@ -47,7 +49,6 @@ public class CustomerServiceCloseSessionEvent extends Event {
 		customerMsg.setText(t);
 		new CustomerService().sendTextMessage(at, customerMsg);
 
-		super.execute(request, requestJson);
 		return respXml;
 	}
 

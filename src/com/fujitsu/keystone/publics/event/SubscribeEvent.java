@@ -31,6 +31,8 @@ public class SubscribeEvent extends Event {
 
     @Override
     public String execute(HttpServletRequest request, JSONObject requestJson) throws AccessTokenException, WeChatException, ConnectionFailedException, JMSException, UnsupportedEncodingException, GasSafeException {
+        super.execute(request, requestJson);
+
         String respXml = null;
         // 发送方帐号
         String fromUserName = requestJson.getString(FROM_USER_NAME);
@@ -79,7 +81,6 @@ public class SubscribeEvent extends Event {
         // 将消息对象转换成xml
         respXml = MessageService.messageToXml(message);
 
-        super.execute(request, requestJson);
         return respXml;
     }
 

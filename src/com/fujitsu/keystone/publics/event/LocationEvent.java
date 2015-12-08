@@ -17,9 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 public class LocationEvent extends Event {
     @Override
     public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, ConnectionFailedException, AccessTokenException, WeChatException, UnsupportedEncodingException, GasSafeException {
+        super.execute(request, requestJson);
+
         String respXml = null;
 
-        super.execute(request, requestJson);
         return respXml;
     }
 }

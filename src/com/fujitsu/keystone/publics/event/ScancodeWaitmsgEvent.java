@@ -41,7 +41,9 @@ public class ScancodeWaitmsgEvent extends Event {
 	 */
 	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException,
 			AccessTokenException, WeChatException, JMSException, UnsupportedEncodingException, GasSafeException {
-		String respXml = null;
+        super.execute(request, requestJson);
+
+        String respXml = null;
 
 		String fromUserName = requestJson.getString(FROM_USER_NAME);
 		String toUserName = requestJson.getString(TO_USER_NAME);
@@ -55,12 +57,20 @@ public class ScancodeWaitmsgEvent extends Event {
 		message.setCreateTime(new Date().getTime());
 		message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
 
+        StringBuffer sengMsg = new StringBuffer();
+
         Map<String, String> params = new HashMap<String, String>();
         params.put("authorizeType", Const.gasApi.AUTHORIZETYPE);
         params.put("openId", fromUserName);
         String tokenResp = GasHttpClientUtil.doPost(Const.gasApi.URL + "ccstWeChatgetToken.htm", params, org.apache.commons.codec.CharEncoding.UTF_8);
         if (!GasHttpClientUtil.isValid(tokenResp)) {
-            throw new GasSafeException(tokenResp);
+            sengMsg.append("系统请求socket出现异常:").append(JSONObject.fromObject(tokenResp).get(WebSocketResFiled.ERROR_CODE));
+            logger.info("setContent:" + sengMsg.toString());
+            message.setContent(sengMsg.toString());
+            // 将消息对象转换成xml
+            respXml = MessageService.messageToXml(message);
+
+            return respXml;
         }
 
         /**
@@ -82,16 +92,11 @@ public class ScancodeWaitmsgEvent extends Event {
 		params.put("pDate", messArray[4]);
 		params.put("bfrq", messArray[5]);
 
-		StringBuffer sengMsg = new StringBuffer();
 		// 身份查询
 		if (MenuService.QP_SFCX.equals(eventKey)) {
 
 
             String response = GasHttpClientUtil.doPost(Const.gasApi.URL + "ccstWeChatBarcodegetBottle.htm", params, org.apache.commons.codec.CharEncoding.UTF_8);
-
-            if (!GasHttpClientUtil.isValid(response)) {
-                throw new GasSafeException(response);
-            }
 
 			if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
 				sengMsg.append("系统请求socket出现异常:").append(response);
@@ -330,7 +335,6 @@ public class ScancodeWaitmsgEvent extends Event {
 		// 将消息对象转换成xml
 		respXml = MessageService.messageToXml(message);
 
-		super.execute(request, requestJson);
 		return respXml;
 	}
 

@@ -35,6 +35,8 @@ public class MerchantOrderEvent extends Event {
 
     @Override
     public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException, UnsupportedEncodingException, GasSafeException {
+        super.execute(request, requestJson);
+
         String at = KeystoneUtil.getAccessToken();
 
         String respXml = null;
@@ -83,7 +85,6 @@ public class MerchantOrderEvent extends Event {
         }
         logger.info(resp);
 
-        super.execute(request, requestJson);
         return respXml;
     }
 
