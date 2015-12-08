@@ -52,12 +52,12 @@ public class SubscribeEvent extends Event {
         params.put("province", user.getString("province"));
         params.put("city", user.getString("city"));
         params.put("headimgUrl", user.getString("headimgurl"));
-        params.put("setCity", null);
-        params.put("sendLng", null);
-        params.put("sendLat", null);
-        params.put("cityName", null);
+        params.put("setCity", "null");
+        params.put("sendLng", "null");
+        params.put("sendLat", "null");
+        params.put("cityName", "null");
 
-        String gasResp = HttpClientUtil.post(Const.gasApi.URL + "ccstWeChatUpFansInfo.htm", params, CharEncoding.UTF_8);
+        String gasResp = HttpClientUtil.post(Const.gasApi.URL + "ccstWeChatUpFansInfo.htm", params, CharEncoding.UTF_8, "application/x-www-form-urlencoded");
 
         if (!GasHttpClientUtil.isValid(gasResp)) {
             throw new GasSafeException(gasResp);

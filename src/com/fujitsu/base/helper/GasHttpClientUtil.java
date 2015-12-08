@@ -71,7 +71,7 @@ public class GasHttpClientUtil extends HttpClientUtil {
 
     public static boolean isValid(String respStr) throws ConnectionFailedException, WeChatException, GasSafeException {
         JSONObject jsonObject = JSONObject.fromObject(respStr);
-        if (jsonObject.containsKey("errcode") && !jsonObject.getString("errcode").equals("0")) {
+        if (jsonObject.containsKey("errorCode") && !jsonObject.getString("errorCode").equals("0")) {
             throw new GasSafeException(respStr);
         }
         return true;
