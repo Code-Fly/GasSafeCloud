@@ -9,8 +9,8 @@ import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.GasSafeException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.GasHttpClientUtil;
-import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.helper.KeystoneUtil;
+import com.fujitsu.client.entity.WebSocketResFiled;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
 import com.fujitsu.keystone.publics.service.impl.UserService;
@@ -59,18 +59,28 @@ public class SubscribeEvent extends Event {
         params.put("sendLat", "null");
         params.put("cityName", "null");
 
-        String gasResp = GasHttpClientUtil.doPost(Const.gasApi.URL + "ccstWeChatUpFansInfo.htm", params, CharEncoding.UTF_8);
-
-        if (!GasHttpClientUtil.isValid(gasResp)) {
-            throw new GasSafeException(gasResp);
-        }
-
         TextMessage message = new TextMessage();
 
         message.setToUserName(fromUserName);
         message.setFromUserName(toUserName);
         message.setCreateTime(new Date().getTime());
         message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
+
+        String gasResp = GasHttpClientUtil.doPost(Const.gasApi.URL + "ccstWeChatUpFansInfo.htm", params, CharEncoding.UTF_8);
+
+        if (!GasHttpClientUtil.isValid(gasResp)) {
+            StringBuffer sengMsg = new StringBuffer();
+
+            sengMsg.append("系统请求socket出现异常:").append(JSONObject.fromObject(gasResp).get(WebSocketResFiled.ERROR_CODE));
+            logger.info("setContent:" + sengMsg.toString());
+            message.setContent(sengMsg.toString());
+            // 将消息对象转换成xml
+            respXml = MessageService.messageToXml(message);
+
+            return respXml;
+        }
+
+
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("您好，欢迎关注")
                 .append(Const.WECHART_NAME)
