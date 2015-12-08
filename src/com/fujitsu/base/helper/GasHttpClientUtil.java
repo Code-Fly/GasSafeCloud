@@ -81,6 +81,7 @@ public class GasHttpClientUtil extends HttpClientUtil {
                 valuePairs.add(nameValuePair);
             }
             String queryStr = URLEncodedUtils.format(valuePairs, charset);
+            queryStr = UrlUtil.decode(queryStr, charset);
             queryStr = "data=" + UrlUtil.encode(queryStr, charset);
             stringEntity = new StringEntity(queryStr, charset);
             stringEntity.setContentType("application/x-www-form-urlencoded");
