@@ -239,7 +239,7 @@ public class ScancodeWaitmsgEvent extends Event {
 					GasQPReadingURLResMsg messageObject = new GasQPReadingURLResMsg();
 					messageObject = (GasQPReadingURLResMsg)JSONObject.toBean(JSONObject.fromObject(message),GasQPReadingURLResMsg.class);
 					sengMsg.append("请点击下面的链接进入我们的网站 :").append(Const.LINE_SEPARATOR);
-					sengMsg.append(messageObject.getResult().getQpUrl()).append(Const.LINE_SEPARATOR);
+					sengMsg.append(messageObject.getResult().getGasUrl()).append(Const.LINE_SEPARATOR);
 				}
 			}
 
