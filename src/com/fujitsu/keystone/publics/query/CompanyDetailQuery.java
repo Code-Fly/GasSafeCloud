@@ -13,6 +13,7 @@ import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.event.Event;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import org.apache.commons.lang3.CharEncoding;
 
 import javax.jms.JMSException;
@@ -72,6 +73,14 @@ public class CompanyDetailQuery extends Query {
             } else {
                 CompanyDetailResMsg retMsg = new CompanyDetailResMsg();
                 JSONObject object = JSONObject.fromObject(response);
+
+                JsonConfig jsonConfig = new JsonConfig();
+                jsonConfig.setRootClass(CompanyDetailResMsg.class);
+                Map<String, Class> classMap = new HashMap<String, Class>();
+                classMap.put("result", CompanyDetailResMsg.class);
+                jsonConfig.setClassMap(classMap);
+                retMsg = (CompanyDetailResMsg) JSONObject.toBean(object, jsonConfig);
+
                 if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
                     buffer.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
                 } else {
