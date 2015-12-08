@@ -1,5 +1,6 @@
 package com.fujitsu.keystone.publics.event;
 
+import com.fujitsu.base.exception.GasSafeException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.client.*;
 import com.fujitsu.client.entity.*;
@@ -39,7 +40,7 @@ public class ScancodeWaitmsgEvent extends Event {
 	 * @throws UnsupportedEncodingException
 	 */
 	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException,
-			AccessTokenException, WeChatException, JMSException, UnsupportedEncodingException {
+			AccessTokenException, WeChatException, JMSException, UnsupportedEncodingException, GasSafeException {
 		String respXml = null;
 
 		String fromUserName = requestJson.getString(FROM_USER_NAME);

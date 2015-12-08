@@ -2,6 +2,7 @@ package com.fujitsu.keystone.publics.query;
 
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.GasSafeException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.event.Event;
@@ -20,7 +21,7 @@ import java.util.Date;
 public class DefaultQuery extends Query {
 
     @Override
-    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, WeChatException, ConnectionFailedException, AccessTokenException, UnsupportedEncodingException {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, WeChatException, ConnectionFailedException, AccessTokenException, UnsupportedEncodingException, GasSafeException {
         String respXml = null;
         // 发送方帐号
         String fromUserName = requestJson.getString(Event.FROM_USER_NAME);

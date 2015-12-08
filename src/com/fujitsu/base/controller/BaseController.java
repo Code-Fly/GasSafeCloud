@@ -2,10 +2,7 @@ package com.fujitsu.base.controller;
 
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.entity.ErrorMsg;
-import com.fujitsu.base.exception.AccessTokenException;
-import com.fujitsu.base.exception.ConnectionFailedException;
-import com.fujitsu.base.exception.OAuthException;
-import com.fujitsu.base.exception.WeChatException;
+import com.fujitsu.base.exception.*;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,9 +50,18 @@ public abstract class BaseController extends Const {
     @ExceptionHandler(OAuthException.class)
     @ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
     @ResponseBody
-    public String handleWeChatException(OAuthException ex) {
+    public String handleOAuthException(OAuthException ex) {
         logger.error("Not Authorised", ex);
         ErrorMsg errMsg = new ErrorMsg("-5", "Not Authorised");
+        return JSONObject.fromObject(errMsg).toString();
+    }
+
+    @ExceptionHandler(GasSafeException.class)
+    @ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
+    @ResponseBody
+    public String handleGasSafeException(GasSafeException ex) {
+        logger.error("Gas safe cloud api error", ex);
+        ErrorMsg errMsg = new ErrorMsg("-6", "Gas safe cloud api error");
         return JSONObject.fromObject(errMsg).toString();
     }
 

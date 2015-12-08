@@ -10,6 +10,7 @@ import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.fujitsu.base.constants.Const;
+import com.fujitsu.base.exception.GasSafeException;
 import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 
@@ -29,7 +30,7 @@ import com.fujitsu.keystone.publics.service.impl.MessageService;
 public class CustomerServiceTransferEvent extends Event {
 
 	@Override
-	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException,UnsupportedEncodingException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException, UnsupportedEncodingException, GasSafeException {
 		String at = KeystoneUtil.getAccessToken();
 		
 		String respXml = null;

@@ -2,6 +2,7 @@ package com.fujitsu.keystone.publics.event;
 
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.GasSafeException;
 import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DefaultEvent extends Event {
     @Override
-    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, ConnectionFailedException, AccessTokenException, WeChatException,UnsupportedEncodingException {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, ConnectionFailedException, AccessTokenException, WeChatException, UnsupportedEncodingException, GasSafeException {
         String respXml = null;
 
         super.execute(request, requestJson);

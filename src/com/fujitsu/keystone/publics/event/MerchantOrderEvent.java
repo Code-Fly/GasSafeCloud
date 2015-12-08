@@ -6,6 +6,7 @@ package com.fujitsu.keystone.publics.event;
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.GasSafeException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.base.helper.WeChatClientUtil;
@@ -33,7 +34,7 @@ public class MerchantOrderEvent extends Event {
     public static String ORDER_ID = "OrderId";
 
     @Override
-    public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException,UnsupportedEncodingException {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException, UnsupportedEncodingException, GasSafeException {
         String at = KeystoneUtil.getAccessToken();
 
         String respXml = null;

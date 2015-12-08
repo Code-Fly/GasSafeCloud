@@ -6,6 +6,7 @@ package com.fujitsu.keystone.publics.event;
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.GasSafeException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.queue.service.iface.IQueueService;
 import com.fujitsu.queue.service.impl.QueueService;
@@ -55,7 +56,7 @@ public abstract class Event {
     // 事件类型：scancode_push(扫码推事件的事件推送)
     public static final String EVENT_SCANCODE_PUSH = "scancode_push";
 
-    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, ConnectionFailedException, AccessTokenException, WeChatException,UnsupportedEncodingException {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, ConnectionFailedException, AccessTokenException, WeChatException, UnsupportedEncodingException, GasSafeException {
         if (null != Const.Queue.ACTIVEMQ_HOST && !Const.Queue.ACTIVEMQ_HOST.isEmpty()) {
             String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
             String msgType = requestJson.getString(Event.MSG_TYPE);

@@ -6,6 +6,7 @@ package com.fujitsu.keystone.publics.event;
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.GasSafeException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
 import com.fujitsu.keystone.publics.query.Query;
@@ -26,7 +27,7 @@ public class ClickEvent extends Event {
     public static final String EVENT_KEY = "EventKey";
 
     @Override
-    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, WeChatException, ConnectionFailedException, AccessTokenException ,UnsupportedEncodingException{
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, WeChatException, ConnectionFailedException, AccessTokenException, UnsupportedEncodingException, GasSafeException {
         String respXml = null;
         // 发送方帐号
         String fromUserName = requestJson.getString(FROM_USER_NAME);
