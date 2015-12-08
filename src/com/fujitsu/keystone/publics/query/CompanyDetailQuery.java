@@ -31,6 +31,8 @@ import java.util.regex.Pattern;
 public class CompanyDetailQuery extends Query {
     @Override
     public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, WeChatException, ConnectionFailedException, AccessTokenException, UnsupportedEncodingException, GasSafeException {
+        super.execute(request, requestJson);
+
         String respXml = null;
         // 发送方帐号
         String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
@@ -156,7 +158,6 @@ public class CompanyDetailQuery extends Query {
         // 将消息对象转换成xml
         respXml = MessageService.messageToXml(message);
 
-        super.execute(request, requestJson);
         return respXml;
     }
 }
