@@ -3,6 +3,7 @@
  */
 package com.fujitsu.keystone.publics.event;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 import javax.jms.JMSException;
