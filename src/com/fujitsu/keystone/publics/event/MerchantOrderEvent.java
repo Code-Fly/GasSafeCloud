@@ -19,6 +19,8 @@ import org.apache.commons.codec.CharEncoding;
 
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -31,7 +33,7 @@ public class MerchantOrderEvent extends Event {
     public static String ORDER_ID = "OrderId";
 
     @Override
-    public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException,UnsupportedEncodingException {
         String at = KeystoneUtil.getAccessToken();
 
         String respXml = null;

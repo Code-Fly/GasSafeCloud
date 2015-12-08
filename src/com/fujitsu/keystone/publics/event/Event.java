@@ -13,6 +13,8 @@ import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,7 +55,7 @@ public abstract class Event {
     // 事件类型：scancode_push(扫码推事件的事件推送)
     public static final String EVENT_SCANCODE_PUSH = "scancode_push";
 
-    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, ConnectionFailedException, AccessTokenException, WeChatException {
+    public String execute(HttpServletRequest request, JSONObject requestJson) throws JMSException, ConnectionFailedException, AccessTokenException, WeChatException,UnsupportedEncodingException {
         if (null != Const.Queue.ACTIVEMQ_HOST && !Const.Queue.ACTIVEMQ_HOST.isEmpty()) {
             String fromUserName = requestJson.getString(Event.FROM_USER_NAME);
             String msgType = requestJson.getString(Event.MSG_TYPE);

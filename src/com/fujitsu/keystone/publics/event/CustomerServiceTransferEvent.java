@@ -28,7 +28,7 @@ import com.fujitsu.keystone.publics.service.impl.MessageService;
 public class CustomerServiceTransferEvent extends Event {
 
 	@Override
-	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException, AccessTokenException, WeChatException, JMSException,UnsupportedEncodingException {
 		String at = KeystoneUtil.getAccessToken();
 		
 		String respXml = null;
