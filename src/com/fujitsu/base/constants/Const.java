@@ -67,6 +67,8 @@ public class Const {
 
         public static final String ACTIVEMQ_QUEUE_SYSTEM_PREFIX = "SYS.";
 
+        public static final int ACTIVEMQ_RECEIVE_TIMEOUT = 1000;
+
     }
 
     public static class PublicPlatform {

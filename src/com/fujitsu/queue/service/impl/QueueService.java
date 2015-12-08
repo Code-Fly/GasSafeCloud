@@ -51,7 +51,7 @@ public class QueueService extends BaseService implements IQueueService {
 
     @Override
     public void clear(String destination) throws JMSException {
-        MessageConsumer consumer = this.preReceive(destination, null);
+        MessageConsumer consumer = this.getConsumer(destination, null);
         int count = 0;
         while (null != this.doReceive(consumer)) {
             count++;
@@ -61,7 +61,7 @@ public class QueueService extends BaseService implements IQueueService {
 
     @Override
     public void clear(String destination, String filter) throws JMSException {
-        MessageConsumer consumer = this.preReceive(destination, filter);
+        MessageConsumer consumer = this.getConsumer(destination, filter);
         int count = 0;
         while (null != this.doReceive(consumer)) {
             count++;
@@ -71,7 +71,7 @@ public class QueueService extends BaseService implements IQueueService {
 
     @Override
     public void send(String destination, String content, String type) throws JMSException {
-        MessageProducer producer = this.preSend(destination);
+        MessageProducer producer = this.getProducer(destination);
         TextMessage message = session.createTextMessage(content);
         message.setJMSType(type);
         this.doSend(producer, message);
@@ -79,8 +79,9 @@ public class QueueService extends BaseService implements IQueueService {
 
     @Override
     public String receive(String destination, String filter) throws JMSException {
-        MessageConsumer consumer = this.preReceive(destination, filter);
+        MessageConsumer consumer = this.getConsumer(destination, filter);
         Message msg = this.doReceive(consumer);
+
         if (null != msg) {
             return ((TextMessage) msg).getText();
         }
@@ -90,7 +91,8 @@ public class QueueService extends BaseService implements IQueueService {
 
     @Override
     public List<String> browse(String destination) throws JMSException {
-        Enumeration msgs = this.doBrowse(destination);
+        QueueBrowser browser = this.getQueueBrowser(destination);
+        Enumeration msgs = this.doBrowse(browser);
 
         List<String> msgList = new ArrayList<>();
         if (!msgs.hasMoreElements()) {
@@ -104,7 +106,23 @@ public class QueueService extends BaseService implements IQueueService {
         return msgList;
     }
 
-    private MessageProducer preSend(String destination) throws JMSException {
+
+    private void doSend(MessageProducer producer, Message message) throws JMSException {
+        producer.send(message);
+        session.commit();
+        producer.close();
+    }
+
+    private Message doReceive(MessageConsumer consumer) throws JMSException {
+        return consumer.receive(Const.Queue.ACTIVEMQ_RECEIVE_TIMEOUT);
+    }
+
+    private Enumeration doBrowse(QueueBrowser browser) throws JMSException {
+        return browser.getEnumeration();
+
+    }
+
+    private MessageProducer getProducer(String destination) throws JMSException {
         Destination dest;
         MessageProducer producer;
 
@@ -122,13 +140,8 @@ public class QueueService extends BaseService implements IQueueService {
         return producer;
     }
 
-    private void doSend(MessageProducer producer, Message message) throws JMSException {
-        producer.send(message);
-        session.commit();
-        producer.close();
-    }
 
-    private MessageConsumer preReceive(String destination, String filter) throws JMSException {
+    private MessageConsumer getConsumer(String destination, String filter) throws JMSException {
         Destination dest;
         MessageConsumer consumer;
 
@@ -149,13 +162,9 @@ public class QueueService extends BaseService implements IQueueService {
         return consumer;
     }
 
-    private Message doReceive(MessageConsumer consumer) throws JMSException {
-        return consumer.receive(1000);
-    }
-
-    private Enumeration doBrowse(String destination) throws JMSException {
+    private QueueBrowser getQueueBrowser(String destination) throws JMSException {
         Queue queue = null;
-        
+
         session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
 
         if (destination.startsWith(Const.Queue.ACTIVEMQ_PROTOCAL_QUEUE)) {
@@ -164,9 +173,8 @@ public class QueueService extends BaseService implements IQueueService {
             throw new JMSException("can not browse non-queue messages");
         }
 
-        QueueBrowser browser = session.createBrowser(queue);
-        return browser.getEnumeration();
-
+        return session.createBrowser(queue);
     }
+
 
 }
