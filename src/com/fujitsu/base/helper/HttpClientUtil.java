@@ -125,7 +125,7 @@ public class HttpClientUtil {
 
     }
 
-    private static String doPost(String url, StringEntity sEntity, String charset) throws ConnectionFailedException {
+    protected static String doPost(String url, StringEntity sEntity, String charset) throws ConnectionFailedException {
         PoolingHttpClientConnectionManager connManager = null;
         CloseableHttpClient httpclient = null;
         CloseableHttpResponse response = null;
@@ -167,7 +167,7 @@ public class HttpClientUtil {
 
     }
 
-    private static String doGet(String url, String param, String charset) throws ConnectionFailedException {
+    protected static String doGet(String url, String param, String charset) throws ConnectionFailedException {
         PoolingHttpClientConnectionManager connManager = null;
         CloseableHttpClient httpclient = null;
         CloseableHttpResponse response = null;
