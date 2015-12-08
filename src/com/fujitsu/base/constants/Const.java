@@ -29,7 +29,8 @@ public class Const {
     private static final String WEBSOCKET_CONF = "api/webSocket.properties";
 
     private static final String ACTIVEMQ_CONF = "api/activemq.properties";
-
+    
+    private static final String GASAPI_CONF = "api/gasApi.properties";
 
     /**
      * global config
@@ -158,6 +159,15 @@ public class Const {
         public static final String AUTHORIZETYPE = ConfigUtil.getProperty(WEBSOCKET_CONF, "authorizeType");
 
         public static final String URL = ConfigUtil.getProperty(WEBSOCKET_CONF, "URL");
+
+    }
+    
+    
+    public static class gasApi {
+    	
+        public static final String AUTHORIZETYPE = ConfigUtil.getProperty(GASAPI_CONF, "authorizeType");
+
+        public static final String URL = ConfigUtil.getProperty(GASAPI_CONF, "URL");
 
     }
 

@@ -15,7 +15,9 @@ import net.sf.json.JSONObject;
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ScancodeWaitmsgEvent extends Event {
 
@@ -52,6 +54,8 @@ public class ScancodeWaitmsgEvent extends Event {
         String tmp = scanResult.substring(1, lastIndex);
         // [QP02001,132020000001,AG,323232,2015年09月,2045年09月]
         String[] messArray = tmp.split(",");
+        Map<String, String> params = new HashMap<String,String>();
+        params.put(key, value);
         StringBuffer sengMsg = new StringBuffer();
         // 身份查询
         if (MenuService.QP_SFCX.equals(eventKey)) {

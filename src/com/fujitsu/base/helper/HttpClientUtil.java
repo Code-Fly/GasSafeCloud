@@ -86,6 +86,8 @@ public class HttpClientUtil {
         }
         return doPost(url, formEntity, charset);
     }
+    
+   
 
     public static String post(String url, String params, String charset) throws ConnectionFailedException {
         StringEntity stringEntity = null;
@@ -96,7 +98,7 @@ public class HttpClientUtil {
 
     }
 
-    private static String doPost(String url, StringEntity sEntity, String charset) throws ConnectionFailedException {
+    protected static String doPost(String url, StringEntity sEntity, String charset) throws ConnectionFailedException {
         PoolingHttpClientConnectionManager connManager = null;
         CloseableHttpClient httpclient = null;
         CloseableHttpResponse response = null;
