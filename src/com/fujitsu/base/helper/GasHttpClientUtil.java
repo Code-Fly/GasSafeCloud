@@ -39,7 +39,7 @@ public class GasHttpClientUtil extends HttpClientUtil {
 	 * @throws ConnectionFailedException
 	 * @throws UnsupportedEncodingException 
 	 */
-	 public static String post(String url, Map<String, String> params, String charset,String openID) throws ConnectionFailedException, UnsupportedEncodingException {
+	 public static String gasPost(String url, Map<String, String> params, String charset,String openID) throws ConnectionFailedException, UnsupportedEncodingException {
 		 List<NameValuePair> tokenPair = new ArrayList<NameValuePair>();
 		 tokenPair.add(new BasicNameValuePair("authorizeType",gasApi.AUTHORIZETYPE));
 		 tokenPair.add(new BasicNameValuePair("authorizeID",openID));
