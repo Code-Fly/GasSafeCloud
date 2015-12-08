@@ -268,7 +268,7 @@ public class ScancodeWaitmsgEvent extends Event {
 			params_AQDW.put("pDate", messArray[4]);
 			
 			
-			String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottlePost.htm", params_AQDW,
+			String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottlePsafe.htm", params_AQDW,
 					CharEncoding.UTF_8, fromUserName);
 			BarcodegetBottlePsafeResMsg messageObject = new BarcodegetBottlePsafeResMsg();
 			JSONObject object = JSONObject.fromObject(response);
