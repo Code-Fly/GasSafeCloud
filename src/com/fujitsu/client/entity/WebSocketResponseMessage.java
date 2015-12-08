@@ -1,12 +1,15 @@
 package com.fujitsu.client.entity;
 
 public class WebSocketResponseMessage extends BaseEntity {
-	Result result;
-	public Result getResult() {
+	String  result;
+
+	public String getResult() {
 		return result;
 	}
-	public void setResult(Result result) {
+
+	public void setResult(String result) {
 		this.result = result;
 	}
+	
 
 }

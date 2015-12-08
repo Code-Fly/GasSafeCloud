@@ -55,7 +55,7 @@ public class GasHttpClientUtil extends HttpClientUtil {
         if (0 != messageObject.getErrorCode()) {
             return String.valueOf(messageObject.getErrorCode());
         } else {
-            params.put("token", messageObject.getResult().getToken());
+            params.put("token", messageObject.getResult());
         }
         return doPost(Const.gasApi.URL + url, params, charset);
     }
