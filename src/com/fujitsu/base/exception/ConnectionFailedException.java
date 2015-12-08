@@ -11,7 +11,7 @@ public class ConnectionFailedException extends Exception {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -954246547431584056L;
+	private static final long serialVersionUID = -3533799359894155475L;
 
 	public ConnectionFailedException() {
         super();
