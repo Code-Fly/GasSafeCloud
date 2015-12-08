@@ -74,16 +74,16 @@ public class CompanyListQuery extends Query {
                 CompanyListResMsg retMsg = new CompanyListResMsg();
                 JSONObject object = JSONObject.fromObject(response);
 
-                JsonConfig jsonConfig = new JsonConfig();
-                jsonConfig.setRootClass(CompanyListResMsg.class);
-                Map<String, Class> classMap = new HashMap<String, Class>();
-                classMap.put("result", CompanyListResMsg.class);
-                jsonConfig.setClassMap(classMap);
-                retMsg = (CompanyListResMsg) JSONObject.toBean(object, jsonConfig);
-
                 if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
                     buffer.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
                 } else {
+                    JsonConfig jsonConfig = new JsonConfig();
+                    jsonConfig.setRootClass(CompanyListResMsg.class);
+                    Map<String, Class> classMap = new HashMap<String, Class>();
+                    classMap.put("result", CompanyListResMsg.class);
+                    jsonConfig.setClassMap(classMap);
+                    retMsg = (CompanyListResMsg) JSONObject.toBean(object, jsonConfig);
+
                     buffer.append("单位列表:").append(Const.LINE_SEPARATOR);
                     buffer.append(Const.LINE_SEPARATOR);
                     for (int i = 0; i < retMsg.getResult().size(); i++) {
