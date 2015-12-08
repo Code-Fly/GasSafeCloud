@@ -114,7 +114,7 @@ public class QueueService extends BaseService implements IQueueService {
     }
 
     private Message doReceive(MessageConsumer consumer) throws JMSException {
-        return consumer.receive(Integer.parseInt(Const.Queue.ACTIVEMQ_RECEIVE_TIMEOUT));
+        return consumer.receive(Long.parseLong(Const.Queue.ACTIVEMQ_RECEIVE_TIMEOUT));
     }
 
     private Enumeration doBrowse(QueueBrowser browser) throws JMSException {
@@ -136,7 +136,7 @@ public class QueueService extends BaseService implements IQueueService {
 
         producer = session.createProducer(dest);
         producer.setDeliveryMode(DeliveryMode.PERSISTENT);
-        producer.setTimeToLive(Integer.parseInt(Const.Queue.ACTIVEMQ_MSG_TIMETOLIVE));
+        producer.setTimeToLive(Long.parseLong(Const.Queue.ACTIVEMQ_MSG_TIMETOLIVE));
 
         return producer;
     }
