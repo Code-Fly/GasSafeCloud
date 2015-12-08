@@ -3,6 +3,8 @@
  */
 package com.fujitsu.keystone.publics.event;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 

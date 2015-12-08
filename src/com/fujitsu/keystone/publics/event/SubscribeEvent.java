@@ -3,6 +3,7 @@
  */
 package com.fujitsu.keystone.publics.event;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 import javax.jms.JMSException;
@@ -24,7 +25,7 @@ import com.fujitsu.keystone.publics.service.impl.MessageService;
 public class SubscribeEvent extends Event {
 
 	@Override
-	public String execute(HttpServletRequest request, JSONObject requestJson) throws AccessTokenException, WeChatException, ConnectionFailedException, JMSException {
+	public String execute(HttpServletRequest request, JSONObject requestJson) throws AccessTokenException, WeChatException, ConnectionFailedException, JMSException, UnsupportedEncodingException {
 		String respXml = null;
 		// 发送方帐号
 		String fromUserName = requestJson.getString(FROM_USER_NAME);
