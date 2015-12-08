@@ -41,9 +41,7 @@ public class ScancodeWaitmsgEvent extends Event {
 	 */
 	public String execute(HttpServletRequest request, JSONObject requestJson) throws ConnectionFailedException,
 			AccessTokenException, WeChatException, JMSException, UnsupportedEncodingException, GasSafeException {
-        super.execute(request, requestJson);
-
-        String respXml = null;
+		String respXml = null;
 
 		String fromUserName = requestJson.getString(FROM_USER_NAME);
 		String toUserName = requestJson.getString(TO_USER_NAME);
@@ -56,47 +54,29 @@ public class ScancodeWaitmsgEvent extends Event {
 		message.setFromUserName(toUserName);
 		message.setCreateTime(new Date().getTime());
 		message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
-
-        StringBuffer sengMsg = new StringBuffer();
-
-        Map<String, String> tokenMap = new HashMap<String, String>();
-        tokenMap.put("authorizeType", Const.gasApi.AUTHORIZETYPE);
-        tokenMap.put("authorizeID", fromUserName);
-        String tokenResp = GasHttpClientUtil.doPost(Const.gasApi.URL + "ccstWeChatgetToken.htm", tokenMap, org.apache.commons.codec.CharEncoding.UTF_8);
-        if (!GasHttpClientUtil.isValid(tokenResp)) {
-            sengMsg.append("系统请求socket出现异常:").append(JSONObject.fromObject(tokenResp).get(WebSocketResFiled.ERROR_CODE));
-            logger.info("setContent:" + sengMsg.toString());
-            message.setContent(sengMsg.toString());
-            // 将消息对象转换成xml
-            respXml = MessageService.messageToXml(message);
-
-            return respXml;
-        }
-
-        /**
-         * 处理message 推送给用户的message
-         * [QP02001,132020000001,AG,323232,2015年09月,2045年09月]气瓶安全云www.qpsafe.cn
-         */
-        int lastIndex = scanResult.lastIndexOf("]");
+		/**
+		 * 处理message 推送给用户的message
+		 * [QP02001,132020000001,AG,323232,2015年09月,2045年09月]气瓶安全云www.qpsafe.cn
+		 */
+		int lastIndex = scanResult.lastIndexOf("]");
 		// QP02001,132020000001,AG,323232,2015年09月,2045年09月
 		String tmp = scanResult.substring(1, lastIndex);
 		// [QP02001,132020000001,AG,323232,2015年09月,2045年09月]
 		String[] messArray = tmp.split(",");
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("token", JSONObject.fromObject(tokenResp).getString("result"));
-        params.put("syzbh", messArray[0]);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("syzbh", messArray[0]);
 		params.put("zcdm", messArray[1]);
 		params.put("pcode", messArray[2]);
 		params.put("pid", messArray[3]);
 		params.put("pDate", messArray[4]);
 		params.put("bfrq", messArray[5]);
 
+		StringBuffer sengMsg = new StringBuffer();
 		// 身份查询
 		if (MenuService.QP_SFCX.equals(eventKey)) {
 
-
-            String response = GasHttpClientUtil.doPost(Const.gasApi.URL + "ccstWeChatBarcodegetBottle.htm", params, org.apache.commons.codec.CharEncoding.UTF_8);
-
+			String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottle.htm", params, CharEncoding.UTF_8,
+					fromUserName);
 			if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
 				sengMsg.append("系统请求socket出现异常:").append(response);
 			} else {
@@ -334,6 +314,7 @@ public class ScancodeWaitmsgEvent extends Event {
 		// 将消息对象转换成xml
 		respXml = MessageService.messageToXml(message);
 
+		super.execute(request, requestJson);
 		return respXml;
 	}
 

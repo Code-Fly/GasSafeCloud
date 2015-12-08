@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,10 +43,11 @@ public class GasHttpClientUtil extends HttpClientUtil {
      * @throws UnsupportedEncodingException
      */
     public static String gasPost(String url, Map<String, String> params, String charset, String openID) throws ConnectionFailedException, UnsupportedEncodingException {
-        List<NameValuePair> tokenPair = new ArrayList<NameValuePair>();
-        tokenPair.add(new BasicNameValuePair("authorizeType", gasApi.AUTHORIZETYPE));
-        tokenPair.add(new BasicNameValuePair("authorizeID", openID));
-        String tokenResp = doPost(Const.gasApi.URL + "ccstWeChatgetToken.htm", new UrlEncodedFormEntity(tokenPair, charset), charset);
+       Map<String, String> paramsToken = new HashMap<>();
+       paramsToken.put("authorizeType", gasApi.AUTHORIZETYPE);
+       paramsToken.put("authorizeID",openID);
+     
+        String tokenResp = doPost(Const.gasApi.URL + "ccstWeChatgetToken.htm", paramsToken, charset);
         logger.info("ccstWeChatgetToken: " + tokenResp);
         // 防止重复获得token
         WebSocketResponseMessage messageObject = new WebSocketResponseMessage();
@@ -55,20 +57,7 @@ public class GasHttpClientUtil extends HttpClientUtil {
         } else {
             params.put("token", messageObject.getResult().getToken());
         }
-        UrlEncodedFormEntity formEntity = null;
-        try {
-            if (null != params) {
-                List<NameValuePair> valuePairs = new ArrayList<NameValuePair>(params.size());
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    NameValuePair nameValuePair = new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue()));
-                    valuePairs.add(nameValuePair);
-                }
-                formEntity = new UrlEncodedFormEntity(valuePairs, charset);
-            }
-        } catch (UnsupportedEncodingException e) {
-            logger.error("参数转码有误", e);
-        }
-        return doPost(Const.gasApi.URL + url, formEntity, charset);
+        return doPost(Const.gasApi.URL + url, params, charset);
     }
 
     public static String doPost(String url, Map<String, String> params, String charset) throws ConnectionFailedException {
