@@ -231,13 +231,12 @@ public class ScancodeWaitmsgEvent extends Event {
 			if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
 				sengMsg.append("系统请求socket出现异常:").append(response);
 			} else {
-				GasQPReadingURLResMsg barMsg = new GasQPReadingURLResMsg();
 				JSONObject object = JSONObject.fromObject(response);
 				if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
 					sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
 				} else {
 					GasQPReadingURLResMsg messageObject = new GasQPReadingURLResMsg();
-					messageObject = (GasQPReadingURLResMsg)JSONObject.toBean(JSONObject.fromObject(message),GasQPReadingURLResMsg.class);
+					messageObject = (GasQPReadingURLResMsg)JSONObject.toBean(JSONObject.fromObject(response),GasQPReadingURLResMsg.class);
 					sengMsg.append("请点击下面的链接进入我们的网站 :").append(Const.LINE_SEPARATOR);
 					sengMsg.append(messageObject.getResult().getGasUrl()).append(Const.LINE_SEPARATOR);
 				}
