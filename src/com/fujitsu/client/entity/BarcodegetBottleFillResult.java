@@ -17,7 +17,7 @@ public class BarcodegetBottleFillResult {
 	private String qpczLicbh;
 	private String pCode;
 	private String rname;
-	private int pid;
+	private String pid;
 	private String workNum;
 	private int fillWeight; 
 	private String czTime;
@@ -51,10 +51,11 @@ public class BarcodegetBottleFillResult {
 	public void setRname(String rname) {
 		this.rname = rname;
 	}
-	public int getPid() {
+	
+	public String getPid() {
 		return pid;
 	}
-	public void setPid(int pid) {
+	public void setPid(String pid) {
 		this.pid = pid;
 	}
 	public String getWorkNum() {
