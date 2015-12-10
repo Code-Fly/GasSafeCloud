@@ -71,12 +71,12 @@
         {
           "type": "view",
           "name": "安全云",
-          "url": "http://weweb.qpsafe.cn/"
+          "url": "http://m.qpsafe.cn/"
         },
         {
           "type": "view",
           "name": "瓶安社区",
-          "url": "http://weweb.ppbpa.cn/"
+          "url": "http://m.ppbpa.cn/"
         }
       ]
     }
