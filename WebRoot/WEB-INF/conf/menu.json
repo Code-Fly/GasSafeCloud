@@ -24,7 +24,7 @@
           "key": "QP_SMSY"
         },
         {
-          "type": "scancode_waitmsg",
+          "type": "click",
           "name": "安全定位",
           "key": "QP_AQDW"
         }

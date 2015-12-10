@@ -10,6 +10,7 @@ import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.base.helper.WeChatClientUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.event.*;
+import com.fujitsu.keystone.publics.query.AqdwQuery;
 import com.fujitsu.keystone.publics.query.CompanyDetailQuery;
 import com.fujitsu.keystone.publics.query.CompanyListQuery;
 import com.fujitsu.keystone.publics.query.DefaultQuery;
@@ -180,7 +181,8 @@ public class CoreService extends BaseService implements ICoreService {
                 String regCorpDetail = "^" + Query.SEPARATOR + "[^" + Query.SEPARATOR + "]+" + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "[^" + Query.SEPARATOR + "]+$";
                 // 客服消息正则
                 String regCustomerService = "^" + Query.SEPARATOR + Query.CUSTOMER_SERVICE + "$";
-
+                // 安全定位
+                String regAQDW = "^" + Query.SEPARATOR + Query.AQWD +Query.SEPARATOR + "$";
                 // 查询企业列表
                 if (Pattern.compile(regCorpList).matcher(content).matches()) {
                     Query query = new CompanyListQuery();
@@ -194,6 +196,12 @@ public class CoreService extends BaseService implements ICoreService {
                 //客服消息
                 else if (Pattern.compile(regCustomerService).matcher(content).matches()) {
                     Event event = new CustomerServiceTransferEvent();
+                    respXml = event.execute(request, requestJson);
+                }
+                // 安全定位
+                else if (content.startsWith("#AQ#")) {
+                    Event event = new AqdwQuery();
+                    logger.info("go to AqdwQuery");
                     respXml = event.execute(request, requestJson);
                 }
                 //其它

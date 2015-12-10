@@ -114,7 +114,19 @@ public class ClickEvent extends Event {
             buffer.append(Query.SEPARATOR + Query.CUSTOMER_SERVICE).append(Const.LINE_SEPARATOR);
             textMessage.setContent(buffer.toString());
             respXml = MessageService.messageToXml(textMessage);
-        }
+        } else if(MenuService.QP_AQDW.equals(eventKey)){
+        	  StringBuffer buffer = new StringBuffer();
+              buffer.append("安全定位").append(Const.LINE_SEPARATOR)
+		              .append(Const.LINE_SEPARATOR)
+		              .append("请输入条件(气瓶编号+生产年度+制造单位代号)，查询气瓶当前位置和当前安全状况信息")
+		              .append(Const.LINE_SEPARATOR)
+		              .append("输入格式:").append(Const.LINE_SEPARATOR)
+		              .append(Query.SEPARATOR+"A"+Query.SEPARATOR+"Q"+Query.SEPARATOR)
+		              .append("013264+2015+MS");
+              textMessage.setContent(buffer.toString());
+              respXml = MessageService.messageToXml(textMessage);
+        	
+        } 
         // 其他按钮
         else {
             textMessage.setContent("功能尚未开放，敬请期待！" + eventKey);

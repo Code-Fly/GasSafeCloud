@@ -21,6 +21,8 @@ public abstract class Query extends Event {
     public static final String DISTRIBUTION_TRANSPORTATION = "B";
 
     public static final String INSPECTION_TESTING = "C";
+    
+    public static final String AQWD = "AQ";
 
     public static final Map<String, String> QUERY_CMD_TYPE = new HashMap<String, String>() {
         {
@@ -37,5 +39,6 @@ public abstract class Query extends Event {
     public static final String QUERY_DETAIL = "B";
 
     public static final String SEPARATOR = "#";
+    
 
 }
