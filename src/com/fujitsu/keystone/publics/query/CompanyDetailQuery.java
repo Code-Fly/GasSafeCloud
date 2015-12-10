@@ -7,6 +7,7 @@ import com.fujitsu.base.exception.GasSafeException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.GasHttpClientUtil;
 import com.fujitsu.client.entity.CompanyDetailResMsg;
+import com.fujitsu.client.entity.CompanyDetailResult;
 import com.fujitsu.client.entity.SocketFailCode;
 import com.fujitsu.client.entity.WebSocketResFiled;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
@@ -82,7 +83,7 @@ public class CompanyDetailQuery extends Query {
                     JsonConfig jsonConfig = new JsonConfig();
                     jsonConfig.setRootClass(CompanyDetailResMsg.class);
                     Map<String, Class> classMap = new HashMap<String, Class>();
-                    classMap.put("result", CompanyDetailResMsg.class);
+                    classMap.put("result", CompanyDetailResult.class);
                     jsonConfig.setClassMap(classMap);
                     retMsg = (CompanyDetailResMsg) JSONObject.toBean(object, jsonConfig);
 
