@@ -222,7 +222,7 @@ public class ScancodeWaitmsgEvent extends Event {
                             .append(barMsg.getResult().getPcode()).append(Const.LINE_SEPARATOR).append("气瓶使用登记证编号:").append(barMsg.getResult().getSyzbh())
                             .append(Const.LINE_SEPARATOR).append("气瓶使用登记代码 :").append(barMsg.getResult().getZcdm())
                             .append(Const.LINE_SEPARATOR).append("出厂日期:").append(barMsg.getResult().getPdate()).append(Const.LINE_SEPARATOR)
-                            .append("报废日期:").append(messArray[4]).append(Const.LINE_SEPARATOR).append("操作日期时间:")
+                            .append("报废日期:").append( messArray[5]).append(Const.LINE_SEPARATOR).append("操作日期时间:")
                             .append(barMsg.getResult().getOpdateTime()).append(Const.LINE_SEPARATOR).append("用户的唯一标识openid:")
                             .append(fromUserName);
                 }
