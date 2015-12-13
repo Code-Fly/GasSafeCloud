@@ -10,7 +10,7 @@
         },
         {
           "type": "scancode_waitmsg",
-          "name": "灌装记录",
+          "name": "充装记录",
           "key": "QP_GZJL"
         },
         {

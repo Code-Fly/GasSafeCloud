@@ -11,7 +11,6 @@ import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.client.entity.WebSocketResponseMessage;
 import net.sf.json.JSONObject;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicNameValuePair;

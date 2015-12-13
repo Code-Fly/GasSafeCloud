@@ -210,16 +210,20 @@ public class ScancodeWaitmsgEvent extends Event {
             if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
                 sengMsg.append("系统请求socket出现异常:").append(response);
             } else {
+            	
                 JSONObject object = JSONObject.fromObject(response);
+               
                 if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
                     sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
                 } else {
-                    sengMsg.append("气瓶编号 :").append(messArray[3]).append(Const.LINE_SEPARATOR).append("气瓶制造单位代号 :")
-                            .append(messArray[2]).append(Const.LINE_SEPARATOR).append("气瓶使用登记证编号:").append(messArray[0])
-                            .append(Const.LINE_SEPARATOR).append("气瓶使用登记代码 :").append(messArray[1])
-                            .append(Const.LINE_SEPARATOR).append("出厂日期:").append(messArray[3]).append(Const.LINE_SEPARATOR)
+                	BarcodeUPBottleInfoResMsg 	barMsg = new BarcodeUPBottleInfoResMsg();
+                	barMsg = (BarcodeUPBottleInfoResMsg) JSONObject.toBean(JSONObject.fromObject(response), BarcodeUPBottleInfoResMsg.class);
+                    sengMsg.append("气瓶编号 :").append(barMsg.getResult().getPid()).append(Const.LINE_SEPARATOR).append("气瓶制造单位代号 :")
+                            .append(barMsg.getResult().getPcode()).append(Const.LINE_SEPARATOR).append("气瓶使用登记证编号:").append(barMsg.getResult().getSyzbh())
+                            .append(Const.LINE_SEPARATOR).append("气瓶使用登记代码 :").append(barMsg.getResult().getZcdm())
+                            .append(Const.LINE_SEPARATOR).append("出厂日期:").append(barMsg.getResult().getPdate()).append(Const.LINE_SEPARATOR)
                             .append("报废日期:").append(messArray[4]).append(Const.LINE_SEPARATOR).append("操作日期时间:")
-                            .append(messArray[5]).append(Const.LINE_SEPARATOR).append("用户的唯一标识openid:")
+                            .append(barMsg.getResult().getOpdateTime()).append(Const.LINE_SEPARATOR).append("用户的唯一标识openid:")
                             .append(fromUserName);
                 }
             }
