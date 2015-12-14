@@ -45,9 +45,9 @@ public class AqdwQuery  extends Query {
         // 开发者微信号
         String toUserName = requestJson.getString(Event.TO_USER_NAME);
 
-        // "#AQ#013264+2015+MS"
+        // "+013264+2015+MS"
         String content = requestJson.getString("Content").trim().toUpperCase();
-        content = content.substring(4);
+        content = content.substring(1);
         logger.info("AqdwQuery content="+content);
         String[] messArray = content.split("[+]");
         StringBuffer  sengMsg = new StringBuffer(); 
@@ -102,7 +102,7 @@ public class AqdwQuery  extends Query {
                   }
               } 
 		} else {
-			sengMsg.append("输入有误！请输入#AQ#气瓶编号+生产年度+制造单位代号");
+			sengMsg.append("输入有误！请输入  +气瓶编号+生产年度+制造单位代号");
         }
         logger.info("sengMsg = " + sengMsg.toString());
         message.setContent(sengMsg.toString());

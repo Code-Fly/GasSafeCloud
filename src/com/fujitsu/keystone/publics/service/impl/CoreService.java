@@ -181,8 +181,7 @@ public class CoreService extends BaseService implements ICoreService {
                 String regCorpDetail = "^" + Query.SEPARATOR + "[^" + Query.SEPARATOR + "]+" + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "[^" + Query.SEPARATOR + "]+$";
                 // 客服消息正则
                 String regCustomerService = "^" + Query.SEPARATOR + Query.CUSTOMER_SERVICE + "$";
-                // 安全定位
-                String regAQDW = "^" + Query.SEPARATOR + Query.AQWD +Query.SEPARATOR + "$";
+              
                 // 查询企业列表
                 if (Pattern.compile(regCorpList).matcher(content).matches()) {
                     Query query = new CompanyListQuery();
@@ -199,9 +198,8 @@ public class CoreService extends BaseService implements ICoreService {
                     respXml = event.execute(request, requestJson);
                 }
                 // 安全定位
-                else if (content.startsWith("#AQ#")) {
+                else if (content.startsWith("+")) {
                     Event event = new AqdwQuery();
-                    logger.info("go to AqdwQuery");
                     respXml = event.execute(request, requestJson);
                 }
                 //其它

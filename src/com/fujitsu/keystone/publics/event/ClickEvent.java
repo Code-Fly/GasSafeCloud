@@ -120,11 +120,9 @@ public class ClickEvent extends Event {
 		              .append(Const.LINE_SEPARATOR)
 		              .append("请输入条件(气瓶编号+生产年度+制造单位代号)，查询气瓶当前位置和当前安全状况信息")
 		              .append(Const.LINE_SEPARATOR)
-		              .append("输入格式:").append(Const.LINE_SEPARATOR)
-		              .append(Query.SEPARATOR+"AQ"+Query.SEPARATOR)
-		              .append("气瓶编号+生产年度+制造单位代号").append(Const.LINE_SEPARATOR)
-		              .append("例:"+Query.SEPARATOR+"AQ"+Query.SEPARATOR)
-		              .append("013264+2015+MS");
+		              .append("输入格式:")
+		              .append("+气瓶编号+生产年度+制造单位代号").append(Const.LINE_SEPARATOR)
+		              .append("例:+013264+2015+MS");
               textMessage.setContent(buffer.toString());
               respXml = MessageService.messageToXml(textMessage);
         	
