@@ -223,8 +223,11 @@ public class ScancodeWaitmsgEvent extends Event {
                             .append(Const.LINE_SEPARATOR).append("气瓶使用登记代码 :").append(barMsg.getResult().getZcdm())
                             .append(Const.LINE_SEPARATOR).append("出厂日期:").append(barMsg.getResult().getPdate()).append(Const.LINE_SEPARATOR)
                             .append("报废日期:").append( messArray[5]).append(Const.LINE_SEPARATOR).append("操作日期时间:")
-                            .append(barMsg.getResult().getOpdateTime()).append(Const.LINE_SEPARATOR).append("用户的唯一标识openid:")
-                            .append(fromUserName);
+                            .append(barMsg.getResult().getOpdateTime()).append(Const.LINE_SEPARATOR)
+                        	.append("send_lat:").append(Const.LINE_SEPARATOR)
+                        	.append("send_lng:").append(Const.LINE_SEPARATOR)
+                        	.append("用户编号:").append(Const.LINE_SEPARATOR)
+                            .append("用户的唯一标识openid:").append(fromUserName);
                 }
             }
         } else if (MenuService.FW_RSQP.equals(eventKey)) {
