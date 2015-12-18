@@ -10,8 +10,8 @@ import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.OAuthException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.KeystoneUtil;
-import com.fujitsu.keystone.publics.service.impl.CoreService;
-import com.fujitsu.keystone.publics.service.impl.UserService;
+import com.fujitsu.keystone.publics.service.iface.ICoreService;
+import com.fujitsu.keystone.publics.service.iface.IUserService;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,9 +30,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = "/api/keystone")
 public class UserController extends BaseController {
     @Resource
-    CoreService coreService;
+    ICoreService coreService;
     @Resource
-    UserService userService;
+    IUserService userService;
 
     /**
      * 获取SNS用户信息
