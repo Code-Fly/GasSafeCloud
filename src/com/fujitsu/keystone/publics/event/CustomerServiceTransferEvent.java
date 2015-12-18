@@ -19,7 +19,7 @@ import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.entity.customer.message.Text;
 import com.fujitsu.keystone.publics.entity.customer.message.TextMessage;
-import com.fujitsu.keystone.publics.entity.push.response.TransferCustomerService;
+import com.fujitsu.keystone.publics.entity.push.response.TransferCustomerServiceMessage;
 import com.fujitsu.keystone.publics.service.impl.CustomerService;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
 
@@ -41,7 +41,7 @@ public class CustomerServiceTransferEvent extends Event {
 		// 开发者微信号
 		String toUserName = requestJson.getString(TO_USER_NAME);
 
-		TransferCustomerService transferMessage = new TransferCustomerService();
+		TransferCustomerServiceMessage transferMessage = new TransferCustomerServiceMessage();
 
 		transferMessage.setToUserName(fromUserName);
 		transferMessage.setFromUserName(toUserName);

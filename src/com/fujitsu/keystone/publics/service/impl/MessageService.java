@@ -3,15 +3,10 @@
  */
 package com.fujitsu.keystone.publics.service.impl;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Writer;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,7 +24,7 @@ import com.fujitsu.keystone.publics.entity.push.response.ImageMessage;
 import com.fujitsu.keystone.publics.entity.push.response.MusicMessage;
 import com.fujitsu.keystone.publics.entity.push.response.NewsMessage;
 import com.fujitsu.keystone.publics.entity.push.response.TextMessage;
-import com.fujitsu.keystone.publics.entity.push.response.TransferCustomerService;
+import com.fujitsu.keystone.publics.entity.push.response.TransferCustomerServiceMessage;
 import com.fujitsu.keystone.publics.entity.push.response.VideoMessage;
 import com.fujitsu.keystone.publics.entity.push.response.VoiceMessage;
 import com.fujitsu.keystone.publics.service.iface.IMessageService;
@@ -219,7 +214,7 @@ public class MessageService extends BaseService implements IMessageService {
 		return xstream.toXML(newsMessage);
 	}
 
-	public static String messageToXml(TransferCustomerService transferMessage) {
+	public static String messageToXml(TransferCustomerServiceMessage transferMessage) {
 		xstream.alias("xml", transferMessage.getClass());
 		return xstream.toXML(transferMessage);
 	}
