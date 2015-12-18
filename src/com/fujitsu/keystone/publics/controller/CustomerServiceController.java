@@ -72,7 +72,7 @@ public class CustomerServiceController extends BaseController {
         return resp.toString();
     }
 
-    @RequestMapping(value = "/customerservice/account/add", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/customerservice/account/create", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getAccountAdd(HttpServletRequest request, HttpServletResponse response,
                                 @RequestParam(value = "kf_account", required = true) String kf_account,
