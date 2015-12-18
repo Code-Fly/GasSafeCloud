@@ -16,10 +16,6 @@ http://www.mydomain.com/api/keystone/file/image/product<br/>
 method: POST<br/>
 param: "url", required = true<br/>
 param: "pid", required = true<br/>
-##### Get UTF-8 encoded url
-http://www.mydomain.com/api/keystone/url/encode<br/>
-method: POST<br/>
-param: "url", required = true<br/>
 
 ###	Menu API
 ##### create
@@ -37,10 +33,10 @@ method: GET<br/>
 http://www.mydomain.com/api/keystone/user/sns/oauth<br/>
 method: GET<br/>
 ##### Get WeChat user
-http://www.mydomain.com/api/keystone/user/query/{openId}<br/>
+http://www.mydomain.com/api/keystone/user/list<br/>
 method: GET<br/>
 ##### Get WeChat user
-http://www.mydomain.com/api/keystone/user/list/{nextOpenId}<br/>
+http://www.mydomain.com/api/keystone/user/query/{openId}<br/>
 method: GET<br/>
 ##### Get WeChat user group list
 http://www.mydomain.com/api/keystone/user/group/list<br/>

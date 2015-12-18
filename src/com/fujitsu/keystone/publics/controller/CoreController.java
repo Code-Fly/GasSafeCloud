@@ -10,8 +10,13 @@ import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.FileUtil;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.base.helper.UrlUtil;
+import com.fujitsu.keystone.publics.entity.push.response.Article;
+import com.fujitsu.keystone.publics.entity.push.response.NewsMessage;
+import com.fujitsu.keystone.publics.entity.push.response.TransInformation;
+import com.fujitsu.keystone.publics.entity.push.response.TransferCustomerServiceMessage;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.impl.GreeterService;
+import com.fujitsu.keystone.publics.service.impl.MessageService;
 import com.fujitsu.queue.service.impl.QueueService;
 import net.sf.json.JSONObject;
 import org.apache.commons.codec.CharEncoding;
@@ -23,6 +28,8 @@ import javax.annotation.Resource;
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Barrie
@@ -105,17 +112,6 @@ public class CoreController extends BaseController {
         String pid = request.getParameter("pid");
         if (null != url || null == pid) {
             url = FileUtil.getWeChatImage(url, FileUtil.CATEGORY_PRODUCT, pid, false);
-        }
-        return url;
-
-    }
-
-    @RequestMapping(value = "/url/encode")
-    @ResponseBody
-    public String urlEncoder(HttpServletRequest request, HttpServletResponse response) {
-        String url = request.getParameter("url");
-        if (null != url) {
-            url = UrlUtil.encode(url, CharEncoding.UTF_8);
         }
         return url;
 
