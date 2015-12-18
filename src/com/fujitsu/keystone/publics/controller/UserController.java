@@ -17,6 +17,7 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -115,9 +116,11 @@ public class UserController extends BaseController {
 
     }
 
-    @RequestMapping(value = "/user/list/{nextOpenId}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/user/list", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String getWeChatUserList(HttpServletRequest request, HttpServletResponse response, @PathVariable String nextOpenId) throws ConnectionFailedException, AccessTokenException, WeChatException {
+    public String getWeChatUserList(HttpServletRequest request, HttpServletResponse response,
+                                    @RequestParam(value = "nextOpenId", required = false, defaultValue = "0") String nextOpenId
+    ) throws ConnectionFailedException, AccessTokenException, WeChatException {
         String at = KeystoneUtil.getAccessToken();
 
         if ("0".equals(nextOpenId))
