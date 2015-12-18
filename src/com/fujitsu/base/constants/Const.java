@@ -129,6 +129,19 @@ public class Const {
 
         public static final String URL_CUSTOMER_SERVICE_MESSAGE_SEND = ConfigUtil.getProperty(PUBLICS_CONF, "url.customer.service.message.send");
 
+        public static final String URL_CUSTOMER_SERVICE_KF_LIST = ConfigUtil.getProperty(PUBLICS_CONF, "url.customer.service.kf.list");
+
+        public static final String URL_CUSTOMER_SERVICE_KF_LIST_ONLINE = ConfigUtil.getProperty(PUBLICS_CONF, "url.customer.service.kf.listOnline");
+
+        public static final String URL_CUSTOMER_SERVICE_KF_ADD = ConfigUtil.getProperty(PUBLICS_CONF, "url.customer.service.kf.add");
+
+        public static final String URL_CUSTOMER_SERVICE_KF_UPDATE = ConfigUtil.getProperty(PUBLICS_CONF, "url.customer.service.kf.update");
+
+        public static final String URL_CUSTOMER_SERVICE_KF_DELETE = ConfigUtil.getProperty(PUBLICS_CONF, "url.customer.service.kf.delete");
+
+        public static final String URL_CUSTOMER_SERVICE_KF_UPLOAD_HEAD_IMG = ConfigUtil.getProperty(PUBLICS_CONF, "url.customer.service.kf.uploadHeadImg");
+
+
     }
 
     public static class MerchantPlatform {
