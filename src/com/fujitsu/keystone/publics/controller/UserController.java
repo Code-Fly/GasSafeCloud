@@ -5,7 +5,6 @@ package com.fujitsu.keystone.publics.controller;
 
 import com.fujitsu.base.constants.Const;
 import com.fujitsu.base.controller.BaseController;
-import com.fujitsu.base.entity.ErrorMsg;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.OAuthException;
@@ -36,14 +35,15 @@ public class UserController extends BaseController {
     UserService userService;
 
     /**
-     * 获取SNS User信息
+     * 获取SNS用户信息
      *
-     * @param request
-     * @param response
-     * @param openId
-     * @param accessToken
+     * @param request     request
+     * @param response    response
+     * @param openId      openId
+     * @param accessToken accessToken
      * @return
      * @throws ConnectionFailedException
+     * @throws WeChatException
      */
     @RequestMapping(value = "/user/sns/query/{openId}/{accessToken}", produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -55,12 +55,14 @@ public class UserController extends BaseController {
     }
 
     /**
-     * SNS User OAuth登录
+     * SNS用户授权
      *
-     * @param request
-     * @param response
+     * @param request  request
+     * @param response response
      * @return
      * @throws ConnectionFailedException
+     * @throws WeChatException
+     * @throws OAuthException
      */
     @RequestMapping(value = "/user/sns/oauth", produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -95,14 +97,15 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 获取微信User信息
+     * 获取关注用户信息
      *
-     * @param request
-     * @param response
-     * @param openId
+     * @param request  request
+     * @param response response
+     * @param openId   openId
      * @return
      * @throws ConnectionFailedException
      * @throws AccessTokenException
+     * @throws WeChatException
      */
     @RequestMapping(value = "/user/query/{openId}", produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -116,6 +119,17 @@ public class UserController extends BaseController {
 
     }
 
+    /**
+     * 获取关注用户列表
+     *
+     * @param request    request
+     * @param response   response
+     * @param nextOpenId nextOpenId
+     * @return
+     * @throws ConnectionFailedException
+     * @throws AccessTokenException
+     * @throws WeChatException
+     */
     @RequestMapping(value = "/user/list", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getWeChatUserList(HttpServletRequest request, HttpServletResponse response,
@@ -131,6 +145,16 @@ public class UserController extends BaseController {
         return resp.toString();
     }
 
+    /**
+     * 获取用户组列表
+     *
+     * @param request  request
+     * @param response response
+     * @return
+     * @throws ConnectionFailedException
+     * @throws AccessTokenException
+     * @throws WeChatException
+     */
     @RequestMapping(value = "/user/group/list", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getWeChatUserGroupList(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException, WeChatException {
@@ -141,6 +165,17 @@ public class UserController extends BaseController {
         return resp.toString();
     }
 
+    /**
+     * 查找用户所在用户组ID
+     *
+     * @param request  request
+     * @param response response
+     * @param openId   openId
+     * @return
+     * @throws ConnectionFailedException
+     * @throws AccessTokenException
+     * @throws WeChatException
+     */
     @RequestMapping(value = "/user/group/query/{openId}", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getWeChatUserGroupByOpenId(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) throws ConnectionFailedException, AccessTokenException, WeChatException {

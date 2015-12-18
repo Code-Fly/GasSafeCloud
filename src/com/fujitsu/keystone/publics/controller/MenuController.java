@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @author Barrie
@@ -33,9 +31,19 @@ public class MenuController extends BaseController {
     @Resource
     ICoreService coreService;
 
+    /**
+     * 创建菜单
+     *
+     * @param request  request
+     * @param response response
+     * @return
+     * @throws ConnectionFailedException
+     * @throws AccessTokenException
+     * @throws WeChatException
+     */
     @RequestMapping(value = "/menu/create", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConnectionFailedException, AccessTokenException, WeChatException {
+    public String create(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException, WeChatException {
         // 调用接口获取access_token
         String at = KeystoneUtil.getAccessToken();
 
@@ -46,9 +54,19 @@ public class MenuController extends BaseController {
         return resp.toString();
     }
 
+    /**
+     * 获取菜单
+     *
+     * @param request  request
+     * @param response response
+     * @return
+     * @throws ConnectionFailedException
+     * @throws AccessTokenException
+     * @throws WeChatException
+     */
     @RequestMapping(value = "/menu/get", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConnectionFailedException, AccessTokenException, WeChatException {
+    public String get(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException, WeChatException {
         // 调用接口获取access_token
         String at = KeystoneUtil.getAccessToken();
 
@@ -57,9 +75,19 @@ public class MenuController extends BaseController {
         return resp.toString();
     }
 
+    /**
+     * 删除菜单
+     *
+     * @param request  request
+     * @param response response
+     * @return
+     * @throws ConnectionFailedException
+     * @throws AccessTokenException
+     * @throws WeChatException
+     */
     @RequestMapping(value = "/menu/delete", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConnectionFailedException, AccessTokenException, WeChatException {
+    public String delete(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException, WeChatException {
         // 调用接口获取access_token
         String at = KeystoneUtil.getAccessToken();
 
