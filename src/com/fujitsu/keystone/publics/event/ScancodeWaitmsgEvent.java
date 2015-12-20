@@ -74,7 +74,7 @@ public class ScancodeWaitmsgEvent extends Event {
         if (MenuService.QP_SFCX.equals(eventKey)) {
 
             String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottle.htm", params, CharEncoding.UTF_8,
-                    fromUserName);
+                    fromUserName,scanResult);
             if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
                 sengMsg.append("系统请求socket出现异常:").append(response);
             } else {
@@ -122,7 +122,7 @@ public class ScancodeWaitmsgEvent extends Event {
 
         } else if (MenuService.QP_GZJL.equals(eventKey)) {
             String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottleFill.htm", params,
-                    CharEncoding.UTF_8, fromUserName);
+                    CharEncoding.UTF_8, fromUserName,scanResult);
             if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
                 sengMsg.append("系统请求socket出现异常:").append(response);
             } else {
@@ -166,7 +166,7 @@ public class ScancodeWaitmsgEvent extends Event {
         } else if (MenuService.QP_LZGZ.equals(eventKey)) {
 
             String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottlePost.htm", params,
-                    CharEncoding.UTF_8, fromUserName);
+                    CharEncoding.UTF_8, fromUserName,scanResult);
             if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
                 sengMsg.append("系统请求socket出现异常:").append(response);
             } else {
@@ -206,7 +206,7 @@ public class ScancodeWaitmsgEvent extends Event {
             params_SMSY.put("openId", fromUserName);
 
             String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodeUPBottleInfo.htm", params_SMSY,
-                    CharEncoding.UTF_8, fromUserName);
+                    CharEncoding.UTF_8, fromUserName,scanResult);
             if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
                 sengMsg.append("系统请求socket出现异常:").append(response);
             } else {
@@ -232,7 +232,7 @@ public class ScancodeWaitmsgEvent extends Event {
             }
         } else if (MenuService.FW_RSQP.equals(eventKey)) {
             String response = GasHttpClientUtil.gasPost("ccstWeChatGetGasQPReadingURL.htm", params,
-                    CharEncoding.UTF_8, fromUserName);
+                    CharEncoding.UTF_8, fromUserName,scanResult);
             if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
                 sengMsg.append("系统请求socket出现异常:").append(response);
             } else {
@@ -249,7 +249,7 @@ public class ScancodeWaitmsgEvent extends Event {
 
         } else if (MenuService.FW_YQAQ.equals(eventKey)) {
             String response = GasHttpClientUtil.gasPost("ccstWeChatGetGasQPReadingURL.htm", params,
-                    CharEncoding.UTF_8, fromUserName);
+                    CharEncoding.UTF_8, fromUserName,scanResult);
             if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
                 sengMsg.append("系统请求socket出现异常:").append(response);
             } else {
@@ -273,7 +273,7 @@ public class ScancodeWaitmsgEvent extends Event {
 
 
             String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottlePsafe.htm", params_AQDW,
-                    CharEncoding.UTF_8, fromUserName);
+                    CharEncoding.UTF_8, fromUserName,scanResult);
             BarcodegetBottlePsafeResMsg messageObject = new BarcodegetBottlePsafeResMsg();
             JSONObject object = JSONObject.fromObject(response);
             if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
