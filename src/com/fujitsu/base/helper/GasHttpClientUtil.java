@@ -75,7 +75,7 @@ public class GasHttpClientUtil extends HttpClientUtil {
          logParams.put("token", messageObject.getResult());
          logParams.put("sendLng", null);
          logParams.put("sendLat", null);
-         logParams.put("opType", url.split(".")[0]);
+         logParams.put("opType", url.split("[.]")[0]);
          logParams.put("codeType", gasApi.AUTHORIZETYPE);
          logParams.put("codeTxt",codeTxt);
          logParams.put("userid", null);
