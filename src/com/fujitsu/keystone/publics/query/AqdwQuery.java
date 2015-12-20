@@ -46,8 +46,7 @@ public class AqdwQuery  extends Query {
         String toUserName = requestJson.getString(Event.TO_USER_NAME);
 
         // "+013264+2015+MS"
-        String content = requestJson.getString("Content").trim().toUpperCase();
-        content = content.substring(1);
+        String content = requestJson.getString("Content").trim();
         logger.info("AqdwQuery content="+content);
         String[] messArray = content.split("[+]");
         StringBuffer  sengMsg = new StringBuffer(); 
@@ -57,11 +56,11 @@ public class AqdwQuery  extends Query {
         message.setFromUserName(toUserName);
         message.setCreateTime(new Date().getTime());
         message.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
-        if (messArray.length == 3) {
+        if (messArray.length == 4) {
         	  Map<String, String> params_AQDW = new HashMap<String, String>();
-              params_AQDW.put("pid", messArray[0]);
-              params_AQDW.put("pYear", messArray[1]);
-              params_AQDW.put("pCode", messArray[2]);
+              params_AQDW.put("pid", messArray[1]);
+              params_AQDW.put("pYear", messArray[2]);
+              params_AQDW.put("pCode", messArray[3]);
               String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottlePsafe.htm", params_AQDW,
                       CharEncoding.UTF_8, fromUserName);
               BarcodegetBottlePsafeResMsg messageObject = new BarcodegetBottlePsafeResMsg();
@@ -101,8 +100,46 @@ public class AqdwQuery  extends Query {
                               .append(messageObject.getResult().get(0).getPhone());
                   }
               } 
-		} else {
-			sengMsg.append("输入有误！请输入  +气瓶编号+生产年度+制造单位代号");
+		} if (messArray.length == 2) {
+			 Map<String, String> params_RegPass = new HashMap<String, String>();
+			 params_RegPass.put("dwbh", messArray[1]);
+			 String response = GasHttpClientUtil.gasPost("ccstWeChatRegPass.htm", params_RegPass,
+                     CharEncoding.UTF_8, fromUserName);
+             JSONObject object = JSONObject.fromObject(response);
+             if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
+                 sengMsg.append("系统请求socket出现异常:").append(response);
+             } else {
+                 if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
+                     sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
+                 } else {
+                	 sengMsg.append(object.get(WebSocketResFiled.RESULT));
+                 }
+             }
+		}
+		if (messArray.length == 6) {
+			 Map<String, String> params_ccstWeChatRegEdit = new HashMap<String, String>();
+			 params_ccstWeChatRegEdit.put("dwbh", messArray[1]);
+			 params_ccstWeChatRegEdit.put("oldUserName", messArray[2]);
+			 params_ccstWeChatRegEdit.put("oldPwd", messArray[3]);
+			 params_ccstWeChatRegEdit.put("newUserName", messArray[4]);
+			 params_ccstWeChatRegEdit.put("newPwd", messArray[5]);
+			 
+			 String response = GasHttpClientUtil.gasPost("ccstWeChatRegEdit.htm", params_ccstWeChatRegEdit,
+                    CharEncoding.UTF_8, fromUserName);
+            JSONObject object = JSONObject.fromObject(response);
+            if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
+                sengMsg.append("系统请求socket出现异常:").append(response);
+            } else {
+                if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
+                    sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
+                } else {
+               	 	sengMsg.append(object.get(WebSocketResFiled.RESULT));
+                }
+            }
+		} 
+		
+		else {
+			sengMsg.append("输入有误!");
         }
         logger.info("sengMsg = " + sengMsg.toString());
         message.setContent(sengMsg.toString());

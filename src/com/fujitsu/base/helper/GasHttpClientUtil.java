@@ -56,6 +56,16 @@ public class GasHttpClientUtil extends HttpClientUtil {
         } else {
             params.put("token", messageObject.getResult());
         }
+        Map<String,String> logParams = new HashMap<>();
+        logParams.put("openId", openID);
+        logParams.put("token", messageObject.getResult());
+        logParams.put("sendLng", null);
+        logParams.put("sendLat", null);
+        logParams.put("opType", url.split(".")[0]);
+        logParams.put("codeType", gasApi.AUTHORIZETYPE);
+        logParams.put("codeTxt", url.split("[.]")[0]);
+        logParams.put("userid", null);
+        doPost(Const.gasApi.URL + "ccstWeChatFansOPLog.htm", logParams, charset);
         return doPost(Const.gasApi.URL + url, params, charset);
     }
 
