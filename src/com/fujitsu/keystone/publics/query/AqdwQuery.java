@@ -100,7 +100,7 @@ public class AqdwQuery  extends Query {
                               .append(messageObject.getResult().get(0).getPhone());
                   }
               } 
-		} if (messArray.length == 2) {
+		} else if (messArray.length == 2) {
 			 Map<String, String> params_RegPass = new HashMap<String, String>();
 			 params_RegPass.put("dwbh", messArray[1]);
 			 String response = GasHttpClientUtil.gasPost("ccstWeChatRegPass.htm", params_RegPass,
@@ -116,7 +116,7 @@ public class AqdwQuery  extends Query {
                  }
              }
 		}
-		if (messArray.length == 6) {
+		else if (messArray.length == 6) {
 			 Map<String, String> params_ccstWeChatRegEdit = new HashMap<String, String>();
 			 params_ccstWeChatRegEdit.put("dwbh", messArray[1]);
 			 params_ccstWeChatRegEdit.put("oldUserName", messArray[2]);
