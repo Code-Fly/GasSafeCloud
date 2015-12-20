@@ -10,11 +10,7 @@ import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.base.helper.WeChatClientUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.event.*;
-import com.fujitsu.keystone.publics.query.AqdwQuery;
-import com.fujitsu.keystone.publics.query.CompanyDetailQuery;
-import com.fujitsu.keystone.publics.query.CompanyListQuery;
-import com.fujitsu.keystone.publics.query.DefaultQuery;
-import com.fujitsu.keystone.publics.query.Query;
+import com.fujitsu.keystone.publics.query.*;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IMenuService;
 import net.sf.json.JSONObject;
@@ -133,11 +129,6 @@ public class CoreService extends BaseService implements ICoreService {
                 // 取消订阅
                 else if (eventType.equals(Event.EVENT_TYPE_UNSUBSCRIBE)) {
                     // TODO 暂不做处理
-                }
-                // 收到订单
-                else if (eventType.equals(Event.EVENT_MERCHANT_ORDER)) {
-                    Event event = new MerchantOrderEvent();
-                    respXml = event.execute(request, requestJson);
                 }
                 // 开始客服会话
                 else if (eventType.equals(Event.EVENT_CUSTOMER_SERVICE_CREATE_SESSION)) {

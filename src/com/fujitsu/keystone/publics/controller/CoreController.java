@@ -9,17 +9,8 @@ import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.FileUtil;
 import com.fujitsu.base.helper.KeystoneUtil;
-import com.fujitsu.base.helper.UrlUtil;
-import com.fujitsu.keystone.publics.entity.push.response.Article;
-import com.fujitsu.keystone.publics.entity.push.response.NewsMessage;
-import com.fujitsu.keystone.publics.entity.push.response.TransInformation;
-import com.fujitsu.keystone.publics.entity.push.response.TransferCustomerServiceMessage;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
-import com.fujitsu.keystone.publics.service.impl.GreeterService;
-import com.fujitsu.keystone.publics.service.impl.MessageService;
-import com.fujitsu.queue.service.impl.QueueService;
 import net.sf.json.JSONObject;
-import org.apache.commons.codec.CharEncoding;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,8 +19,6 @@ import javax.annotation.Resource;
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Barrie
@@ -40,12 +29,6 @@ public class CoreController extends BaseController {
 
     @Resource
     ICoreService coreService;
-
-    @Resource
-    GreeterService greeterService;
-
-    @Resource
-    QueueService mq;
 
     @RequestMapping(value = "/core")
     public void connect(HttpServletRequest request, HttpServletResponse response) {
@@ -71,23 +54,6 @@ public class CoreController extends BaseController {
     @RequestMapping(value = "/token/refresh", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String refreshToken(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, WeChatException, JMSException {
-//
-//        greeterService.post("111111");
-//        greeterService.post("222");
-//        greeterService.post("333");
-//        greeterService.get();
-//        greeterService.get();
-//        greeterService.get();
-//
-//        String queue = "queue://omiuxs4TDeYabfsAXdUh6GFfIloU";
-//        mq.connect();
-//        System.out.println(mq.browse(queue));
-//        mq.clear(queue);
-//        mq.clear(queue, "JMSType <> '" + MessageService.REQ_MESSAGE_TYPE_TEXT + "'");
-//        System.out.println(mq.receive(queue, null));
-//        System.out.println(mq.receive(queue, "JMSType = '" + MessageService.REQ_MESSAGE_TYPE_TEXT + "'"));
-//        System.out.println(mq.browse(queue));
-//        mq.close();
 
         return KeystoneUtil.refreshLocalAccessToken().toString();
     }
