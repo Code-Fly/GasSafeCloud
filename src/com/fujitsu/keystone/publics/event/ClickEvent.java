@@ -16,7 +16,6 @@ import net.sf.json.JSONObject;
 
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
@@ -110,8 +109,10 @@ public class ClickEvent extends Event {
             buffer.append("咨询投诉").append(Const.LINE_SEPARATOR);
             buffer.append(Const.LINE_SEPARATOR);
             buffer.append("气瓶用户对任何环节有疑问均可通过微信方式咨询，并提出投诉和建议。").append(Const.LINE_SEPARATOR);
-            buffer.append("输入格式:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR + Query.CUSTOMER_SERVICE).append(Const.LINE_SEPARATOR);
+            buffer.append("投诉信息支持文本/图像/语音/录像。").append(Const.LINE_SEPARATOR);
+            buffer.append("文本输入格式:").append(Const.LINE_SEPARATOR);
+            buffer.append(Query.SEPARATOR + "文本信息").append(Const.LINE_SEPARATOR);
+            buffer.append("图像/语音/录像请直接上传").append(Const.LINE_SEPARATOR);
             textMessage.setContent(buffer.toString());
             respXml = MessageService.messageToXml(textMessage);
         } else if(MenuService.QP_AQDW.equals(eventKey)){
