@@ -175,6 +175,11 @@ public class CoreService extends BaseService implements ICoreService {
                 Event event = new ComplaintsQuery();
                 respXml = event.execute(request, requestJson);
             }
+            // 当用户发短视频消息时
+            else if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_SHORT_VIDEO)) {
+                Event event = new ComplaintsQuery();
+                respXml = event.execute(request, requestJson);
+            }
             // 当用户发音频消息时
             else if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_VOICE)) {
                 Event event = new ComplaintsQuery();
