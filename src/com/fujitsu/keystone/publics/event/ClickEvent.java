@@ -109,25 +109,25 @@ public class ClickEvent extends Event {
             buffer.append("咨询投诉").append(Const.LINE_SEPARATOR);
             buffer.append(Const.LINE_SEPARATOR);
             buffer.append("气瓶用户对任何环节有疑问均可通过微信方式咨询，并提出投诉和建议。").append(Const.LINE_SEPARATOR);
-            buffer.append("投诉信息支持文本/图像/语音/录像。").append(Const.LINE_SEPARATOR);
+            buffer.append("投诉信息支持文本/图像/语音/视频。").append(Const.LINE_SEPARATOR);
             buffer.append("文本输入格式:").append(Const.LINE_SEPARATOR);
             buffer.append(Query.SEPARATOR + "文本信息").append(Const.LINE_SEPARATOR);
-            buffer.append("图像/语音/录像请直接上传").append(Const.LINE_SEPARATOR);
+            buffer.append("图像/语音/视频请通过微信直接上传").append(Const.LINE_SEPARATOR);
             textMessage.setContent(buffer.toString());
             respXml = MessageService.messageToXml(textMessage);
-        } else if(MenuService.QP_AQDW.equals(eventKey)){
-        	  StringBuffer buffer = new StringBuffer();
-              buffer.append("安全定位").append(Const.LINE_SEPARATOR)
-		              .append(Const.LINE_SEPARATOR)
-		              .append("请输入条件(气瓶编号+生产年度+制造单位代号)，查询气瓶当前位置和当前安全状况信息")
-		              .append(Const.LINE_SEPARATOR)
-		              .append("输入格式:")
-		              .append("+气瓶编号+生产年度+制造单位代号").append(Const.LINE_SEPARATOR)
-		              .append("例:+013264+2015+MS");
-              textMessage.setContent(buffer.toString());
-              respXml = MessageService.messageToXml(textMessage);
-        	
-        } 
+        } else if (MenuService.QP_AQDW.equals(eventKey)) {
+            StringBuffer buffer = new StringBuffer();
+            buffer.append("安全定位").append(Const.LINE_SEPARATOR)
+                    .append(Const.LINE_SEPARATOR)
+                    .append("请输入条件(气瓶编号+生产年度+制造单位代号)，查询气瓶当前位置和当前安全状况信息")
+                    .append(Const.LINE_SEPARATOR)
+                    .append("输入格式:")
+                    .append(Query.SEPARATOR + "气瓶编号" + Query.SEPARATOR + "生产年度" + Query.SEPARATOR + "制造单位代号").append(Const.LINE_SEPARATOR)
+                    .append("例:" + Query.SEPARATOR + "013264" + Query.SEPARATOR + "2015" + Query.SEPARATOR + "MS");
+            textMessage.setContent(buffer.toString());
+            respXml = MessageService.messageToXml(textMessage);
+
+        }
         // 其他按钮
         else {
             textMessage.setContent("功能尚未开放，敬请期待！" + eventKey);
