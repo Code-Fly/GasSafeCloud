@@ -186,7 +186,7 @@ public class CoreService extends BaseService implements ICoreService {
                 String content = requestJson.getString("Content").trim().toUpperCase();
 
                 // 投诉咨询正则
-                String regCustomerService = "^" + Query.SEPARATOR + "[^" + Query.SEPARATOR + "]+" + "$";
+                String regCustomerService = "^\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+" + "$";
                 // 安全定位正则
                 String regSafeLocation = "^\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+$";
 
