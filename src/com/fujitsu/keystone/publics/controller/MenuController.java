@@ -8,12 +8,14 @@ import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.ConfigUtil;
-import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IMenuService;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.CharEncoding;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -32,7 +34,7 @@ public class MenuController extends BaseController {
     ICoreService coreService;
 
     /**
-     * 创建菜单
+     * 创建默认菜单
      *
      * @param request  request
      * @param response response
@@ -41,16 +43,42 @@ public class MenuController extends BaseController {
      * @throws AccessTokenException
      * @throws WeChatException
      */
-    @RequestMapping(value = "/menu/create", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/menu/create/default", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=" + CharEncoding.UTF_8)
     @ResponseBody
-    public String create(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException, WeChatException {
-        // 调用接口获取access_token
-        String at = KeystoneUtil.getAccessToken();
+    public String createDetault(HttpServletRequest request, HttpServletResponse response,
+                                @RequestParam(value = "data", required = false, defaultValue = "0") String data
+    ) throws ConnectionFailedException, AccessTokenException, WeChatException {
 
-        String menuStr = ConfigUtil.getJson("menu.json");
+        if ("0".equals(data)) {
+            data = ConfigUtil.getJson("menu-default.json");
+        }
 
-        // 调用接口创建菜单
-        JSONObject resp = JSONObject.fromObject(menuService.create(at, JSONObject.fromObject(menuStr)));
+        JSONObject resp = JSONObject.fromObject(menuService.createDefault(JSONObject.fromObject(data)));
+        return resp.toString();
+    }
+
+    /**
+     * 创建条件菜单
+     *
+     * @param request
+     * @param response
+     * @param data
+     * @return
+     * @throws ConnectionFailedException
+     * @throws AccessTokenException
+     * @throws WeChatException
+     */
+    @RequestMapping(value = "/menu/create/condition", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=" + CharEncoding.UTF_8)
+    @ResponseBody
+    public String createCondition(HttpServletRequest request, HttpServletResponse response,
+                                  @RequestParam(value = "data", required = false, defaultValue = "0") String data
+    ) throws ConnectionFailedException, AccessTokenException, WeChatException {
+
+        if ("0".equals(data)) {
+            data = ConfigUtil.getJson("menu-condition.json");
+        }
+
+        JSONObject resp = JSONObject.fromObject(menuService.createCondition(JSONObject.fromObject(data)));
         return resp.toString();
     }
 
@@ -67,16 +95,13 @@ public class MenuController extends BaseController {
     @RequestMapping(value = "/menu/get", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String get(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException, WeChatException {
-        // 调用接口获取access_token
-        String at = KeystoneUtil.getAccessToken();
 
-        // 调用接口创建菜单
-        JSONObject resp = JSONObject.fromObject(menuService.get(at));
+        JSONObject resp = JSONObject.fromObject(menuService.get());
         return resp.toString();
     }
 
     /**
-     * 删除菜单
+     * 删除默认菜单
      *
      * @param request  request
      * @param response response
@@ -85,14 +110,52 @@ public class MenuController extends BaseController {
      * @throws AccessTokenException
      * @throws WeChatException
      */
-    @RequestMapping(value = "/menu/delete", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/menu/delete/default", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=" + CharEncoding.UTF_8)
     @ResponseBody
-    public String delete(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException, WeChatException {
-        // 调用接口获取access_token
-        String at = KeystoneUtil.getAccessToken();
+    public String deleteDetault(HttpServletRequest request, HttpServletResponse response) throws ConnectionFailedException, AccessTokenException, WeChatException {
 
-        // 调用接口创建菜单
-        JSONObject resp = JSONObject.fromObject(menuService.delete(at));
+        JSONObject resp = JSONObject.fromObject(menuService.deleteDefault());
+        return resp.toString();
+    }
+
+    /**
+     * 删除条件菜单
+     *
+     * @param request  request
+     * @param response response
+     * @return
+     * @throws ConnectionFailedException
+     * @throws AccessTokenException
+     * @throws WeChatException
+     */
+    @RequestMapping(value = "/menu/delete/condition", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=" + CharEncoding.UTF_8)
+    @ResponseBody
+    public String deleteCondition(HttpServletRequest request, HttpServletResponse response,
+                                  @RequestParam(value = "id", required = true) String id
+    ) throws ConnectionFailedException, AccessTokenException, WeChatException {
+
+        JSONObject resp = JSONObject.fromObject(menuService.deleteCondition(id));
+        return resp.toString();
+    }
+
+    /**
+     * 测试菜单
+     *
+     * @param request
+     * @param response
+     * @param userId
+     * @return
+     * @throws ConnectionFailedException
+     * @throws AccessTokenException
+     * @throws WeChatException
+     */
+    @RequestMapping(value = "/menu/test", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=" + CharEncoding.UTF_8)
+    @ResponseBody
+    public String test(HttpServletRequest request, HttpServletResponse response,
+                       @RequestParam(value = "userId", required = true) String userId
+    ) throws ConnectionFailedException, AccessTokenException, WeChatException {
+
+        JSONObject resp = JSONObject.fromObject(menuService.test(userId));
         return resp.toString();
     }
 }

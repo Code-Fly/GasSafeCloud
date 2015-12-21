@@ -7,10 +7,11 @@ import com.fujitsu.base.controller.BaseController;
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
-import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IUserService;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.CharEncoding;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,16 +44,18 @@ public class UserController extends BaseController {
      * @throws AccessTokenException
      * @throws WeChatException
      */
-    @RequestMapping(value = "/user/query/{openId}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/user/query/{openId}", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=" + CharEncoding.UTF_8)
     @ResponseBody
-    public String getWeChatUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) throws ConnectionFailedException, AccessTokenException, WeChatException {
-        // 调用接口获取access_token
-        String at = KeystoneUtil.getAccessToken();
+    public String getWeChatUserInfo(HttpServletRequest request, HttpServletResponse response,
+                                    @PathVariable String openId
+    ) throws ConnectionFailedException, AccessTokenException, WeChatException {
 
-        JSONObject resp = userService.getWeChatUserInfo(request, at, openId);
+        JSONObject resp = userService.getWeChatUserInfo(request, openId);
 
         return resp.toString();
 
     }
-
 }
+
+    
+

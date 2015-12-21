@@ -3,6 +3,7 @@
  */
 package com.fujitsu.keystone.publics.service.iface;
 
+import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
@@ -15,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface IUserService {
 
-	JSONObject getWeChatUserInfo(String accessToken, String openId) throws ConnectionFailedException, WeChatException;
+    JSONObject getWeChatUserInfo(String openId) throws ConnectionFailedException, WeChatException, AccessTokenException;
 
-	JSONObject getWeChatUserInfo(HttpServletRequest request, String accessToken, String openId) throws ConnectionFailedException, WeChatException;
+    JSONObject getWeChatUserInfo(HttpServletRequest request, String openId) throws ConnectionFailedException, WeChatException, AccessTokenException;
 
 }

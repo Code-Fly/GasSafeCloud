@@ -20,39 +20,30 @@ public abstract class BaseController extends Const {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    @ExceptionHandler(RuntimeException.class)
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    @ResponseBody
-    public String handleUnexpectedServerException(RuntimeException ex) {
-        logger.error("Internal Error", ex);
-        ErrorMsg errMsg = new ErrorMsg("-2", "Internal Error");
-        return JSONObject.fromObject(errMsg).toString();
-    }
-
     @ExceptionHandler(ConnectionFailedException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.SERVICE_UNAVAILABLE)
     @ResponseBody
     public String handleConnectionFailedException(ConnectionFailedException ex) {
         logger.error("Connection Failed", ex);
-        ErrorMsg errMsg = new ErrorMsg("-3", "Connection Failed");
+        ErrorMsg errMsg = new ErrorMsg(HttpStatus.SERVICE_UNAVAILABLE.toString(), "Connection Failed");
         return JSONObject.fromObject(errMsg).toString();
     }
 
     @ExceptionHandler(JMSException.class)
-    @ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
+    @ResponseStatus(value = HttpStatus.SERVICE_UNAVAILABLE)
     @ResponseBody
     public String handleJMSException(JMSException ex) {
         logger.error("Message Queue connect error", ex);
-        ErrorMsg errMsg = new ErrorMsg("-4", "Message Queue connect error");
+        ErrorMsg errMsg = new ErrorMsg(HttpStatus.SERVICE_UNAVAILABLE.toString(), "Message Queue connect error");
         return JSONObject.fromObject(errMsg).toString();
     }
 
     @ExceptionHandler(OAuthException.class)
-    @ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     @ResponseBody
     public String handleOAuthException(OAuthException ex) {
         logger.error("Not Authorised", ex);
-        ErrorMsg errMsg = new ErrorMsg("-5", "Not Authorised");
+        ErrorMsg errMsg = new ErrorMsg(HttpStatus.UNAUTHORIZED.toString(), "Not Authorised");
         return JSONObject.fromObject(errMsg).toString();
     }
 

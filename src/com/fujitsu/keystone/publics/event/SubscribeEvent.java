@@ -42,7 +42,7 @@ public class SubscribeEvent extends Event {
         String at = KeystoneUtil.getAccessToken();
         UserService userService = new UserService();
 
-        JSONObject user = userService.getWeChatUserInfo(at, fromUserName);
+        JSONObject user = userService.getWeChatUserInfo(fromUserName);
 
         Map<String, String> params = new HashMap<>();
         params.put("authorizeType", Const.gasApi.AUTHORIZETYPE);

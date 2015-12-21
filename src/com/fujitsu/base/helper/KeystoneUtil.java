@@ -168,7 +168,7 @@ public class KeystoneUtil {
 
     }
 
-    public static synchronized JSONObject getLocalAccessToken() throws ConnectionFailedException, WeChatException {
+    public static synchronized JSONObject getLocalAccessToken() throws ConnectionFailedException, WeChatException, AccessTokenException {
         String at = ConfigUtil.getProperty("token.properties", "token.api.accessToken");
         String et = ConfigUtil.getProperty("token.properties", "token.api.expireTime");
         if (null == at || null == et) {
@@ -191,7 +191,7 @@ public class KeystoneUtil {
         return JSONObject.fromObject(resp);
     }
 
-    public static synchronized JSONObject refreshLocalAccessToken() throws ConnectionFailedException, WeChatException {
+    public static synchronized JSONObject refreshLocalAccessToken() throws ConnectionFailedException, WeChatException, AccessTokenException {
         CoreService coreService = new CoreService();
         JSONObject at = coreService.getAccessToken(Const.WECHART_APP_ID, Const.WECHART_APP_SECRET);
         if (at.containsKey("access_token")) {

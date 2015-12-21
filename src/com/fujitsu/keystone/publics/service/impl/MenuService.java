@@ -4,9 +4,9 @@
 package com.fujitsu.keystone.publics.service.impl;
 
 import com.fujitsu.base.constants.Const;
+import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
-import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.helper.WeChatClientUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.service.iface.IMenuService;
@@ -41,47 +41,64 @@ public class MenuService extends BaseService implements IMenuService {
     @Resource
     IMessageService messageService;
 
-    /**
-     * @param accessToken
-     * @param json
-     * @return
-     * @throws ConnectionFailedException
-     */
-    public JSONObject create(String accessToken, JSONObject json) throws ConnectionFailedException, WeChatException {
 
-        // 拼装创建菜单的url
-        String url = Const.PublicPlatform.URL_MENU_CREATE.replace("ACCESS_TOKEN", accessToken);
+    @Override
+    public JSONObject createDefault(JSONObject json) throws ConnectionFailedException, WeChatException, AccessTokenException {
+        String url = Const.PublicPlatform.URL_MENU_CREATE_DEFAULT;
 
         String response = WeChatClientUtil.post(url, json.toString(), CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }
 
-    /**
-     * @param accessToken
-     * @return
-     * @throws ConnectionFailedException
-     */
-    public JSONObject get(String accessToken) throws ConnectionFailedException, WeChatException {
-        String url = Const.PublicPlatform.URL_MENU_GET.replace("ACCESS_TOKEN", accessToken);
+    @Override
+    public JSONObject createCondition(JSONObject json) throws ConnectionFailedException, WeChatException, AccessTokenException {
+        String url = Const.PublicPlatform.URL_MENU_CREATE_CONDITION;
+
+        String response = WeChatClientUtil.post(url, json.toString(), CharEncoding.UTF_8);
+
+        return JSONObject.fromObject(response);
+    }
+
+    @Override
+    public JSONObject get() throws ConnectionFailedException, WeChatException, AccessTokenException {
+        String url = Const.PublicPlatform.URL_MENU_GET;
 
         String response = WeChatClientUtil.get(url, CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }
 
-    /**
-     * @param accessToken
-     * @return
-     * @throws ConnectionFailedException
-     */
-    public JSONObject delete(String accessToken) throws ConnectionFailedException, WeChatException {
-        String url = Const.PublicPlatform.URL_MENU_DELETE.replace("ACCESS_TOKEN", accessToken);
+    @Override
+    public JSONObject deleteDefault() throws ConnectionFailedException, WeChatException, AccessTokenException {
+        String url = Const.PublicPlatform.URL_MENU_DELETE_CONDITION;
 
         String response = WeChatClientUtil.get(url, CharEncoding.UTF_8);
 
         return JSONObject.fromObject(response);
     }
 
+    @Override
+    public JSONObject deleteCondition(String id) throws ConnectionFailedException, WeChatException, AccessTokenException {
+        String url = Const.PublicPlatform.URL_MENU_DELETE_DEFAULT;
 
+        JSONObject param = new JSONObject();
+        param.put("menuid", id);
+
+        String response = WeChatClientUtil.post(url, param.toString(), CharEncoding.UTF_8);
+
+        return JSONObject.fromObject(response);
+    }
+
+    @Override
+    public JSONObject test(String userId) throws ConnectionFailedException, WeChatException, AccessTokenException {
+        String url = Const.PublicPlatform.URL_MENU_TEST;
+
+        JSONObject param = new JSONObject();
+        param.put("user_id", userId);
+
+        String response = WeChatClientUtil.post(url, param.toString(), CharEncoding.UTF_8);
+
+        return JSONObject.fromObject(response);
+    }
 }

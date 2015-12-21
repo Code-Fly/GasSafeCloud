@@ -10,6 +10,31 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+	<error-page>
+		<!-- Missing login -->
+		<error-code>401</error-code>
+		<location>/exception/401</location>
+	</error-page>
+	<error-page>
+		<!-- Forbidden directory listing -->
+		<error-code>403</error-code>
+		<location>/exception/403</location>
+	</error-page>
+	<error-page>
+		<!-- Missing resource -->
+		<error-code>404</error-code>
+		<location>/exception/404</location>
+	</error-page>
+	<error-page>
+		<!-- Uncaught exception -->
+		<error-code>500</error-code>
+		<location>/exception/500</location>
+	</error-page>
+	<error-page>
+		<!-- Unsupported servlet method -->
+		<error-code>503</error-code>
+		<location>/exception/503</location>
+	</error-page>
 	<!-- Character Encoding filter -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>

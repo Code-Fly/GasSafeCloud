@@ -1,11 +1,14 @@
 package com.fujitsu.base.helper;
 
+import com.fujitsu.base.constants.Const;
+import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -16,10 +19,10 @@ public class WeChatClientUtil {
 
     private static int RETRY = 3;
 
-    public static String get(String url, String charset) throws ConnectionFailedException, WeChatException {
+    public static String get(String url, String charset) throws ConnectionFailedException, WeChatException, AccessTokenException {
         String resp = null;
         for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.get(url, charset);
+            resp = HttpClientUtil.get(url.replace("ACCESS_TOKEN", KeystoneUtil.getAccessToken()), charset);
             if (isValid(resp)) {
                 break;
             }
@@ -28,10 +31,10 @@ public class WeChatClientUtil {
 
     }
 
-    public static String get(String url, Map<String, String> params, String charset) throws ConnectionFailedException, WeChatException {
+    public static String get(String url, Map<String, String> params, String charset) throws ConnectionFailedException, WeChatException, AccessTokenException {
         String resp = null;
         for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.get(url, params, charset);
+            resp = HttpClientUtil.get(url.replace("ACCESS_TOKEN", KeystoneUtil.getAccessToken()), params, charset);
             if (isValid(resp)) {
                 break;
             }
@@ -39,55 +42,10 @@ public class WeChatClientUtil {
         return resp;
     }
 
-    public static String get(String url, String params, String charset) throws ConnectionFailedException, WeChatException {
+    public static String get(String url, String params, String charset) throws ConnectionFailedException, WeChatException, AccessTokenException {
         String resp = null;
         for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.get(url, params, charset);
-            if (isValid(resp)) {
-                break;
-            }
-        }
-        return resp;
-
-    }
-
-    public static String post(String url, String charset) throws ConnectionFailedException, WeChatException {
-        String resp = null;
-        for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.post(url, charset);
-            if (isValid(resp)) {
-                break;
-            }
-        }
-        return resp;
-    }
-
-    public static String post(String url, Map<String, String> params, String charset) throws ConnectionFailedException, WeChatException {
-        String resp = null;
-        for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.post(url, params, charset);
-            if (isValid(resp)) {
-                break;
-            }
-        }
-        return resp;
-    }
-
-    public static String post(String url, Map<String, String> params, String charset, String ContentType) throws ConnectionFailedException, WeChatException {
-        String resp = null;
-        for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.post(url, params, charset, ContentType);
-            if (isValid(resp)) {
-                break;
-            }
-        }
-        return resp;
-    }
-
-    public static String post(String url, String params, String charset) throws ConnectionFailedException, WeChatException {
-        String resp = null;
-        for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.post(url, params, charset);
+            resp = HttpClientUtil.get(url.replace("ACCESS_TOKEN", KeystoneUtil.getAccessToken()), params, charset);
             if (isValid(resp)) {
                 break;
             }
@@ -96,10 +54,67 @@ public class WeChatClientUtil {
 
     }
 
-    public static String post(String url, String params, String charset, String ContentType) throws ConnectionFailedException, WeChatException {
+    public static String forward(String url, String charset, HttpServletResponse httpServletResponse) throws ConnectionFailedException, WeChatException, AccessTokenException {
         String resp = null;
         for (int i = 0; i < (RETRY - 1); i++) {
-            resp = HttpClientUtil.post(url, params, charset, ContentType);
+            resp = HttpClientUtil.get(Const.PublicPlatform.URL_GET_CALLBACK_IP.replace("ACCESS_TOKEN", KeystoneUtil.getAccessToken()), charset);
+            if (isValid(resp)) {
+                return HttpClientUtil.forward(url.replace("ACCESS_TOKEN", KeystoneUtil.getAccessToken()), charset, httpServletResponse);
+            }
+        }
+        return resp;
+
+    }
+
+    public static String post(String url, String charset) throws ConnectionFailedException, WeChatException, AccessTokenException {
+        String resp = null;
+        for (int i = 0; i < (RETRY - 1); i++) {
+            resp = HttpClientUtil.post(url.replace("ACCESS_TOKEN", KeystoneUtil.getAccessToken()), charset);
+            if (isValid(resp)) {
+                break;
+            }
+        }
+        return resp;
+    }
+
+    public static String post(String url, Map<String, String> params, String charset) throws ConnectionFailedException, WeChatException, AccessTokenException {
+        String resp = null;
+        for (int i = 0; i < (RETRY - 1); i++) {
+            resp = HttpClientUtil.post(url.replace("ACCESS_TOKEN", KeystoneUtil.getAccessToken()), params, charset);
+            if (isValid(resp)) {
+                break;
+            }
+        }
+        return resp;
+    }
+
+    public static String post(String url, Map<String, String> params, String charset, String ContentType) throws ConnectionFailedException, WeChatException, AccessTokenException {
+        String resp = null;
+        for (int i = 0; i < (RETRY - 1); i++) {
+            resp = HttpClientUtil.post(url.replace("ACCESS_TOKEN", KeystoneUtil.getAccessToken()), params, charset, ContentType);
+            if (isValid(resp)) {
+                break;
+            }
+        }
+        return resp;
+    }
+
+    public static String post(String url, String params, String charset) throws ConnectionFailedException, WeChatException, AccessTokenException {
+        String resp = null;
+        for (int i = 0; i < (RETRY - 1); i++) {
+            resp = HttpClientUtil.post(url.replace("ACCESS_TOKEN", KeystoneUtil.getAccessToken()), params, charset);
+            if (isValid(resp)) {
+                break;
+            }
+        }
+        return resp;
+
+    }
+
+    public static String post(String url, String params, String charset, String ContentType) throws ConnectionFailedException, WeChatException, AccessTokenException {
+        String resp = null;
+        for (int i = 0; i < (RETRY - 1); i++) {
+            resp = HttpClientUtil.post(url.replace("ACCESS_TOKEN", KeystoneUtil.getAccessToken()), params, charset, ContentType);
             if (isValid(resp)) {
                 break;
             }

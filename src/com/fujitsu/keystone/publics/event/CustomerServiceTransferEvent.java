@@ -3,25 +3,23 @@
  */
 package com.fujitsu.keystone.publics.event;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
-
-import javax.jms.JMSException;
-import javax.servlet.http.HttpServletRequest;
-
 import com.fujitsu.base.constants.Const;
-import com.fujitsu.base.exception.GasSafeException;
-import com.fujitsu.base.exception.WeChatException;
-import net.sf.json.JSONObject;
-
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.GasSafeException;
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.entity.customer.message.Text;
 import com.fujitsu.keystone.publics.entity.customer.message.TextMessage;
 import com.fujitsu.keystone.publics.entity.push.response.TransferCustomerServiceMessage;
 import com.fujitsu.keystone.publics.service.impl.CustomerService;
 import com.fujitsu.keystone.publics.service.impl.MessageService;
+import net.sf.json.JSONObject;
+
+import javax.jms.JMSException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 /**
  * @author Barrie
@@ -59,7 +57,7 @@ public class CustomerServiceTransferEvent extends Event {
 		buffer.append("请稍后，我们的客服人员马上会接待您。").append(Const.LINE_SEPARATOR);
 		t.setContent(buffer.toString());
 		message.setText(t);
-		new CustomerService().sendTextMessage(at, message);
+		new CustomerService().sendTextMessage(message);
 
 		return respXml;
 	}

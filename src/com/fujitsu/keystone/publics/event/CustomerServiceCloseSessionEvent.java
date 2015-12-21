@@ -3,22 +3,20 @@
  */
 package com.fujitsu.keystone.publics.event;
 
-import java.io.UnsupportedEncodingException;
-
-import javax.jms.JMSException;
-import javax.servlet.http.HttpServletRequest;
-
 import com.fujitsu.base.constants.Const;
-import com.fujitsu.base.exception.GasSafeException;
-import com.fujitsu.base.exception.WeChatException;
-import net.sf.json.JSONObject;
-
 import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
+import com.fujitsu.base.exception.GasSafeException;
+import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.keystone.publics.entity.customer.message.Text;
 import com.fujitsu.keystone.publics.entity.customer.message.TextMessage;
 import com.fujitsu.keystone.publics.service.impl.CustomerService;
+import net.sf.json.JSONObject;
+
+import javax.jms.JMSException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 
 /**
  * @author Barrie
@@ -47,7 +45,7 @@ public class CustomerServiceCloseSessionEvent extends Event {
 		buffer.append("感谢您使用客服服务.").append(Const.LINE_SEPARATOR);
 		t.setContent(buffer.toString());
 		customerMsg.setText(t);
-		new CustomerService().sendTextMessage(at, customerMsg);
+		new CustomerService().sendTextMessage(customerMsg);
 
 		return respXml;
 	}

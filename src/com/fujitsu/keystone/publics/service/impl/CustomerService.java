@@ -4,6 +4,7 @@
 package com.fujitsu.keystone.publics.service.impl;
 
 import com.fujitsu.base.constants.Const;
+import com.fujitsu.base.exception.AccessTokenException;
 import com.fujitsu.base.exception.ConnectionFailedException;
 import com.fujitsu.base.exception.WeChatException;
 import com.fujitsu.base.helper.WeChatClientUtil;
@@ -33,13 +34,13 @@ public class CustomerService extends BaseService implements ICustomerService {
 
 
     @Override
-    public JSONObject sendTextMessage(String accessToken, TextMessage message) throws ConnectionFailedException, WeChatException {
-        JSONObject response = sendMessage(accessToken, JSONObject.fromObject(message));
+    public JSONObject sendTextMessage(TextMessage message) throws ConnectionFailedException, WeChatException, AccessTokenException {
+        JSONObject response = sendMessage(JSONObject.fromObject(message));
         return response;
     }
 
-    private JSONObject sendMessage(String accessToken, JSONObject message) throws ConnectionFailedException, WeChatException {
-        String url = Const.PublicPlatform.URL_CUSTOMER_SERVICE_MESSAGE_SEND.replace("ACCESS_TOKEN", accessToken);
+    private JSONObject sendMessage(JSONObject message) throws ConnectionFailedException, WeChatException, AccessTokenException {
+        String url = Const.PublicPlatform.URL_CUSTOMER_SERVICE_MESSAGE_SEND;
 
         String response = WeChatClientUtil.post(url, message.toString(), CharEncoding.UTF_8);
 
