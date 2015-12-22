@@ -43,62 +43,32 @@ public class ClickEvent extends Event {
         // 事件KEY值，与创建菜单时的key值对应
         String eventKey = requestJson.getString(EVENT_KEY);
         // 根据key值判断用户点击的按钮
-        // 充装存储
-        if (eventKey.equals(MenuService.GL_CZCC)) {
+        // 单位查询
+        if (eventKey.equals(MenuService.GL_DWCX)) {
             StringBuffer buffer = new StringBuffer();
-            buffer.append("充装存储信息查询").append(Const.LINE_SEPARATOR);
+            buffer.append("单位查询").append(Const.LINE_SEPARATOR);
+            buffer.append(Const.LINE_SEPARATOR);
             buffer.append("查询该单位气瓶充装、存储许可信息和本单位作业人员信息。").append(Const.LINE_SEPARATOR);
-            buffer.append("输入格式:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR + Query.FILLING_STORAGE + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "单位全名").append(Const.LINE_SEPARATOR);
-            buffer.append("例:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR + Query.FILLING_STORAGE + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "无锡华润燃气有限公司").append(Const.LINE_SEPARATOR);
+            buffer.append("查询详细:");
+            buffer.append(Query.SEPARATOR_3 + Query.FILLING_STORAGE_DETAIL + Query.SEPARATOR_3 + "单位全名").append(Const.LINE_SEPARATOR);
+            buffer.append("查询单位名称:");
+            buffer.append(Query.SEPARATOR_3 + Query.FILLING_STORAGE_LIST + Query.SEPARATOR_3 + "查询名").append(Const.LINE_SEPARATOR);
             buffer.append(Const.LINE_SEPARATOR);
-            buffer.append("充装存储单位名称查询").append(Const.LINE_SEPARATOR);
-            buffer.append("支持模糊查询").append(Const.LINE_SEPARATOR);
-            buffer.append("输入格式:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR + Query.FILLING_STORAGE + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "查询名").append(Const.LINE_SEPARATOR);
-            buffer.append("例:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR + Query.FILLING_STORAGE + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "华润").append(Const.LINE_SEPARATOR);
-
-            textMessage.setContent(buffer.toString());
-            respXml = MessageService.messageToXml(textMessage);
-        }
-        // 配送运输
-        else if (eventKey.equals(MenuService.GL_PSYS)) {
-            StringBuffer buffer = new StringBuffer();
-            buffer.append("配送运输信息查询").append(Const.LINE_SEPARATOR);
             buffer.append("查询该单位燃气配送、运输许可信息和从业人员信息。").append(Const.LINE_SEPARATOR);
-            buffer.append("输入格式:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR + Query.DISTRIBUTION_TRANSPORTATION + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "单位全名").append(Const.LINE_SEPARATOR);
-            buffer.append("例:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR + Query.DISTRIBUTION_TRANSPORTATION + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "无锡华润燃气有限公司").append(Const.LINE_SEPARATOR);
+            buffer.append("查询详细:");
+            buffer.append(Query.SEPARATOR_3 + Query.DISTRIBUTION_TRANSPORTATION_DETAIL + Query.SEPARATOR_3 + "单位全名").append(Const.LINE_SEPARATOR);
+            buffer.append("查询单位名称:");
+            buffer.append(Query.SEPARATOR_3 + Query.DISTRIBUTION_TRANSPORTATION_LIST + Query.SEPARATOR_3 + "查询名").append(Const.LINE_SEPARATOR);
             buffer.append(Const.LINE_SEPARATOR);
-            buffer.append("配送运输单位名称查询").append(Const.LINE_SEPARATOR);
-            buffer.append("支持模糊查询").append(Const.LINE_SEPARATOR);
-            buffer.append("输入格式:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR + Query.DISTRIBUTION_TRANSPORTATION + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "查询名").append(Const.LINE_SEPARATOR);
-            buffer.append("例:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR + Query.DISTRIBUTION_TRANSPORTATION + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "华润").append(Const.LINE_SEPARATOR);
-
-            textMessage.setContent(buffer.toString());
-            respXml = MessageService.messageToXml(textMessage);
-        }
-        // 检验检测
-        else if (eventKey.equals(MenuService.GL_JYJC)) {
-            StringBuffer buffer = new StringBuffer();
-            buffer.append("检验检测信息查询").append(Const.LINE_SEPARATOR);
             buffer.append("查询该单位气瓶检验信息和检验人员信息。").append(Const.LINE_SEPARATOR);
-            buffer.append("输入格式:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR + Query.INSPECTION_TESTING + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "单位全名").append(Const.LINE_SEPARATOR);
-            buffer.append("例:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR + Query.INSPECTION_TESTING + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "无锡华润燃气有限公司").append(Const.LINE_SEPARATOR);
+            buffer.append("查询详细:");
+            buffer.append(Query.SEPARATOR_3 + Query.INSPECTION_TESTING_DETAIL + Query.SEPARATOR_3 + "单位全名").append(Const.LINE_SEPARATOR);
+            buffer.append("查询单位名称:");
+            buffer.append(Query.SEPARATOR_3 + Query.INSPECTION_TESTING_LIST + Query.SEPARATOR_3 + "查询名").append(Const.LINE_SEPARATOR);
             buffer.append(Const.LINE_SEPARATOR);
-            buffer.append("检验检测单位名称查询").append(Const.LINE_SEPARATOR);
-            buffer.append("支持模糊查询").append(Const.LINE_SEPARATOR);
-            buffer.append("输入格式:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR + Query.INSPECTION_TESTING + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "查询名").append(Const.LINE_SEPARATOR);
             buffer.append("例:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR + Query.INSPECTION_TESTING + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "华润").append(Const.LINE_SEPARATOR);
+            buffer.append(Query.SEPARATOR_3 + Query.FILLING_STORAGE_DETAIL + Query.SEPARATOR_3 + "华润").append(Const.LINE_SEPARATOR);
+            buffer.append(Query.SEPARATOR_3 + Query.FILLING_STORAGE_DETAIL + Query.SEPARATOR_3 + "无锡华润燃气有限公司").append(Const.LINE_SEPARATOR);
 
             textMessage.setContent(buffer.toString());
             respXml = MessageService.messageToXml(textMessage);
@@ -123,8 +93,8 @@ public class ClickEvent extends Event {
                     .append("请输入条件(气瓶编号+生产年度+制造单位代号)，查询气瓶当前位置和当前安全状况信息")
                     .append(Const.LINE_SEPARATOR)
                     .append("输入格式:").append(Const.LINE_SEPARATOR)
-                    .append(Query.SEPARATOR + "气瓶编号" + Query.SEPARATOR + "生产年度" + Query.SEPARATOR + "制造单位代号").append(Const.LINE_SEPARATOR)
-                    .append("例:" + Query.SEPARATOR + "013264" + Query.SEPARATOR + "2003" + Query.SEPARATOR + "ms");
+                    .append(Query.SEPARATOR_1 + "气瓶编号" + Query.SEPARATOR_1 + "生产年度" + Query.SEPARATOR_1 + "制造单位代号").append(Const.LINE_SEPARATOR)
+                    .append("例:" + Query.SEPARATOR_1 + "013264" + Query.SEPARATOR_1 + "2003" + Query.SEPARATOR_1 + "ms");
             textMessage.setContent(buffer.toString());
             respXml = MessageService.messageToXml(textMessage);
 

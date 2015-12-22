@@ -11,10 +11,7 @@ import com.fujitsu.base.helper.HttpClientUtil;
 import com.fujitsu.base.helper.KeystoneUtil;
 import com.fujitsu.base.service.BaseService;
 import com.fujitsu.keystone.publics.event.*;
-import com.fujitsu.keystone.publics.query.AqdwQuery;
-import com.fujitsu.keystone.publics.query.ComplaintsQuery;
-import com.fujitsu.keystone.publics.query.DefaultQuery;
-import com.fujitsu.keystone.publics.query.Query;
+import com.fujitsu.keystone.publics.query.*;
 import com.fujitsu.keystone.publics.service.iface.ICoreService;
 import com.fujitsu.keystone.publics.service.iface.IMenuService;
 import net.sf.json.JSONObject;
@@ -191,16 +188,46 @@ public class CoreService extends BaseService implements ICoreService {
                 String content = requestJson.getString("Content").trim().toUpperCase();
 
                 // 添加用户正则
-                String regAddUser = "^\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+" + "$";
+                String regAddUser = "^\\" + Query.SEPARATOR_1 + "[^\\" + Query.SEPARATOR_1 + "]+" + "$";
                 // 修改用户正则
-                String regUpdateUser = "^\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+$";
+                String regUpdateUser = "^\\" + Query.SEPARATOR_1 + "[^\\" + Query.SEPARATOR_1 + "]+\\" + Query.SEPARATOR_1 + "[^\\" + Query.SEPARATOR_1 + "]+\\" + Query.SEPARATOR_1 + "[^\\" + Query.SEPARATOR_1 + "]+\\" + Query.SEPARATOR_1 + "[^\\" + Query.SEPARATOR_1 + "]+\\" + Query.SEPARATOR_1 + "[^\\" + Query.SEPARATOR_1 + "]+$";
                 // 安全定位正则
-                String regSafeLocation = "^\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+$";
+                String regSafeLocation = "^\\" + Query.SEPARATOR_1 + "[^\\" + Query.SEPARATOR_1 + "]+\\" + Query.SEPARATOR_1 + "[^\\" + Query.SEPARATOR_1 + "]+\\" + Query.SEPARATOR_1 + "[^\\" + Query.SEPARATOR_1 + "]+$";
                 // 投诉咨询正则
                 String regComplains = "^" + Query.SEPARATOR_2 + "[^" + Query.SEPARATOR_2 + "]+" + "$";
+                // 充装存储列表正则
+                String regCZCCCorpList = "^" + Query.SEPARATOR_3 + Query.FILLING_STORAGE_LIST + Query.SEPARATOR_3 + "[^" + Query.SEPARATOR_3 + "]+$";
+                // 充装存储详情正则
+                String regCZCCCorpDetail = "^" + Query.SEPARATOR_3 + Query.FILLING_STORAGE_DETAIL + Query.SEPARATOR_3 + "[^" + Query.SEPARATOR_3 + "]+$";
+                // 配送运输列表正则
+                String regPSYSCorpList = "^" + Query.SEPARATOR_3 + Query.DISTRIBUTION_TRANSPORTATION_LIST + Query.SEPARATOR_3 + "[^" + Query.SEPARATOR_3 + "]+$";
+                // 配送运输详情正则
+                String regPSYSCorpDetail = "^" + Query.SEPARATOR_3 + Query.DISTRIBUTION_TRANSPORTATION_DETAIL + Query.SEPARATOR_3 + "[^" + Query.SEPARATOR_3 + "]+$";
+                // 检验监测列表正则
+                String regJYJCCorpList = "^" + Query.SEPARATOR_3 + Query.INSPECTION_TESTING_LIST + Query.SEPARATOR_3 + "[^" + Query.SEPARATOR_3 + "]+$";
+                // 检验监测详情正则
+                String regJYJCCorpDetail = "^" + Query.SEPARATOR_3 + Query.INSPECTION_TESTING_DETAIL + Query.SEPARATOR_3 + "[^" + Query.SEPARATOR_3 + "]+$";
 
+                // 查询企业列表
+                if (
+                        Pattern.compile(regCZCCCorpList).matcher(content).matches() ||
+                                Pattern.compile(regPSYSCorpList).matcher(content).matches() ||
+                                Pattern.compile(regJYJCCorpList).matcher(content).matches()
+                        ) {
+                    Query query = new CompanyListQuery();
+                    respXml = query.execute(request, requestJson);
+                }
+                // 查询企业详情
+                else if (
+                        Pattern.compile(regCZCCCorpDetail).matcher(content).matches() ||
+                                Pattern.compile(regPSYSCorpDetail).matcher(content).matches() ||
+                                Pattern.compile(regJYJCCorpDetail).matcher(content).matches()
+                        ) {
+                    Query query = new CompanyDetailQuery();
+                    respXml = query.execute(request, requestJson);
+                }
                 // 投诉咨询
-                if (Pattern.compile(regComplains).matcher(content).matches()) {
+                else if (Pattern.compile(regComplains).matcher(content).matches()) {
                     Event event = new ComplaintsQuery();
                     respXml = event.execute(request, requestJson);
                 }

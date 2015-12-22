@@ -23,8 +23,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Barrie on 15/11/26.
@@ -45,14 +43,9 @@ public class CompanyListQuery extends Query {
         String queryCmd = null;
         String queryType = null;
 
-        String regQueryCmd = "^\\" + Query.SEPARATOR + "([^" + Query.SEPARATOR + "]+)\\" + Query.SEPARATOR;
-
-        Pattern p = Pattern.compile(regQueryCmd);
-        Matcher m = p.matcher(content);
-        while (m.find()) {
-            queryCmd = m.group(1);
-            queryType = QUERY_CMD_TYPE.get(queryCmd);
-        }
+        String[] cmds = content.split(Query.SEPARATOR_3);
+        queryCmd = cmds[1];
+        queryType = QUERY_CMD_TYPE.get(queryCmd);
 
         TextMessage message = new TextMessage();
 
@@ -64,7 +57,7 @@ public class CompanyListQuery extends Query {
         if (null != queryType) {
             StringBuffer buffer = new StringBuffer();
             // 将搜索字符及后面的+、空格、-等特殊符号去掉
-            String keyWord = content.replaceAll("^" + Query.SEPARATOR + queryCmd + Query.SEPARATOR + Query.QUERY_LIST + Query.SEPARATOR + "[\\+ ~!@#%^-_=]?", "");
+            String keyWord = content.replaceAll("^" + Query.SEPARATOR_3 + queryCmd + Query.SEPARATOR_3 + "[\\+ ~!@#%^-_=]?", "");
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("uName", keyWord);

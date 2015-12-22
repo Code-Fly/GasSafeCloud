@@ -23,8 +23,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Barrie on 15/11/26.
@@ -45,14 +43,8 @@ public class CompanyDetailQuery extends Query {
         String queryCmd = null;
         String queryType = null;
 
-        String regQueryCmd = "^\\" + Query.SEPARATOR + "([^" + Query.SEPARATOR + "]+)\\" + Query.SEPARATOR;
-
-        Pattern p = Pattern.compile(regQueryCmd);
-        Matcher m = p.matcher(content);
-        while (m.find()) {
-            queryCmd = m.group(1);
-            queryType = QUERY_CMD_TYPE.get(queryCmd);
-        }
+        queryCmd = content.split(Query.SEPARATOR_3)[1];
+        queryType = QUERY_CMD_TYPE.get(queryCmd);
 
         TextMessage message = new TextMessage();
 
@@ -64,7 +56,7 @@ public class CompanyDetailQuery extends Query {
         if (null != queryType) {
             StringBuffer buffer = new StringBuffer();
             // 将搜索字符及后面的+、空格、-等特殊符号去掉
-            String keyWord = content.replaceAll("^" + Query.SEPARATOR + queryCmd + Query.SEPARATOR + Query.QUERY_DETAIL + Query.SEPARATOR + "[\\+ ~!@#%^-_=]?", "");
+            String keyWord = content.replaceAll("^" + Query.SEPARATOR_3 + queryCmd + Query.SEPARATOR_3 + "[\\+ ~!@#%^-_=]?", "");
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("uName", keyWord);
@@ -88,7 +80,7 @@ public class CompanyDetailQuery extends Query {
                     retMsg = (CompanyDetailResMsg) JSONObject.toBean(object, jsonConfig);
 
                     // 充装存储
-                    if (Query.FILLING_STORAGE.equals(queryCmd)) {
+                    if (Query.FILLING_STORAGE_DETAIL.equals(queryCmd)) {
                         buffer.append("单位信息:").append(Const.LINE_SEPARATOR);
                         buffer.append(Const.LINE_SEPARATOR);
                         for (int i = 0; i < retMsg.getResult().size(); i++) {
@@ -109,7 +101,7 @@ public class CompanyDetailQuery extends Query {
                         }
                     }
                     // 配送运输
-                    else if (Query.DISTRIBUTION_TRANSPORTATION.equals(queryCmd)) {
+                    else if (Query.DISTRIBUTION_TRANSPORTATION_DETAIL.equals(queryCmd)) {
                         buffer.append("单位信息:").append(Const.LINE_SEPARATOR);
                         buffer.append(Const.LINE_SEPARATOR);
                         for (int i = 0; i < retMsg.getResult().size(); i++) {
@@ -128,7 +120,7 @@ public class CompanyDetailQuery extends Query {
                         }
                     }
                     // 检验监测
-                    else if (Query.INSPECTION_TESTING.equals(queryCmd)) {
+                    else if (Query.INSPECTION_TESTING_DETAIL.equals(queryCmd)) {
                         buffer.append("单位信息:").append(Const.LINE_SEPARATOR);
                         buffer.append(Const.LINE_SEPARATOR);
                         for (int i = 0; i < retMsg.getResult().size(); i++) {
