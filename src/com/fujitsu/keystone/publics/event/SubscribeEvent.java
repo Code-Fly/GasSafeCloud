@@ -85,7 +85,7 @@ public class SubscribeEvent extends Event {
         stringBuffer.append("您好，欢迎关注")
                 .append(Const.WECHART_NAME)
                 .append(Const.LINE_SEPARATOR)
-                .append("www.qpsafe.com");
+                .append("www.qpsafe.cn");
         message.setContent(stringBuffer.toString());
 
         // 将消息对象转换成xml
