@@ -64,10 +64,11 @@ public class AqdwQuery  extends Query {
               String response = GasHttpClientUtil.gasPost("ccstWeChatBarcodegetBottlePsafe.htm", params_AQDW,
                       CharEncoding.UTF_8, fromUserName);
               BarcodegetBottlePsafeResMsg messageObject = new BarcodegetBottlePsafeResMsg();
-              JSONObject object = JSONObject.fromObject(response);
+             
               if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
                   sengMsg.append("系统请求socket出现异常:").append(response);
               } else {
+            	  JSONObject object = JSONObject.fromObject(response);
                   if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
                       sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
                   } else {
@@ -105,10 +106,11 @@ public class AqdwQuery  extends Query {
 			 params_RegPass.put("dwbh", messArray[1]);
 			 String response = GasHttpClientUtil.gasPost("ccstWeChatRegPass.htm", params_RegPass,
                      CharEncoding.UTF_8, fromUserName);
-             JSONObject object = JSONObject.fromObject(response);
+            
              if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
                  sengMsg.append("系统请求socket出现异常:").append(response);
              } else {
+            	 JSONObject object = JSONObject.fromObject(response);
                  if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
                      sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
                  } else {
@@ -126,10 +128,11 @@ public class AqdwQuery  extends Query {
 			 
 			 String response = GasHttpClientUtil.gasPost("ccstWeChatRegEdit.htm", params_ccstWeChatRegEdit,
                     CharEncoding.UTF_8, fromUserName);
-            JSONObject object = JSONObject.fromObject(response);
+            
             if (SocketFailCode.ERR_CODE_LENGTH == response.length()) {
                 sengMsg.append("系统请求socket出现异常:").append(response);
             } else {
+            	JSONObject object = JSONObject.fromObject(response);
                 if (0 != (int) object.get(WebSocketResFiled.ERROR_CODE)) {
                     sengMsg.append("系统请求socket出现异常:").append(object.get(WebSocketResFiled.ERROR_CODE));
                 } else {
