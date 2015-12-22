@@ -91,8 +91,8 @@ public class ScancodeWaitmsgEvent extends Event {
                     barMsg = (BarcodegetBottleResMsg) JSONObject.toBean(object, jsonConfig);
                     sengMsg.append("气瓶使用证编号:").append(barMsg.getResult().get(0).getSyzbh()).append(Const.LINE_SEPARATOR)
                             .append("气瓶注册代码:").append(barMsg.getResult().get(0).getZcdm()).append(Const.LINE_SEPARATOR)
-                            .append("单位自有编号:").append(barMsg.getResult().get(0).getZybh()).append(Const.LINE_SEPARATOR)
-                            .append("气瓶充装单位编号:").append(barMsg.getResult().get(0).getRno()).append(Const.LINE_SEPARATOR)
+                            //.append("单位自有编号:").append(barMsg.getResult().get(0).getZybh()).append(Const.LINE_SEPARATOR)
+                            .append("气瓶充装单位:").append(barMsg.getResult().get(0).getJianname()).append(Const.LINE_SEPARATOR)
                             .append("气瓶制造单位代号:").append(messArray[2]).append(Const.LINE_SEPARATOR).append("气瓶品种:")
                             .append(barMsg.getResult().get(0).getClassName()).append(Const.LINE_SEPARATOR)
                             .append("气瓶型号:").append(barMsg.getResult().get(0).getTypeName())

@@ -27,7 +27,16 @@ public class BarcodegetBottleResult {
 	String rnoidTzsbName;
 	String zcdm;
 	String mediumName;
-	
+	String jianname;
+
+	public String getJianname() {
+		return jianname;
+	}
+
+	public void setJianname(String jianname) {
+		this.jianname = jianname;
+	}
+
 	public int getpPress() {
 		return pPress;
 	}
