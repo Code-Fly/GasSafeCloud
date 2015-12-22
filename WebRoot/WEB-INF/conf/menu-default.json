@@ -34,11 +34,6 @@
       "name": "管理",
       "sub_button": [
         {
-          "type": "scancode_waitmsg",
-          "name": "车用气瓶",
-          "key": "GL_CYQP"
-        },
-        {
           "type": "click",
           "name": "充装存储",
           "key": "GL_CZCC"
