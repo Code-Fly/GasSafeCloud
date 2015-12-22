@@ -67,8 +67,8 @@ public class ClickEvent extends Event {
             buffer.append(Query.SEPARATOR_3 + Query.INSPECTION_TESTING_LIST + Query.SEPARATOR_3 + "查询名").append(Const.LINE_SEPARATOR);
             buffer.append(Const.LINE_SEPARATOR);
             buffer.append("例:").append(Const.LINE_SEPARATOR);
-            buffer.append(Query.SEPARATOR_3 + Query.FILLING_STORAGE_DETAIL + Query.SEPARATOR_3 + "华润").append(Const.LINE_SEPARATOR);
             buffer.append(Query.SEPARATOR_3 + Query.FILLING_STORAGE_DETAIL + Query.SEPARATOR_3 + "无锡华润燃气有限公司").append(Const.LINE_SEPARATOR);
+            buffer.append(Query.SEPARATOR_3 + Query.FILLING_STORAGE_LIST + Query.SEPARATOR_3 + "华润").append(Const.LINE_SEPARATOR);
 
             textMessage.setContent(buffer.toString());
             respXml = MessageService.messageToXml(textMessage);
