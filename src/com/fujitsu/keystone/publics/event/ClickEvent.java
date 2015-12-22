@@ -124,7 +124,7 @@ public class ClickEvent extends Event {
                     .append(Const.LINE_SEPARATOR)
                     .append("输入格式:").append(Const.LINE_SEPARATOR)
                     .append(Query.SEPARATOR + "气瓶编号" + Query.SEPARATOR + "生产年度" + Query.SEPARATOR + "制造单位代号").append(Const.LINE_SEPARATOR)
-                    .append("例:" + Query.SEPARATOR + "013264" + Query.SEPARATOR + "2015" + Query.SEPARATOR + "MS");
+                    .append("例:" + Query.SEPARATOR + "013264" + Query.SEPARATOR + "2003" + Query.SEPARATOR + "ms");
             textMessage.setContent(buffer.toString());
             respXml = MessageService.messageToXml(textMessage);
 
