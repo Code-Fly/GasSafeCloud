@@ -39,6 +39,9 @@ public abstract class Query extends Event {
     public static final String QUERY_DETAIL = "B";
 
     public static final String SEPARATOR = "+";
-    
+
+    public static final String SEPARATOR_2 = "#";
+
+
 
 }

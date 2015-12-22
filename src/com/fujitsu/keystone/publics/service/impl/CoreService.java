@@ -190,14 +190,28 @@ public class CoreService extends BaseService implements ICoreService {
                 // 文本消息内容
                 String content = requestJson.getString("Content").trim().toUpperCase();
 
-                // 投诉咨询正则
-                String regCustomerService = "^\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+" + "$";
+                // 添加用户正则
+                String regAddUser = "^\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+" + "$";
+                // 修改用户正则
+                String regUpdateUser = "^\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+$";
                 // 安全定位正则
                 String regSafeLocation = "^\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+\\" + Query.SEPARATOR + "[^\\" + Query.SEPARATOR + "]+$";
+                // 投诉咨询正则
+                String regComplains = "^" + Query.SEPARATOR_2 + "[^" + Query.SEPARATOR_2 + "]+" + "$";
 
                 // 投诉咨询
-                if (Pattern.compile(regCustomerService).matcher(content).matches()) {
+                if (Pattern.compile(regComplains).matcher(content).matches()) {
                     Event event = new ComplaintsQuery();
+                    respXml = event.execute(request, requestJson);
+                }
+                // 添加用户
+                else if (Pattern.compile(regAddUser).matcher(content).matches()) {
+                    Event event = new AqdwQuery();
+                    respXml = event.execute(request, requestJson);
+                }
+                // 修改用户
+                else if (Pattern.compile(regUpdateUser).matcher(content).matches()) {
+                    Event event = new AqdwQuery();
                     respXml = event.execute(request, requestJson);
                 }
                 // 安全定位
