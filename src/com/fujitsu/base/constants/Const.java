@@ -26,6 +26,7 @@ public class Const {
      */
 
     public static final String WECHART_NAME = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.name");
+    public static final String WECHART_DOMAIN = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.domain");
     public static final String WECHART_URL = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.url");
     public static final String WECHART_APP_ID = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.appid");
     public static final String WECHART_APP_SECRET = ConfigUtil.getProperty(GLOBAL_CONF, "wechat.appsecret");
