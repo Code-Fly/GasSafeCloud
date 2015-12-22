@@ -35,18 +35,8 @@
       "sub_button": [
         {
           "type": "click",
-          "name": "充装存储",
-          "key": "GL_CZCC"
-        },
-        {
-          "type": "click",
-          "name": "配送运输",
-          "key": "GL_PSYS"
-        },
-        {
-          "type": "click",
-          "name": "检验检测",
-          "key": "GL_JYJC"
+          "name": "单位查询",
+          "key": "GL_DWCX"
         }
       ]
     },
