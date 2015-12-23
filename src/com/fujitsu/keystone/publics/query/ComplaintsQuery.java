@@ -74,7 +74,7 @@ public class ComplaintsQuery extends Query {
         // 图像
         else if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_IMAGE)) {
             params.put("MediaId", requestJson.getString("MediaId"));
-            params.put("PicUrl", requestJson.getString("Format"));
+            params.put("PicUrl", requestJson.getString("PicUrl"));
             message.setContent(upload(params, fromUserName));
         }
 
