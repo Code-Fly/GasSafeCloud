@@ -37,6 +37,11 @@
           "type": "click",
           "name": "单位查询",
           "key": "GL_DWCX"
+        },
+        {
+          "type": "click",
+          "name": "云系统",
+          "key": "GL_YXT"
         }
       ]
     },

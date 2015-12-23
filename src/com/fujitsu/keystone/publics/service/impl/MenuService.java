@@ -34,7 +34,7 @@ public class MenuService extends BaseService implements IMenuService {
     public static final String GL_PSYS = "GL_PSYS";
     public static final String GL_JYJC = "GL_JYJC";
     public static final String GL_DWCX = "GL_DWCX";
-
+    public static final String GL_YXT = "GL_YXT";
 
     public static final String FW_RSQP = "FW_RSQP";
     public static final String FW_YQAQ = "FW_YQAQ";

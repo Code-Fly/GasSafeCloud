@@ -86,7 +86,9 @@ public class ClickEvent extends Event {
             buffer.append("例:" + Query.SEPARATOR_2 + "我想咨询一个问题");
             textMessage.setContent(buffer.toString());
             respXml = MessageService.messageToXml(textMessage);
-        } else if (MenuService.QP_AQDW.equals(eventKey)) {
+        }
+        // 安全定位
+        else if (MenuService.QP_AQDW.equals(eventKey)) {
             StringBuffer buffer = new StringBuffer();
             buffer.append("安全定位").append(Const.LINE_SEPARATOR)
                     .append(Const.LINE_SEPARATOR)
@@ -95,6 +97,22 @@ public class ClickEvent extends Event {
                     .append("输入格式:").append(Const.LINE_SEPARATOR)
                     .append(Query.SEPARATOR_1 + "气瓶编号" + Query.SEPARATOR_1 + "生产年度" + Query.SEPARATOR_1 + "制造单位代号").append(Const.LINE_SEPARATOR)
                     .append("例:" + Query.SEPARATOR_1 + "013264" + Query.SEPARATOR_1 + "2003" + Query.SEPARATOR_1 + "ms");
+            textMessage.setContent(buffer.toString());
+            respXml = MessageService.messageToXml(textMessage);
+        }
+        // 云系统
+        else if (MenuService.GL_YXT.equals(eventKey)) {
+            StringBuffer buffer = new StringBuffer();
+            buffer.append("云系统").append(Const.LINE_SEPARATOR);
+            buffer.append(Const.LINE_SEPARATOR);
+            buffer.append("气瓶用户发送微信文本信息实现气瓶安全云系统自助注册审核以及修改登录用户名密码。").append(Const.LINE_SEPARATOR);
+            buffer.append("注册后默认用户名:01,密码:000000。").append(Const.LINE_SEPARATOR);
+            buffer.append("自助注册审核:").append(Const.LINE_SEPARATOR);
+            buffer.append(Query.SEPARATOR_1 + "单位编号").append(Const.LINE_SEPARATOR);
+            buffer.append("例:" + Query.SEPARATOR_1 + "CCSTAA000001");
+            buffer.append("修改账号密码:").append(Const.LINE_SEPARATOR);
+            buffer.append(Query.SEPARATOR_1 + "单位编号" + Query.SEPARATOR_1 + "旧账号" + Query.SEPARATOR_1 + "旧密码" + Query.SEPARATOR_1 + "新账号" + Query.SEPARATOR_1 + "新密码").append(Const.LINE_SEPARATOR);
+            buffer.append("例:" + Query.SEPARATOR_1 + "CCSTAA000001" + Query.SEPARATOR_1 + "张三" + Query.SEPARATOR_1 + "pass1" + Query.SEPARATOR_1 + "lisi" + Query.SEPARATOR_1 + "passw2");
             textMessage.setContent(buffer.toString());
             respXml = MessageService.messageToXml(textMessage);
 
