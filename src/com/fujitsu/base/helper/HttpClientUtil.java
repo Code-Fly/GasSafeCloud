@@ -252,6 +252,10 @@ public class HttpClientUtil {
             for (Header ct : contentType) {
                 httpServletResponse.setHeader("Content-Type", ct.getValue());
             }
+            Header[] contentLength = response.getHeaders("Content-Length");
+            for (Header cl : contentLength) {
+                httpServletResponse.setHeader("Content-Length", cl.getValue());
+            }
             entity = response.getEntity();
 
             InputStream inputStream = entity.getContent();
