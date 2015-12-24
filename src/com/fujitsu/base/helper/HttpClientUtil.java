@@ -244,9 +244,13 @@ public class HttpClientUtil {
             }
 
             response = httpclient.execute(httpGet);
-            Header[] headers = response.getHeaders("Content-disposition");
-            for (Header h : headers) {
-                httpServletResponse.setHeader("Content-disposition", h.getValue());
+            Header[] contentDisposition = response.getHeaders("Content-disposition");
+            for (Header cd : contentDisposition) {
+                httpServletResponse.setHeader("Content-disposition", cd.getValue());
+            }
+            Header[] contentType = response.getHeaders("Content-Type");
+            for (Header ct : contentType) {
+                httpServletResponse.setHeader("Content-Type", ct.getValue());
             }
             entity = response.getEntity();
 
