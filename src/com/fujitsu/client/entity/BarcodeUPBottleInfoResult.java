@@ -1,5 +1,7 @@
 package com.fujitsu.client.entity;
 
+import com.fujitsu.base.helper.CommonUtil;
+
 public class BarcodeUPBottleInfoResult {
 	private String opdateTime;
 	private String syzbh;
@@ -12,7 +14,7 @@ public class BarcodeUPBottleInfoResult {
 		return opdateTime;
 	}
 	public void setOpdateTime(String opdateTime) {
-		this.opdateTime = opdateTime;
+		this.opdateTime = CommonUtil.dateToYearMonthDay(opdateTime);
 	}
 	public String getSyzbh() {
 		return syzbh;
@@ -42,7 +44,7 @@ public class BarcodeUPBottleInfoResult {
 		return pdate;
 	}
 	public void setPdate(String pdate) {
-		this.pdate = pdate;
+		this.pdate =  CommonUtil.dateToYearMonthDay(pdate);;
 	}
 	public String getOpenId() {
 		return openId;

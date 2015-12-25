@@ -1,5 +1,6 @@
 package com.fujitsu.client.entity;
 
+import com.fujitsu.base.helper.CommonUtil;
 
 public class BarcodegetBottlePostResult {
 	private String  unitName;
@@ -49,7 +50,7 @@ public class BarcodegetBottlePostResult {
 		return psStart;
 	}
 	public void setPsStart(String psStart) {
-		this.psStart = psStart;
+		this.psStart = CommonUtil.dateToYearMonthDay(psStart);
 	}
 	
 }

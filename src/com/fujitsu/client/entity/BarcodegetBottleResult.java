@@ -1,5 +1,7 @@
 package com.fujitsu.client.entity;
 
+import com.fujitsu.base.helper.CommonUtil;
+
 public class BarcodegetBottleResult {
 	int pPress;
 	String rno;
@@ -71,7 +73,7 @@ public class BarcodegetBottleResult {
 		return xjrq;
 	}
 	public void setXjrq(String xjrq) {
-		this.xjrq = xjrq;
+		this.xjrq = CommonUtil.dateToYearMonth(xjrq);
 	}
 	public int getBf() {
 		return bf;
@@ -137,7 +139,7 @@ public class BarcodegetBottleResult {
 		return fDate;
 	}
 	public void setfDate(String fDate) {
-		this.fDate = fDate;
+		this.fDate = CommonUtil.dateToYearMonth(fDate);
 	}
 	public String getQpStructureName() {
 		return qpStructureName;
@@ -149,7 +151,7 @@ public class BarcodegetBottleResult {
 		return pDate;
 	}
 	public void setpDate(String pDate) {
-		this.pDate = pDate;
+		this.pDate = CommonUtil.dateToYearMonth(pDate);
 	}
 	public String getTypeName() {
 		return typeName;

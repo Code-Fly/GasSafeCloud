@@ -1,5 +1,7 @@
 package com.fujitsu.client.entity;
 
+import com.fujitsu.base.helper.CommonUtil;
+
 public class BarcodegetBottlePsafeResult {
 	private String pCode;
 	private String zcdm;
@@ -70,25 +72,25 @@ public class BarcodegetBottlePsafeResult {
 		return pDate;
 	}
 	public void setpDate(String pDate) {
-		this.pDate = pDate;
+		this.pDate = CommonUtil.dateToYearMonth(pDate);
 	}
 	public String getfDate() {
 		return fDate;
 	}
 	public void setfDate(String fDate) {
-		this.fDate = fDate;
+		this.fDate =  CommonUtil.dateToYearMonth(fDate);
 	}
 	public String getXjrq() {
 		return xjrq;
 	}
 	public void setXjrq(String xjrq) {
-		this.xjrq = xjrq;
+		this.xjrq = CommonUtil.dateToYearMonth(xjrq);
 	}
 	public String getBfrq() {
 		return bfrq;
 	}
 	public void setBfrq(String bfrq) {
-		this.bfrq = bfrq;
+		this.bfrq = CommonUtil.dateToYearMonth(bfrq);;
 	}
 	public String getUserName() {
 		return userName;

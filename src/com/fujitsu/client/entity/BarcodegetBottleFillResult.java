@@ -3,6 +3,8 @@
  */
 package com.fujitsu.client.entity;
 
+import com.fujitsu.base.helper.CommonUtil;
+
 /**
  * {"typeName":"YSP118(YSP-50)","checkDatetimeStart":"",
  * "qpczLicbh":"PZZ苏-1218（17)号","pCode":"MS",
@@ -31,7 +33,7 @@ public class BarcodegetBottleFillResult {
 		return checkDatetimeStart;
 	}
 	public void setCheckDatetimeStart(String checkDatetimeStart) {
-		this.checkDatetimeStart = checkDatetimeStart;
+		this.checkDatetimeStart =CommonUtil.dateToYearMonthDay(checkDatetimeStart);
 	}
 	public String getQpczLicbh() {
 		return qpczLicbh;

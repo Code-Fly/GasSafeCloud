@@ -98,7 +98,11 @@ public class AqdwQuery  extends Query {
                               .append(messageObject.getResult().get(0).getUserName()).append(Const.LINE_SEPARATOR)
                               .append("用户位置:").append(messageObject.getResult().get(0).getUserInfo())
                               .append(Const.LINE_SEPARATOR).append("用户联系方式:")
-                              .append(messageObject.getResult().get(0).getPhone());
+                              .append(messageObject.getResult().get(0).getPhone())
+                              .append(Const.LINE_SEPARATOR)
+                              .append(Const.WECHART_NAME)
+                              .append(" ")
+                              .append(Const.WECHART_DOMAIN);
                   }
               } 
 		} else if (messArray.length == 2) {

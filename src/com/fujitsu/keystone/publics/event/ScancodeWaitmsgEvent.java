@@ -56,9 +56,10 @@ public class ScancodeWaitmsgEvent extends Event {
          * 处理message 推送给用户的message
          * [QP02001,132020000001,AG,323232,2015年09月,2045年09月]气瓶安全云www.qpsafe.cn
          */
+        int beginIndex = scanResult.lastIndexOf("[");
         int lastIndex = scanResult.lastIndexOf("]");
         // QP02001,132020000001,AG,323232,2015年09月,2045年09月
-        String tmp = scanResult.substring(1, lastIndex);
+        String tmp = scanResult.substring(beginIndex+1, lastIndex);
         // [QP02001,132020000001,AG,323232,2015年09月,2045年09月]
         String[] messArray = tmp.split(",");
         Map<String, String> params = new HashMap<String, String>();
@@ -312,7 +313,10 @@ public class ScancodeWaitmsgEvent extends Event {
                 }
             }
         }
-
+        sengMsg.append(Const.LINE_SEPARATOR)
+		       .append(Const.WECHART_NAME)
+		       .append(" ")
+		       .append(Const.WECHART_DOMAIN);
         logger.info("setContent:" + sengMsg.toString());
         message.setContent(sengMsg.toString());
         // 将消息对象转换成xml
