@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactManager">
     <artifact type="exploded-war" name="GasSafeCloud:war exploded">
-      <output-path>/Volumes/DATA/DEV/Java/apache-tomcat-8.0.28/webapps/GasSafeCloud</output-path>
+      <output-path>$PROJECT_DIR$/../../../apache-tomcat-8.0.28/webapps/ROOT</output-path>
       <root id="root">
         <element id="directory" name="WEB-INF">
           <element id="directory" name="classes">
@@ -17,7 +17,7 @@
     </artifact>
     <artifact type="war" name="GasSafeCloud:war">
       <output-path>$USER_HOME$/Desktop</output-path>
-      <root id="archive" name="GasSafeCloud_war.war">
+      <root id="archive" name="GasSafeCloud.war">
         <element id="artifact" artifact-name="GasSafeCloud:war exploded" />
       </root>
     </artifact>
@@ -197,17 +197,7 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
-  <component name="PublishConfigData" serverName="58.215.2.82">
-    <serverData>
-      <paths name="58.215.2.82">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/webapps/GasSafeCloud" local="$PROJECT_DIR$/WebRoot" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-    </serverData>
-  </component>
+  <component name="PublishConfigData" serverName="58.215.2.82" />
   <component name="SvnBranchConfigurationManager">
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
